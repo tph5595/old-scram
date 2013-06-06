@@ -1,11 +1,12 @@
-from servers.websocket import ScramSocketServer, Echo
+from servers.websocket import Echo, Ping
 
 class ScramHttpServers(object):
     def __init__(self):
-        self.test = Echo()
-        
+        self.echo = Echo()
+        self.ping = Ping()
     def start(self):
-        self.test.serve_forever()
+        self.ping.start()
+        self.echo.serve_forever()
         
 if __name__ == '__main__':
     http_servers = ScramHttpServers()

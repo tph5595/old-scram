@@ -13,14 +13,21 @@
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			require(["dojox/socket", "dojo/domReady!"], function(Socket) {
-				var api = "ws://127.0.0.1:10002/api";
-				var socket = new Socket("ws://127.0.0.1:10002/api");
-				socket.on("message", function(event) {
+				var echoSocket = new Socket("ws://127.0.0.1:10002/api");
+				var pingSocket = new Socket("ws://127.0.0.1:10001/api");
+				echoSocket.on("message", function(event) {
 					var data = event.data;
-					console.log("data", data);
+					console.log("Echo Data", data);
 				});
-				socket.on("open", function(event) {
-					socket.send("hi server");
+				echoSocket.on("open", function(event) {
+					echoSocket.send("hi server");
+				});
+				pingSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Ping Data", data);
+				});
+				pingSocket.on("open", function(event) {
+					pingSocket.send("ping");
 				});
 			});
 
