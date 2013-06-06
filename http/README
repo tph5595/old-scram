@@ -1,0 +1,11 @@
+This package is for the HTTP protocol front end to the scram CTF
+
+Requires:
+gevent
+jquery
+flask
+
+server.py will run the various servers for the game
+
+
+The websocket.py contains all of the classes of the servers.

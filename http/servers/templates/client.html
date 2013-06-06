@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>                                                                           
+<head>                                                                           
+    <title>SCRAM CTF Tester</title>                                                   
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8">                              
+        $(document).ready(function(){                                            
+            //form handler
+            $('form').submit(function(event){                                    
+                ws.send($('#data').val())                                        
+                return false;                                                    
+            });   
+            //socket handler                                                               
+            if ("WebSocket" in window) {    
+            	//this is the raw socket setup                                     
+                testSocket = new WebSocket("ws://" + document.domain + ":10001/api");                
+                //this is the socket recv func
+                testSocket.onmessage = function (msg) {                                  
+                    $("#log").append("<p>"+msg.data+"</p>")                      
+                }; 
+                //add more sockets handlers here  
+                //
+                //                                                            
+            } else {                                                             
+                alert("WebSocket not supported");                                
+            }                                                                    
+        });                                                                      
+    </script>                                                                    
+</head>                                                                          
+<body>                                                                           
+    <h1>Send:</h1>                                                               
+    <form method='POST' action='#'>                                              
+        <textarea name='data' id="data"></textarea>                              
+        <div><input type='submit'></div>                                         
+    </form>                                                                      
+    <h1>Receive:</h1>                                                            
+    <div id="log"></div>                                                         
+</body>                                                                          
+</html> 
