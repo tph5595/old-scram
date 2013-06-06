@@ -1,8 +1,8 @@
-from servers.websocket import ScramSocketServer
+from servers.websocket import ScramSocketServer, Echo
 
 class ScramHttpServers(object):
     def __init__(self):
-        self.test = ScramSocketServer()
+        self.test = Echo()
         
     def start(self):
         self.test.serve_forever()

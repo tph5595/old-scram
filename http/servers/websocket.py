@@ -1,25 +1,17 @@
 from geventwebsocket.handler import WebSocketHandler
-from gevent.pywsgi import WSGIServer
+from gevent.wsgi import WSGIServer
 from flask import Flask, request, render_template
-
+from webob import Request
+        
 class ScramSocketServer(WSGIServer):
     port = 10001
     def __init__(self):
         self.port = ScramSocketServer.port
         self.app = Flask(__name__)
-        self.app.add_url_rule('/', 'index', self.index)
         self.app.add_url_rule('/api', 'api', self.api, methods=['GET','POST',])
-        self.app.add_url_rule('/handshake', 'handshake', self.handshake)
-        print self.app.url_map
         super(ScramSocketServer, self).__init__(('',self.port), self.app, handler_class=WebSocketHandler)
         
-    def index(self):
-        try:
-            return render_template('client.html') #<- need to place templates in the templates dir
-        except Exception as e:
-            print str(e)
-    
-    def handshake(self,message):
+    def process(self,message):
         """
         Override this in the subclass
             - your overriding func should convert the http protocol to AMP then call the AMP server for the plant
@@ -34,9 +26,17 @@ class ScramSocketServer(WSGIServer):
             while True:
                 #message is in the format of the websocket sub protocol
                 message = ws.receive()  
-                print "here"             
-                ws.send(message)
-        return   
+                print message
+                result = self.process(message)             
+                ws.send(result)
+        return
+class Echo(ScramSocketServer):   
+    ScramSocketServer.port = 10002
+    def __init__(self):
+        super(Echo,self).__init__()
+     
+     
+     
      
 if __name__ == '__main__':
     http_server = ScramSocketServer()
