@@ -1,6 +1,6 @@
 
 import random
-
+import uuid
 from twisted.application.service import Service
 from scram.plant import Plant
 
@@ -10,7 +10,10 @@ TCP_SERVICE_NAME = 'tcp-service-name'
 SCRAM_SERVICE_NAME = 'scram-service-name'
 
 #point = record('x y')
-
+class Player(object):
+    def __init__(self):
+        self.id = str(uuid.uuid4())
+        
 class World(SimulationTime):
     """
     All-encompassing model object for the state of a scram game.
@@ -24,10 +27,22 @@ class World(SimulationTime):
     def __init__(self, random=random, granularity=1, platformClock=None):
         SimulationTime.__init__(self, granularity, platformClock)
         self.random = random
+        #the plant
         self.plant = Plant()
+        #array for the players
+        self.players = []
+        
+    def createPlayer(self):
+        player = Player()
+        self.players.append(player)
+        return player
+    
+    def removePlayer(self,player):
+        self.players.remove(player)
         
     def start(self):
         SimulationTime.start(self)
+        # add plant update as an observer to the sim time tick
         self.addObserver(self.plant.update)
 
 class ScramService(Service):

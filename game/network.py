@@ -72,6 +72,13 @@ class Handshake(Command):
     Initial sync up w/ server
     """
     response = [('identifier',String()),('granularity',Integer())]
+    
+class PollPlant(Command):
+    """
+    Get the run time data from the plant
+    """
+    arguments = [('id',String()),('mwh',String())] 
+    #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
     """
@@ -98,8 +105,9 @@ class NetworkController(AMP):
         modelObject.addObserver(self)
         
     def storeHandshakeResponse(self,identifier, modelObject):
+        print dir(modelObject)
         print "Got Identifier %s"%(identifier)
-        self.addModelObject(identifier, modelObject)
+        #self.addModelObject(identifier, modelObject)
         
     def handshake(self):
         d = self.callRemote(Handshake)
@@ -111,6 +119,12 @@ class NetworkController(AMP):
             return self.environment
         d.addCallback(cbHs)
         return d
+    
+    def pollPlant(self,id,mwh):
+        print "Poll Plant Got update: %s %s"%(id,mwh)
+        return {}
+    PollPlant.responder(pollPlant)
+        
 
     def objectByIdentifier(self, identifier):
         """

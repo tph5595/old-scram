@@ -102,7 +102,7 @@ class Plant(object):
         #this is energy production of the reactor
         #TODO: not sure if we need to deal w/ prev core temp as a factor
         self.reactorTemp = (self.rodConst*self.rodLevel)*self.energyOutputRate
-        print "RCS Reactor Temp: %s"%(str(self.reactorTemp))
+
         
     def _exchangeRate(self,tcRate,numPumps):
         rate= (numPumps/self.maxPumps)*tcRate
@@ -114,17 +114,11 @@ class Plant(object):
         newTemp = self.rcsColdLegTemp + self.reactorTemp + self.reactorResidualTemp
         self.rcsHotLegTemp = (newTemp)*(rate)
         self.reactorResidualTemp = self.reactorTemp - self.rcsHotLegTemp
-        print "RCS Hot Leg Temp: %s"%(str(self.rcsHotLegTemp))    
-        print "RCS TC Rate: %s"%(str(rate))
         
     def _xferEnergyToAfs(self):
         rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
         self.rcsColdLegTemp =  self.rcsHotLegTemp*rate 
         self.afsHotLegTemp = self.afsColdLegTemp+(self.rcsHotLegTemp - self.rcsColdLegTemp)
-        
-        print "RCS Cold Leg Temp: %s"%(str(self.rcsColdLegTemp))
-        print "AFS Hot Leg Temp: %s"%(str(self.afsHotLegTemp))      
-        print "SG TC Rate: %s"%(str(rate))
     
     def _xferSteamToGen(self):
         #TODO: need some calc based on temp to drive gen efficiency
@@ -132,28 +126,24 @@ class Plant(object):
             self.generatorMW = 200
         else:
             self.generatorMW = 0
-        print "Gen MW: %s"%(str(self.generatorMW))
+
         #TODO: need to add the "hour" calc in here   
         self.generatorMWH = self.generatorMWH + self.generatorMW
-        print "Gen MWH: %s"%(str(self.generatorMWH))
+
         #drop the temp in the steam after turbine
         rate = self._exchangeRate(self.genTcRate, self.maxPumps)
         self.afsHotLegTemp = self.afsHotLegTemp*rate
-        print "Gen TC Rate: %s"%(str(rate))
-        print "AFS Hot Leg after Gen: %s"%(str(self.afsHotLegTemp))
+
         
     def _xferSteamToCondenser(self):  
         rate = self._exchangeRate(self.conTcRate, self.conPumps)   
         self.afsColdLegTemp = self.afsHotLegTemp*rate
         self.csHotLegTemp = self.csColdLegTemp+(self.afsHotLegTemp - self.afsColdLegTemp)
-        print "AFS Cold Leg Temp: %s"%(str(self.afsColdLegTemp))
-        print "CS Hot Leg Temp: %s"%(str(self.csHotLegTemp))
+
     
     def _xferToTower(self):
         rate = self._exchangeRate(self.towerTcRate, self.towerPumps)  
         self.csColdLegTemp = self.csHotLegTemp*rate
-        print "CS TC Rate: %s"%(str(rate))
-        print "CS Cold Leg Temp: %s"%(str(self.csColdLegTemp))  
           
     def _getEarthQuake(self):
         possibility = not(random.getrandbits(1))
@@ -162,10 +152,28 @@ class Plant(object):
         #        Also do not want to do this every cycle of the clock
         result = possibility
         return result
-        
+    
+    def poll(self):
+        #self.display()
+        return self.generatorMWH
+    
+    def display(self):
+        print"*****************************" 
+        print "Sim Time: %s"%(str(self.elapsedTime))
+        print "RCS Reactor Temp: %s"%(str(self.reactorTemp))
+        print "RCS Hot Leg Temp: %s"%(str(self.rcsHotLegTemp)) 
+        print "RCS Cold Leg Temp: %s"%(str(self.rcsColdLegTemp))
+        print "AFS Hot Leg Temp: %s"%(str(self.afsHotLegTemp))  
+        print "Gen MW: %s"%(str(self.generatorMW))
+        print "Gen MWH: %s"%(str(self.generatorMWH))
+        print "AFS Hot Leg after Gen: %s"%(str(self.afsHotLegTemp))
+        print "AFS Cold Leg Temp: %s"%(str(self.afsColdLegTemp))
+        print "CS Hot Leg Temp: %s"%(str(self.csHotLegTemp))
+        print "CS Cold Leg Temp: %s"%(str(self.csColdLegTemp))  
+                
     def update(self):
         self.elapsedTime += 1 
-        print"*****************************"       
+      
         #make some energy; which is heat and
         self._energyProduction()
         #xfer the heat from the reactor to the RCS water high side

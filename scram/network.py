@@ -7,10 +7,7 @@ from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
 #from game.terrain import CHUNK_GRANULARITY
-from game.network import (Handshake)
-
-import uuid
-
+from game.network import (Handshake, PollPlant)
 
 class ScramServer(AMP):
     """
@@ -29,19 +26,30 @@ class ScramServer(AMP):
         self.clock = clock
         self.players = {}
         self.player = None
+        self.update = 0
 
     def handshake(self):
-        identifier = str(uuid.uuid4())
+        print"Got Handshake from client"
+        self.player = self.world.createPlayer()
         self.clock.callLater(0, self.sendExistingState)
         return{"granularity": self.world.granularity,
-                "identifier": identifier}
+                "identifier": self.player.id}
     Handshake.responder(handshake)
     
+    def pollPlant(self):
+        self.update +=self.update        
+        mwh = self.world.plant.poll()  
+        print "Poll Plant: %s"%(mwh)      
+        self.callRemote(PollPlant,id=str(self.update),mwh=str(mwh))
+        return{}
+        
     def sendExistingState(self):
         """
         Send information about connected players.
         """
         #TODO: implement me!!
+        print "Sending existing state"
+        self.world.addObserver(self.pollPlant)
         pass
 
 
@@ -78,7 +86,9 @@ class ScramServer(AMP):
         """
         Remove this connection's L{Player} from the L{World}.
         """
+        print "Player %s Connection Lost: %s"%(self.player.id,reason)
         self.world.removePlayer(self.player)
+        self.world.removeObserver(self.pollPlant)
 
 
 

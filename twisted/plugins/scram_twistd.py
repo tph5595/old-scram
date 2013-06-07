@@ -53,7 +53,7 @@ class _ScramPlugin(object):
             factory = TrafficLoggingFactory(
                 factory, join(options['log-directory'], 'scram'))
 
-        tcp = TCPServer(options['port'], factory)
+        tcp = TCPServer(options['port'], factory, interface='127.0.0.1')
         tcp.setName(TCP_SERVICE_NAME)
         tcp.setServiceParent(service)
 

@@ -47,7 +47,8 @@ class SimulationTime(Clock):
         in this world.
         """
         self.observers.append(observer)
-        
+    def removeObserver(self,observer):
+        self.observers.remove(observer)       
         
     def _update(self, frames):
         """

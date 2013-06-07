@@ -8,6 +8,9 @@ from twisted.internet.protocol import ClientFactory
 from twisted.protocols.policies import ProtocolWrapper, WrappingFactory
 from twisted.internet.defer import Deferred
 from twisted.internet import reactor
+from twisted.internet.task import LoopingCall
+
+from Queue import Queue, Empty
 
 from game.network import NetworkController
 
@@ -53,6 +56,7 @@ class UI(object):
 
     def __init__(self, reactor=reactor):
         self.reactor = reactor
+        self.q = Queue()
 
 
     def connect(self, (host, port)):
@@ -72,6 +76,36 @@ class UI(object):
     def handshake(self, protocol):
         self.protocol = protocol
         return self.protocol.handshake()
+    
+    def handleInput(self):
+        #TODO: need a stop call
+        try:
+            for event in self.q.get(True,2):
+                self._handleEvent(event)
+        except KeyboardInterrupt:
+            self.stop()
+        except Empty:
+            pass
+
+            
+    def _handleEvent(self,event):
+        pass        
+    
+    def stop(self):
+        print"Calling stop"
+        self._inputCall.stop()
+    
+    def go(self):
+        """
+        this is the loop that keeps the AMP client alive
+        """
+        print "in go"
+        self._inputCall = LoopingCall(self.handleInput)
+        finishedDeferred = self._inputCall.start(0.04,now=True)
+        return finishedDeferred
+    
+    def pollPlant(self):
+        pass
 
 
     def gotHandshake(self, environment):
@@ -80,7 +114,8 @@ class UI(object):
         L{Environment} in a L{Window}.
         """
         environment.start()
-        return None
+        self.go()
+        #TODO: need a loop to keep the client running.
 
 
     def start(self, (host, port)):
