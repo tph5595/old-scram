@@ -9,6 +9,7 @@ from twisted.protocols.policies import ProtocolWrapper, WrappingFactory
 from twisted.internet.defer import Deferred
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
+from twisted.web import server, resource
 
 from Queue import Queue, Empty
 
@@ -27,8 +28,6 @@ class ConnectionNotificationWrapper(ProtocolWrapper):
         ProtocolWrapper.makeConnection(self, transport)
         self.factory.connectionNotification.callback(self.wrappedProtocol)
 
-
-
 class ConnectionNotificationFactory(WrappingFactory):
     """
     A factory which uses L{ConnectionNotificationWrapper}.
@@ -41,31 +40,34 @@ class ConnectionNotificationFactory(WrappingFactory):
     def __init__(self, realFactory):
         WrappingFactory.__init__(self, realFactory)
         self.connectionNotification = Deferred()
+
+class Simple(resource.Resource):
+    """
+    This is a simple server that allows commands to be passed to the client
+    """
+    isLeaf = True
+    def __init__(self,parent):
+        self.parent = parent
+        self.children = {}
         
+    def render_GET(self,request):
+        """
+        This server responds to a get request and put it on the UI Queue
+        """
+        print "Cmd: %s"%request.args['cmd']
+        self.parent.q.put(request.args['cmd'])
+        return ""
+            
 class UI(object):
     """
-    See L{game.ui}.
-
-    @ivar reactor: Something which provides
-        L{twisted.internet.interfaces.IReactorTCP} and
-        L{twisted.internet.interfaces.IReactorTime}.
-
-    @ivar windowFactory: The factory that should produce things like
-        L{game.view.Window}.
+    This is the user interface 
     """
 
     def __init__(self, reactor=reactor):
         self.reactor = reactor
         self.q = Queue()
 
-
     def connect(self, (host, port)):
-        """
-        Connect to the Game server at the given (host, port).
-
-        @param host: The name of the host to connect to.
-        @param port: The TCP port number to connect to.
-        """
         clientFactory = ClientFactory()
         clientFactory.protocol = lambda: NetworkController(
             self.reactor)
@@ -78,18 +80,15 @@ class UI(object):
         return self.protocol.handshake()
     
     def handleInput(self):
-        #TODO: need a stop call
         try:
-            for event in self.q.get(True,2):
-                self._handleEvent(event)
-        except KeyboardInterrupt:
-            self.stop()
+            event = self.q.get(False)
+            self._handleCommand(event)
         except Empty:
             pass
-
             
-    def _handleEvent(self,event):
-        pass        
+    def _handleCommand(self,event):
+        #TODO: do something with the command
+        print "Event: %s"%event      
     
     def stop(self):
         print"Calling stop"
@@ -99,25 +98,20 @@ class UI(object):
         """
         this is the loop that keeps the AMP client alive
         """
-        print "in go"
         self._inputCall = LoopingCall(self.handleInput)
         finishedDeferred = self._inputCall.start(0.04,now=True)
         return finishedDeferred
-    
-    def pollPlant(self):
-        pass
-
 
     def gotHandshake(self, environment):
-        """
-        Hook up a user-interface controller for the L{Player} and display the
-        L{Environment} in a L{Window}.
-        """
         environment.start()
+        self.reactor.callLater(0,self.pipeServer)
         self.go()
-        #TODO: need a loop to keep the client running.
 
-
+    def pipeServer(self):
+        print"server starting"
+        site = server.Site(Simple(self))
+        self.reactor.listenTCP(8099,site)
+        
     def start(self, (host, port)):
         """
         Let's Go!

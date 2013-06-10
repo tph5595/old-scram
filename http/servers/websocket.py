@@ -1,7 +1,8 @@
 from geventwebsocket.handler import WebSocketHandler
 from gevent.wsgi import WSGIServer
-from flask import Flask, request, render_template
-from webob import Request
+from flask import Flask, request
+
+import httplib
         
 class ScramSocketServer(WSGIServer):
     def __init__(self):
@@ -76,7 +77,33 @@ class Ping(WSGIServer):
                 result = self.process(message)             
                 ws.send(result)
         return
-     
+    
+class Poll(WSGIServer):   
+    def __init__(self):
+        self.app = Flask("Poll")
+        self.app.add_url_rule('/api', 'api', self.api, methods=['GET',])
+        super(Ping, self).__init__(('',8081), self.app, handler_class=WebSocketHandler)
+        self.conn = httplib.HTTPConnection('127.0.0.1',8099)
+        
+    def process(self,message):
+        """
+        Poll the Plant for current infos
+        """
+        self.conn.request("GET","/api?cmd=poll")
+        resp = self.conn.getresponse()
+        data = resp.read()   
+        print "Poll Response: %s"%str(data) 
+        return data    
+    
+    def api(self):
+        if request.environ.get('wsgi.websocket'):
+            ws = request.environ['wsgi.websocket']
+            while True:
+                #message is in the format of the websocket sub protocol
+                message = ws.receive()  
+                result = self.process(message)             
+                ws.send(result)
+        return    
      
      
      

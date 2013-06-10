@@ -37,7 +37,7 @@ class ScramServer(AMP):
     Handshake.responder(handshake)
     
     def pollPlant(self):
-        self.update +=self.update        
+        self.update +=1       
         mwh = self.world.plant.poll()  
         print "Poll Plant: %s"%(mwh)      
         self.callRemote(PollPlant,id=str(self.update),mwh=str(mwh))
@@ -49,7 +49,7 @@ class ScramServer(AMP):
         """
         #TODO: implement me!!
         print "Sending existing state"
-        self.world.addObserver(self.pollPlant)
+        #self.world.addObserver(self.pollPlant)
         pass
 
 

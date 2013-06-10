@@ -105,7 +105,6 @@ class NetworkController(AMP):
         modelObject.addObserver(self)
         
     def storeHandshakeResponse(self,identifier, modelObject):
-        print dir(modelObject)
         print "Got Identifier %s"%(identifier)
         #self.addModelObject(identifier, modelObject)
         
