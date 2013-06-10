@@ -36,6 +36,50 @@
 					echoSocket.send(myJSON);
 
 				}
+				
+				 //Edited by Joe Pecsi...not sure if the below is correct or not
+		                pollSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("Poll Data", data);
+		                });
+		                pollSocket.on("open", function(event) {
+		                    echoSocket.send("Hey guys...polling");
+		                });
+		                signupSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("Signup Data", data);
+		                });
+		                signupSocket.on("open", function(event) {
+		                    pingSocket.send("signup");
+		                });
+		                loginSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("User Data", data);
+		                });
+		                loginSocket.on("open", function(event) {
+		                    echoSocket.send("hi user");
+		                });
+		                rodSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("Rod State", data);
+		                });
+		                rodSocket.on("open", function(event) {
+		                    pingSocket.send("rod change");
+		                });
+		                valveSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("Valve State", data);
+		                });
+		                valveSocket.on("open", function(event) {
+		                    pingSocket.send("valve change");
+		                });
+		                gaugeSocket.on("message", function(event) {
+		                    var data = event.data;
+		                    console.log("Gauge State", data);
+		                });
+		                gaugeSocket.on("open", function(event) {
+		                    echoSocket.send("gauge change");
+		                });
 			});
 
 		</script>
