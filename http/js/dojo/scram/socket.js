@@ -1,5 +1,5 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
-	return Declare("scam.socket", null, {
+	return Declare("scram.socket", null, {
 		///
 		/// This is the class for standing up all the sockets and dealing with the comms.
 		///
