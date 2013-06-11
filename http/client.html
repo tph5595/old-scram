@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html id="html">
 	<head>
 		<title>SCRAM CTF Tester</title>
 		<script>
@@ -12,20 +12,11 @@
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojox/socket", "dojo/domReady!"], function(Socket) {
+			require(["dojox/socket", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dojo/dom-attr", "dojo/fx", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/domReady!"], 
+			function(Socket, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
 				var echoSocket = new Socket("ws://127.0.0.1:10002/api");
 				var pingSocket = new Socket("ws://127.0.0.1:10001/api");
-				
-				//Sockets added in by Joe Pecsi on 06/10/2013
 				var pollSocket = new Socket("ws://127.0.0.1:8081/api");
-				var userSocket = new Socket("ws://127.0.0.1:8082/api");
-				var rodSocket = new Socket("ws://127.0.0.1:8083/api");
-				var valveSocket = new Socket("ws://127.0.0.1:8084/api");
-				var gaugeSocket = new Socket("ws://127.0.0.1:8085/api");
-			
-		
-				
-				
 				echoSocket.on("message", function(event) {
 					var data = event.data;
 					console.log("Echo Data", data);
@@ -46,64 +37,312 @@
 					//call my socket send func w/ payload
 					echoSocket.send(myJSON);
 
-				}
+				};
+			/*
+			 //Edited by Joe Pecsi...not sure if the below is correct or not
+				pollSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Poll Data", data);
+				});
+				pollSocket.on("open", function(event) {
+					echoSocket.send("Hey guys...polling");
+				});
+				signupSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Signup Data", data);
+				});
+				signupSocket.on("open", function(event) {
+					pingSocket.send("signup");
+				});
+				loginSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("User Data", data);
+				});
+				loginSocket.on("open", function(event) {
+					echoSocket.send("hi user");
+				});
+				rodSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Rod State", data);
+				});
+				rodSocket.on("open", function(event) {
+					pingSocket.send("rod change");
+				});
+				valveSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Valve State", data);
+				});
+				valveSocket.on("open", function(event) {
+					pingSocket.send("valve change");
+				});
+				gaugeSocket.on("message", function(event) {
+					var data = event.data;
+					console.log("Gauge State", data);
+				});
+				gaugeSocket.on("open", function(event) {
+					echoSocket.send("gauge change");
+				});
 				
-				 //Edited by Joe Pecsi...not sure if the below is correct or not
-		                pollSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("Poll Data", data);
-		                });
-		                pollSocket.on("open", function(event) {
-		                    echoSocket.send("Hey guys...polling");
-		                });
-		                signupSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("Signup Data", data);
-		                });
-		                signupSocket.on("open", function(event) {
-		                    pingSocket.send("signup");
-		                });
-		                loginSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("User Data", data);
-		                });
-		                loginSocket.on("open", function(event) {
-		                    echoSocket.send("hi user");
-		                });
-		                rodSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("Rod State", data);
-		                });
-		                rodSocket.on("open", function(event) {
-		                    pingSocket.send("rod change");
-		                });
-		                valveSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("Valve State", data);
-		                });
-		                valveSocket.on("open", function(event) {
-		                    pingSocket.send("valve change");
-		                });
-		                gaugeSocket.on("message", function(event) {
-		                    var data = event.data;
-		                    console.log("Gauge State", data);
-		                });
-		                gaugeSocket.on("open", function(event) {
-		                    echoSocket.send("gauge change");
-		                });
-			});
+				*/
+				
+				var bodyDiv = new domConstruct.create("body", {id: 'body'}, "html");
+				var mainDiv = new domConstruct.create("div", {id: "main"}, "body");//create main div that will hold the scramBackground image
+				
+				//construct rods divs and rod buttons
+				var rods = new domConstruct.create("img", {id: 'rods', src: 'Rods.png'}, "main"); //create the rods image
 
+				
+				var rodDownButton = new domConstruct.create("div", {id: 'rodDownButton'}, "main"); //create the rod down button div
+				var rodUpButton = new domConstruct.create("div", {id: 'rodUpButton'}, "main"); //create the rod up button div	
+				
+				//construct gagueBottomLeft divs and gagueBottomLeftDown buttons
+				var gagueBottomLeftDownButton = new domConstruct.create("div", {id: 'gagueBottomLeftDownButton'}, "main");//create the gague bottom left Down button div
+				var gagueBottomLeftUpButton = new domConstruct.create("div", {id: 'gagueBottomLeftUpButton'}, "main");//create the gague bottom left up button div
+				var gague_bottom_left_div = new domConstruct.create("div", {id: 'gague_bottom_left_div'}, "main");
+				var gague_bottom_left = new domConstruct.create("img", {id: 'gague_bottom_left', src: '1.png', width: "17px", height: '35px'}, "gague_bottom_left_div");
+				
+				//gague middle bottom
+				var gague_middle_bottom = new domConstruct.create("div", {id: 'gague_middle_bottom'}, "main");
+				
+				//gague top left
+				var gague_top_left = new domConstruct.create("div", {id: 'gague_top_left'}, "main");
+				
+				//gague middle top
+				var gague_middle_top = new domConstruct.create("div", {id: 'gague_middle_top'}, "main");
+				
+				//gague top right
+				var gague_top_right = new domConstruct.create("div", {id: 'gague_top_right'}, "main");
+				
+				var gague1level = 2;
+				
+				
+				
+				
+				
+				//main container tags
+				var htmlPos = new domStyle.set("html", "position", "fixed"); //set html tag to a fixed position
+				var mainBkgd = new domStyle.set("main", "backgroundImage", "url(scram.png)"); //set the background image of the main tag to the scram game background
+				var mainWidth = new domStyle.set("main", "width", "1000px");
+				var mainHeight = new domStyle.set("main", "height", "601px");
+				var mainBkgdRpt = new domStyle.set("main", "backgroundRepeat", "no-repeat");
+				
+				//rods
+				
+				new domStyle.set("rodDownButton", {position: "fixed", top: "300px"});
+				new domStyle.set("rods", {width: "70px", position: "fixed", left: "92px", top: "160px"});
+				
+				new domStyle.set("gagueBottomLeftUpButton", {width: "100px"});
+				
+				new domStyle.set("gague_bottom_left_div", {backgroundColor: "yellow", position: "fixed", top: "450px", left: "236px", width: "30px", height: "40px"});
+				
+				new domStyle.set("gague_middle_bottom", {backgroundColor: "green", position: "fixed", top: "450px", left: "620px", width: "30px", height: "40px"});
+				
+				new domStyle.set("gague_top_left", {backgroundColor: "blue", position: "fixed", top: "340px", left: "315px", width: "30px", height: "40px"});
+				
+				new domStyle.set("gague_middle_top", {backgroundColor: "purple", position: "fixed", top: "340px", left: "628px", width: "30px", height: "40px"});
+				
+				new domStyle.set("gague_top_right", {backgroundColor: "red", position: "fixed", top: "340px", left: "710px", width: "30px", height: "40px"});
+				
+				
+				//rods
+				
+				var myButton = new Button({
+					label: "Click me!"
+				}, "main");
+				
+				var rodlevel = 0;
+				
+				
+				var rodDownButton = new Button({
+					title: "Rod: Down",
+					onClick: function(){ //checks the rod level and slides it down to the appropriate place
+						if (rodlevel == 0){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 126,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 1
+						}
+						else if (rodlevel == 1){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 132,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 2
+						}
+						else if (rodlevel == 2){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 138,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 3
+						}
+						else if (rodlevel == 3){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 144,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 4
+						}
+						else if (rodlevel == 4){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 150,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 5
+						}
+						else if (rodlevel == 5){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 156,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 6
+						}
+						else if (rodlevel == 6){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 162,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 7
+						}
+						else if (rodlevel == 7){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 168,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 8
+						}
+						else if (rodlevel == 8){
+							var rodshift = new dom.byId("rods");
+							fx.slideTo({
+								top: 175,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 9
+						}
+					}
+				}, "main");
+			/*
+				//Button : Rod : Up
+				var rodUpButton = new Button({
+					label: "Rod: Up",
+					onClick: function(){ //checks the rod level and slides it up to the appropriate place
+						var rodshift = dom.byId("rods");
+						if (rodlevel == 9){
+							fx.slideTo({
+								top: 168,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 8
+						}
+						else if (rodlevel == 8){
+							fx.slideTo({
+								top: 162,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 7
+						}
+						else if (rodlevel == 7){
+							fx.slideTo({
+								top: 156,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 6
+						}
+						else if (rodlevel == 6){
+							fx.slideTo({
+								top: 150,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 5
+						}
+						else if (rodlevel == 5){
+							fx.slideTo({
+								top: 144,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 4
+						}
+						else if (rodlevel == 4){
+							fx.slideTo({
+								top: 138,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 3
+						}
+						else if (rodlevel == 3){
+							fx.slideTo({
+								top: 132,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 2
+						}
+						else if (rodlevel == 2){
+							fx.slideTo({
+								top: 126,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 1
+						}
+						else if (rodlevel == 1){
+							fx.slideTo({
+								top: 120,
+								left: 92,
+								node: rods
+							}).play();
+							rodlevel = 0
+						}
+					}
+				}, "rodUpButton");
+				
+				
+				
+				var gagueBottomLeftDownButton = new Button({
+					label: "Gauge Bottom Left: Down",
+					onClick: function(){ //sets current img source to a variable. checks variable against a set value. Changes picture accordingly
+						var currentImg = domAttr.get('gague_bottom_left', 'src');
+						if (currentImg == '4.png'){
+							domAttr.set('gague_bottom_left', {src: "3.png", width: "25px", height: '35px'});
+						}
+						else if (currentImg == '3.png'){
+							domAttr.set('gague_bottom_left', {src: "2.png", width: "20px", height: '35px'});
+						}
+						else if (currentImg == '2.png'){
+							domAttr.set('gague_bottom_left', {src: "1.png", width: "17px", height: '35px'});
+						}
+					}
+				}, "gagueBottomLeftDownButton");
+				
+				*/
+				
+			});
+			
+		
 		</script>
 	</head>
-	<body>
-		<h1>Send:</h1>
-		<form method='POST' action='#'>
-			<textarea name='data' id="data"></textarea>
-			<div>
-				<input type='submit'>
-			</div>
-		</form>
-		<h1>Receive:</h1>
-		<div id="log"></div>
-	</body>
 </html>
