@@ -4,25 +4,41 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
 	return Declare("scram.socket", null, {
 		///
-		/// This is the class for standing up all the sockets and dealing with the comms.
+		///Valve class
 		///
 		
-		#current state of valve (open, off)
+		valve: null,
+		//current state of valve (open, off)
 		valveState: null,
+		_socket: null,
 		
-		#constructor takes in args
+		//constructor takes in args
 		constructor : function(args) {
-			this.valve = new Socket("ws://127.0.0.1:8081");
-			this.valve.on("valveOpen", lang.hitch(this, this._valveOpen));
-			this.valve.on("valveClose", lang.hitch(this, this._valveClose));
+			
+			//don't need dis crap here
+			//this.valve = new Socket("ws://127.0.0.1:8081");
+			//this.valve.on("valveOpen", lang.hitch(this, this._valveOpen));
+			//this.valve.on("valveClose", lang.hitch(this, this._valveClose));
+			
+			//This will be used in collection
+			//this._socket = (args.socket);
 		},
-		_valveOpen : function(event) {
+		
+		_socketMessage: function(event){
+			//Listenurr
+			this.valveState = msg;
+		},
+		
+		valveOpen: function(event) {
 			console.log("Valve Opened");
-			this.valve.send("Open");
+			//this.valve.send("Open");
+			//Will update valve state to open
 		},
-		_valveClose : function(event) {
+		
+		valveClose: function(event) {
 			console.log("Valve Closed");
-			this.valve.send("Close");
+			//this.valve.send("Close");
+			//will update valve state to closed
 		}
 		
 	});
