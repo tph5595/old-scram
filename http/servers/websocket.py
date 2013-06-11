@@ -82,13 +82,14 @@ class Poll(WSGIServer):
     def __init__(self):
         self.app = Flask("Poll")
         self.app.add_url_rule('/api', 'api', self.api, methods=['GET',])
-        super(Ping, self).__init__(('',8081), self.app, handler_class=WebSocketHandler)
+        super(Poll, self).__init__(('',8081), self.app, handler_class=WebSocketHandler)
         self.conn = httplib.HTTPConnection('127.0.0.1',8099)
         
     def process(self,message):
         """
         Poll the Plant for current infos
         """
+        print "Poll Processing Message: %s"%message
         self.conn.request("GET","/api?cmd=poll")
         resp = self.conn.getresponse()
         data = resp.read()   

@@ -15,6 +15,17 @@
 			require(["dojox/socket", "dojo/domReady!"], function(Socket) {
 				var echoSocket = new Socket("ws://127.0.0.1:10002/api");
 				var pingSocket = new Socket("ws://127.0.0.1:10001/api");
+				
+				//Sockets added in by Joe Pecsi on 06/10/2013
+				var pollSocket = new Socket("ws://127.0.0.1:8081/api");
+				var userSocket = new Socket("ws://127.0.0.1:8082/api");
+				var rodSocket = new Socket("ws://127.0.0.1:8083/api");
+				var valveSocket = new Socket("ws://127.0.0.1:8084/api");
+				var gaugeSocket = new Socket("ws://127.0.0.1:8085/api");
+			
+		
+				
+				
 				echoSocket.on("message", function(event) {
 					var data = event.data;
 					console.log("Echo Data", data);
