@@ -89,7 +89,7 @@
 				var mainDiv = new domConstruct.create("div", {id: "main"}, "body");//create main div that will hold the scramBackground image
 				
 				//construct rods divs and rod buttons
-				var rods = new domConstruct.create("img", {id: 'rods', src: 'Rods.png'}, "main"); //create the rods image
+				var rods = new domConstruct.create("img", {id: 'rods', src: 'images/elements/rods.png'}, "main"); //create the rods image
 
 				
 				var rodDownButton = new domConstruct.create("div", {id: 'rodDownButton'}, "main"); //create the rod down button div
@@ -121,10 +121,12 @@
 				
 				//main container tags
 				var htmlPos = new domStyle.set("html", "position", "fixed"); //set html tag to a fixed position
-				var mainBkgd = new domStyle.set("main", "backgroundImage", "url(scram.png)"); //set the background image of the main tag to the scram game background
-				var mainWidth = new domStyle.set("main", "width", "1000px");
-				var mainHeight = new domStyle.set("main", "height", "601px");
-				var mainBkgdRpt = new domStyle.set("main", "backgroundRepeat", "no-repeat");
+				
+				var mainStyle = new domStyle.set("main", {
+							backgroundImage: 'url(images/background.png)', 
+							width: '1000px', height: '601px', 
+							backgroundRepeat: 'no-repeat', 
+							backgroundSize: '1000px 601px'});
 				
 				//rods
 				
@@ -320,7 +322,7 @@
 					}
 				}, "rodUpButton");
 				
-				
+//!*!*!*!*!*!*!*!*!*!*!*!*!you need to change the directory*!*!*!*!*!*!*!*!*!*!*!*!*!*!**!*!*!*!*!*!!*
 				
 				var gagueBottomLeftDownButton = new Button({
 					label: "Gauge Bottom Left: Down",
