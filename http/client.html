@@ -130,8 +130,8 @@
 				
 				//rods
 				
-				new domStyle.set("rodDownButton", {position: "fixed", top: "300px"});
-				new domStyle.set("rods", {width: "70px", position: "fixed", left: "92px", top: "160px"});
+
+				new domStyle.set("rods", {width: "70px", position: "fixed", left: "92px", top: "100px"}); //max 156 px min 100 px
 				
 				new domStyle.set("gagueBottomLeftUpButton", {width: "100px"});
 				
@@ -147,173 +147,173 @@
 				
 				
 				//rods
-				
-				var myButton = new Button({
-					label: "Click me!"
-				}, "main");
+				/* the good one
+				var testButton = new dijit.form.Button({
+					onClick: function(){
+						dojo.fx.slideTo({
+								top: 126,
+								left: 92,
+								node: rods
+						}).play();
+					}
+				}, 'rodDownButton');
+*/
 				
 				var rodlevel = 0;
 				
 				
-				var rodDownButton = new Button({
+				var rod_Down_Button = new dijit.form.Button({
 					title: "Rod: Down",
 					onClick: function(){ //checks the rod level and slides it down to the appropriate place
 						if (rodlevel == 0){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 126,
+							dojo.fx.slideTo({
+								top: 108,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 1
 						}
 						else if (rodlevel == 1){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 132,
+							dojo.fx.slideTo({
+								top: 115,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 2
 						}
 						else if (rodlevel == 2){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 138,
+							dojo.fx.slideTo({
+								top: 120,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 3
 						}
 						else if (rodlevel == 3){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 144,
+							dojo.fx.slideTo({
+								top: 125,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 4
 						}
 						else if (rodlevel == 4){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 150,
+							dojo.fx.slideTo({
+								top: 132,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 5
 						}
 						else if (rodlevel == 5){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 156,
+							dojo.fx.slideTo({
+								top: 138,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 6
 						}
 						else if (rodlevel == 6){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 162,
+							dojo.fx.slideTo({
+								top: 143,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 7
 						}
 						else if (rodlevel == 7){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 168,
+							dojo.fx.slideTo({
+								top: 149,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 8
 						}
 						else if (rodlevel == 8){
-							var rodshift = new dom.byId("rods");
-							fx.slideTo({
-								top: 175,
+							dojo.fx.slideTo({
+								top: 156,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 9
 						}
 					}
-				}, "main");
-			/*
+				}, "rodDownButton");
+			
+			
+			
+			
 				//Button : Rod : Up
-				var rodUpButton = new Button({
+				var rodUpButton = new dijit.form.Button({
 					label: "Rod: Up",
 					onClick: function(){ //checks the rod level and slides it up to the appropriate place
-						var rodshift = dom.byId("rods");
 						if (rodlevel == 9){
-							fx.slideTo({
-								top: 168,
+							dojo.fx.slideTo({
+								top: 149,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 8
 						}
 						else if (rodlevel == 8){
-							fx.slideTo({
-								top: 162,
+							dojo.fx.slideTo({
+								top: 143,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 7
 						}
 						else if (rodlevel == 7){
-							fx.slideTo({
-								top: 156,
+							dojo.fx.slideTo({
+								top: 138,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 6
 						}
 						else if (rodlevel == 6){
-							fx.slideTo({
-								top: 150,
+							dojo.fx.slideTo({
+								top: 132,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 5
 						}
 						else if (rodlevel == 5){
-							fx.slideTo({
-								top: 144,
+							dojo.fx.slideTo({
+								top: 125,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 4
 						}
 						else if (rodlevel == 4){
-							fx.slideTo({
-								top: 138,
+							dojo.fx.slideTo({
+								top: 120,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 3
 						}
 						else if (rodlevel == 3){
-							fx.slideTo({
-								top: 132,
+							dojo.fx.slideTo({
+								top: 115,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 2
 						}
 						else if (rodlevel == 2){
-							fx.slideTo({
-								top: 126,
+							dojo.fx.slideTo({
+								top: 108,
 								left: 92,
 								node: rods
 							}).play();
 							rodlevel = 1
 						}
 						else if (rodlevel == 1){
-							fx.slideTo({
-								top: 120,
+							dojo.fx.slideTo({
+								top: 100,
 								left: 92,
 								node: rods
 							}).play();
@@ -321,28 +321,30 @@
 						}
 					}
 				}, "rodUpButton");
-				
+			
 //!*!*!*!*!*!*!*!*!*!*!*!*!you need to change the directory*!*!*!*!*!*!*!*!*!*!*!*!*!*!**!*!*!*!*!*!!*
 				
-				var gagueBottomLeftDownButton = new Button({
+				var gagueBottomLeftDownButton = new dijit.form.Button({
 					label: "Gauge Bottom Left: Down",
 					onClick: function(){ //sets current img source to a variable. checks variable against a set value. Changes picture accordingly
 						var currentImg = domAttr.get('gague_bottom_left', 'src');
 						if (currentImg == '4.png'){
-							domAttr.set('gague_bottom_left', {src: "3.png", width: "25px", height: '35px'});
+							domAttr.set('gague_bottom_left', {src: "images/statsValues/3.png", width: "25px", height: '35px'});
 						}
 						else if (currentImg == '3.png'){
-							domAttr.set('gague_bottom_left', {src: "2.png", width: "20px", height: '35px'});
+							domAttr.set('gague_bottom_left', {src: "images/statsValues/2.png", width: "20px", height: '35px'});
 						}
 						else if (currentImg == '2.png'){
-							domAttr.set('gague_bottom_left', {src: "1.png", width: "17px", height: '35px'});
+							domAttr.set('gague_bottom_left', {src: "images/statsValues/1.png", width: "17px", height: '35px'});
 						}
 					}
 				}, "gagueBottomLeftDownButton");
 				
-				*/
 				
-			});
+				
+			}
+			
+			);
 			
 		
 		</script>
