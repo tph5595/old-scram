@@ -121,7 +121,7 @@ class NetworkController(AMP):
     
     def pollPlant(self,id,mwh):
         print "Poll Plant Got update: %s %s"%(id,mwh)
-        return {}
+        return {'id':id,'mwh':mwh}
     PollPlant.responder(pollPlant)
         
 
@@ -150,19 +150,3 @@ class NetworkController(AMP):
                 return identifier
         raise ValueError("identifierByObject passed unknown model objects")
 
-
-#     def setDirectionOf(self, identifier, direction, x, y, z, orientation):
-#         """
-#         Set the direction of a local model object.
-# 
-#         @type identifier: L{int}
-#         @type direction: One of the L{game.direction} direction constants
-# 
-#         @see: L{SetDirectionOf}
-#         """
-#         player = self.objectByIdentifier(identifier)
-#         player.setDirection(direction)
-#         player.setPosition(Vector(x, y, z))
-#         player.orientation.y = orientation
-#         return {}
-#     SetDirectionOf.responder(setDirectionOf)

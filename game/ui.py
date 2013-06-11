@@ -15,6 +15,13 @@ from Queue import Queue, Empty
 
 from game.network import NetworkController
 
+#front end listeners
+from http.servers.websocket2 import EchoServerProtocol
+
+from autobahn.websocket import WebSocketServerFactory, \
+                               WebSocketServerProtocol, \
+                               listenWS
+
 class ConnectionNotificationWrapper(ProtocolWrapper):
     """
     A protocol wrapper which fires a Deferred when the connection is made.
@@ -41,23 +48,7 @@ class ConnectionNotificationFactory(WrappingFactory):
         WrappingFactory.__init__(self, realFactory)
         self.connectionNotification = Deferred()
 
-class Simple(resource.Resource):
-    """
-    This is a simple server that allows commands to be passed to the client
-    """
-    isLeaf = True
-    def __init__(self,parent):
-        self.parent = parent
-        self.children = {}
-        
-    def render_GET(self,request):
-        """
-        This server responds to a get request and put it on the UI Queue
-        """
-        print "Cmd: %s"%request.args['cmd']
-        self.parent.q.put(request.args['cmd'])
-        return ""
-            
+          
 class UI(object):
     """
     This is the user interface 
@@ -65,7 +56,8 @@ class UI(object):
 
     def __init__(self, reactor=reactor):
         self.reactor = reactor
-        self.q = Queue()
+        self.q = Queue() #not sure I need this
+        self.frontEndListeners={}
 
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
@@ -87,7 +79,7 @@ class UI(object):
             pass
             
     def _handleCommand(self,event):
-        #TODO: do something with the command
+        #TODO: do something with the command by call the protocol method
         print "Event: %s"%event      
     
     def stop(self):
@@ -103,15 +95,31 @@ class UI(object):
         return finishedDeferred
 
     def gotHandshake(self, environment):
+        print dir(environment)
         environment.start()
-        self.reactor.callLater(0,self.pipeServer)
+        self.reactor.callLater(0,self.setUpListeners)
         self.go()
-
-    def pipeServer(self):
-        print"server starting"
-        site = server.Site(Simple(self))
-        self.reactor.listenTCP(8099,site)
         
+    def echo(self,msg):
+        """
+        This is the socket hook
+        """
+        print "Echo in UI got MSG: %s"%msg  
+        return "Blargh"
+         
+    def setUpListeners(self):
+        echoFactory = WebSocketServerFactory("ws://localhost:8081",
+                                        debug=True,
+                                        debugCodePaths=True)
+    
+        echoFactory.protocol = EchoServerProtocol
+        echoFactory.setProtocolOptions(allowHixie76=True)
+        #HACK: add an array for observing messages
+        echoFactory.observers = []
+        echoFactory.observers.append(self.echo)
+        self.frontEndListeners['echo'] = echoFactory
+        listenWS(self.frontEndListeners['echo'])     
+           
     def start(self, (host, port)):
         """
         Let's Go!

@@ -39,7 +39,7 @@ class ScramServer(AMP):
     def pollPlant(self):
         self.update +=1       
         mwh = self.world.plant.poll()  
-        print "Poll Plant: %s"%(mwh)      
+        print "Poll Plant: %s"%(mwh)    
         self.callRemote(PollPlant,id=str(self.update),mwh=str(mwh))
         return{}
         
