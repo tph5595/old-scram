@@ -12,7 +12,7 @@
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojox/socket", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dojo/dom-attr", "dojo/fx", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/domReady!"], 
+			require(["dojox/socket", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], 
 			function(Socket, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
 				var echoSocket = new Socket("ws://127.0.0.1:10002/api");
 				var pingSocket = new Socket("ws://127.0.0.1:10001/api");
@@ -95,25 +95,29 @@
 				var rodDownButton = new domConstruct.create("div", {id: 'rodDownButton'}, "main"); //create the rod down button div
 				var rodUpButton = new domConstruct.create("div", {id: 'rodUpButton'}, "main"); //create the rod up button div	
 				
-				//construct gagueBottomLeft divs and gagueBottomLeftDown buttons
-				var gagueBottomLeftDownButton = new domConstruct.create("div", {id: 'gagueBottomLeftDownButton'}, "main");//create the gague bottom left Down button div
-				var gagueBottomLeftUpButton = new domConstruct.create("div", {id: 'gagueBottomLeftUpButton'}, "main");//create the gague bottom left up button div
-				var gague_bottom_left_div = new domConstruct.create("div", {id: 'gague_bottom_left_div'}, "main");
-				var gague_bottom_left = new domConstruct.create("img", {id: 'gague_bottom_left', src: '1.png', width: "17px", height: '35px'}, "gague_bottom_left_div");
+				//construct gaugeBottomLeft divs and gaugeBottomLeftDown buttons
+				var gaugeBottomLeftDownButton = new domConstruct.create("div", {id: 'gaugeBottomLeftDownButton'}, "main");//create the gauge bottom left Down button div
+				var gaugeBottomLeftUpButton = new domConstruct.create("div", {id: 'gaugeBottomLeftUpButton'}, "main");//create the gauge bottom left up button div
+				var gauge_bottom_left_div = new domConstruct.create("div", {id: 'gauge_bottom_left_div'}, "main");
+				var gauge_bottom_left = new domConstruct.create("img", {id: 'gauge_bottom_left', src: '4.png', width: "17px", height: '35px'}, "gauge_bottom_left_div");
 				
-				//gague middle bottom
-				var gague_middle_bottom = new domConstruct.create("div", {id: 'gague_middle_bottom'}, "main");
+				//gauge middle bottom
+				var gauge_middle_bottom = new domConstruct.create("div", {id: 'gauge_middle_bottom'}, "main");
 				
-				//gague top left
-				var gague_top_left = new domConstruct.create("div", {id: 'gague_top_left'}, "main");
+				//gauge top left
+				var gauge_top_left = new domConstruct.create("div", {id: 'gauge_top_left'}, "main");
 				
-				//gague middle top
-				var gague_middle_top = new domConstruct.create("div", {id: 'gague_middle_top'}, "main");
+				//gauge middle top
+				var gauge_middle_top = new domConstruct.create("div", {id: 'gauge_middle_top'}, "main");
 				
-				//gague top right
-				var gague_top_right = new domConstruct.create("div", {id: 'gague_top_right'}, "main");
+				//gauge top right
+				var gauge_top_right = new domConstruct.create("div", {id: 'gauge_top_right'}, "main");
 				
-				var gague1level = 2;
+				//stats bar
+				var stats_0 = new domConstruct.create("img", {id: 'stats_0', src: 'images/statsValues/0.png'}, 'main');
+				var stats_1 = new domConstruct.create('img', {id: 'stats_1', src: 'images/statsValues/1.png'}, 'main');
+				
+				var gauge1level = 2;
 				
 				
 				
@@ -131,20 +135,20 @@
 				//rods
 				
 
-				new domStyle.set("rods", {width: "70px", position: "fixed", left: "92px", top: "100px"}); //max 156 px min 100 px
+				new domStyle.set("rods", {width: "68px", position: "fixed", left: "92px", top: "100px"}); //max 156 px min 100 px
 				
-				new domStyle.set("gagueBottomLeftUpButton", {width: "100px"});
+				new domStyle.set("gauge_bottom_left_div", {backgroundColor: "yellow", position: "fixed", top: "450px", left: "236px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gague_bottom_left_div", {backgroundColor: "yellow", position: "fixed", top: "450px", left: "236px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_middle_bottom", {backgroundColor: "green", position: "fixed", top: "450px", left: "620px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gague_middle_bottom", {backgroundColor: "green", position: "fixed", top: "450px", left: "620px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_top_left", {backgroundColor: "blue", position: "fixed", top: "340px", left: "315px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gague_top_left", {backgroundColor: "blue", position: "fixed", top: "340px", left: "315px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_middle_top", {backgroundColor: "purple", position: "fixed", top: "340px", left: "628px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gague_middle_top", {backgroundColor: "purple", position: "fixed", top: "340px", left: "628px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_top_right", {backgroundColor: "red", position: "fixed", top: "340px", left: "710px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gague_top_right", {backgroundColor: "red", position: "fixed", top: "340px", left: "710px", width: "30px", height: "40px"});
-				
+				new domStyle.set('stats_0', {width: '30px', height: '40px', position: 'fixed', top: '500px', left: '970px'});
+				new domStyle.set('stats_1', {width: '15px', height: '40px', position: 'fixed', top: '500px', left: '940px'});
 				
 				//rods
 				/* the good one
@@ -322,29 +326,66 @@
 					}
 				}, "rodUpButton");
 			
-//!*!*!*!*!*!*!*!*!*!*!*!*!you need to change the directory*!*!*!*!*!*!*!*!*!*!*!*!*!*!**!*!*!*!*!*!!*
-				
-				var gagueBottomLeftDownButton = new dijit.form.Button({
+
+
+
+
+				imgNumber = 4;
+				var gaugeBottomLeftDownButton = new dijit.form.Button({
 					label: "Gauge Bottom Left: Down",
-					onClick: function(){ //sets current img source to a variable. checks variable against a set value. Changes picture accordingly
-						var currentImg = domAttr.get('gague_bottom_left', 'src');
-						if (currentImg == '4.png'){
-							domAttr.set('gague_bottom_left', {src: "images/statsValues/3.png", width: "25px", height: '35px'});
+					onClick: function(){
+						switch(imgNumber){
+							case 4:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								imgNumber -= 1;
+								break;
+							case 3:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								imgNumber -= 1;
+								break;
+							case 2:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								imgNumber -= 1;
+								break;
+							case 1:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								imgNumber -= 1;
+								break;
+							}	
+						
 						}
-						else if (currentImg == '3.png'){
-							domAttr.set('gague_bottom_left', {src: "images/statsValues/2.png", width: "20px", height: '35px'});
+					}, "gaugeBottomLeftDownButton");
+
+				imgNumber = 4;
+				var gaugeBottomLeftDownButton = new dijit.form.Button({
+					label: "Gauge Bottom Left: Down",
+					onClick: function(){
+						switch(imgNumber){
+							case 0:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								imgNumber += 1;
+								break;
+							case 1:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								imgNumber += 1;
+								break;
+							case 2:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								imgNumber += 1;
+								break;
+							case 3:
+								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								imgNumber += 1;
+								break;
+							}	
+						
 						}
-						else if (currentImg == '2.png'){
-							domAttr.set('gague_bottom_left', {src: "images/statsValues/1.png", width: "17px", height: '35px'});
-						}
-					}
-				}, "gagueBottomLeftDownButton");
+					}, "gaugeBottomLeftUpButton");
+
+
+
 				
-				
-				
-			}
-			
-			);
+			});
 			
 		
 		</script>
