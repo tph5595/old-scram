@@ -126,6 +126,7 @@ class NetworkController(AMP):
         j = {'identifier':updateid,'mwh':mwh}
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
+                
                 self.factory.frontEndListeners['poll'].connections[0].sendMessage(json.dumps(j))
         except KeyError:
             pass   
