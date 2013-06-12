@@ -40,7 +40,7 @@ class ScramServer(AMP):
         self.update +=1       
         mwh = self.world.plant.poll()  
         print "Poll Plant: %s"%(mwh)    
-        self.callRemote(PollPlant,id=str(self.update),mwh=str(mwh))
+        self.callRemote(PollPlant,updateid=str(self.update),mwh=str(mwh))
         return{}
         
     def sendExistingState(self):
@@ -49,7 +49,7 @@ class ScramServer(AMP):
         """
         #TODO: implement me!!
         print "Sending existing state"
-        #self.world.addObserver(self.pollPlant)
+        self.world.addObserver(self.pollPlant)
         pass
 
 

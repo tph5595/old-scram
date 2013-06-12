@@ -11,6 +11,8 @@ from twisted.protocols.amp import (
 from game.environment import Environment
 #from game.vector import Vector
 
+import json
+
 """
 rjweiss - define AMP protocol for the game here! The network controller (client) can be defined below. 
             The server code is located in scram/network.py. 
@@ -77,7 +79,7 @@ class PollPlant(Command):
     """
     Get the run time data from the plant
     """
-    arguments = [('id',String()),('mwh',String())] 
+    arguments = [('updateid',String()),('mwh',String())] 
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -119,9 +121,15 @@ class NetworkController(AMP):
         d.addCallback(cbHs)
         return d
     
-    def pollPlant(self,id,mwh):
-        print "Poll Plant Got update: %s %s"%(id,mwh)
-        return {'id':id,'mwh':mwh}
+    def pollPlant(self,updateid,mwh):
+        print "Poll Plant Got update: %s %s"%(updateid,mwh)
+        j = {'identifier':updateid,'mwh':mwh}
+        try:
+            if len(self.factory.frontEndListeners['poll'].connections) > 0:
+                self.factory.frontEndListeners['poll'].connections[0].sendMessage(json.dumps(j))
+        except KeyError:
+            pass   
+        return j
     PollPlant.responder(pollPlant)
         
 
