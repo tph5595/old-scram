@@ -127,14 +127,16 @@
 				var gauge_top_right_div = new domConstruct.create("div", {id: 'gauge_top_right_div'}, "main");
 				var gauge_top_right = new domConstruct.create('img', {id: 'gauge_top_right', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_right_div');
 				
+				
+				//megawatthours
+				var MWH = new domConstruct.create('div', {id: 'MWH'}, 'main');
+				
+				
 				//stats bar
-				var stats_0 = new domConstruct.create("img", {id: 'stats_0', src: 'images/statsValues/0.png'}, 'main');
-				var stats_1 = new domConstruct.create('img', {id: 'stats_1', src: 'images/statsValues/1.png'}, 'main');
+				var stats_0 = new domConstruct.create("img", {id: 'stats_0', src: 'images/statsValues/0.png'}, 'MWH');
+				var stats_1 = new domConstruct.create('img', {id: 'stats_1', src: 'images/statsValues/1.png'}, 'MWH');
 				
-				var gauge1level = 2;
-				
-				
-				
+
 				
 				
 				//main container tags
@@ -179,8 +181,11 @@
 				new domStyle.set('gaugeTopRightUpButton', {position: "fixed", top: "355px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set('stats_0', {width: '30px', height: '40px', position: 'fixed', top: '625px', left: '970px'});
-				new domStyle.set('stats_1', {width: '15px', height: '40px', position: 'fixed', top: '625px', left: '940px'});
+				new domStyle.set('MWH', {backgroundColor: 'green', width: '100px', height: '20px', position: 'fixed', top: '700px', left: '775px'});
+				
+				
+				new domStyle.set('stats_0', {width: '10px', height: '20px'});
+				new domStyle.set('stats_1', {width: '5px', height: '20px'});
 				
 				//rods
 				
@@ -190,167 +195,172 @@
 				var rodlevel = 0;
 				//you've got to fix this button. it needs switched into the pictures located to the left of the tank
 				
-				var rod_Down_Button = new dijit.form.Button({
+				var rod_Down_Button = {
 					backgroundImage: 'url(images/elements/upBtn.png)',
 					title: "Rod: Down",
 					onClick: function(){ //checks the rod level and slides it down to the appropriate place
-						if (rodlevel == 0){
-							dojo.fx.slideTo({
-								top: 108,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 1
-						}
-						else if (rodlevel == 1){
-							dojo.fx.slideTo({
-								top: 115,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 2
-						}
-						else if (rodlevel == 2){
-							dojo.fx.slideTo({
-								top: 120,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 3
-						}
-						else if (rodlevel == 3){
-							dojo.fx.slideTo({
-								top: 125,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 4
-						}
-						else if (rodlevel == 4){
-							dojo.fx.slideTo({
-								top: 132,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 5
-						}
-						else if (rodlevel == 5){
-							dojo.fx.slideTo({
-								top: 138,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 6
-						}
-						else if (rodlevel == 6){
-							dojo.fx.slideTo({
-								top: 143,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 7
-						}
-						else if (rodlevel == 7){
-							dojo.fx.slideTo({
-								top: 149,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 8
-						}
-						else if (rodlevel == 8){
-							dojo.fx.slideTo({
-								top: 156,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 9
+						switch(rodlevel){
+							case 0:
+								dojo.fx.slideTo({
+									top: 188,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 1;
+								break;
+							case 1:
+								dojo.fx.slideTo({
+									top: 194,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 2;
+								break;
+							case 2:
+								dojo.fx.slideTo({
+									top: 200,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 3;
+								break;
+							case 3:
+								dojo.fx.slideTo({
+									top: 206,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 4;
+								break;
+							case 4:
+								dojo.fx.slideTo({
+									top: 212,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 5;
+								break;
+							case 5:
+								dojo.fx.slideTo({
+									top: 218,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 6;
+								break;
+							case 6:
+								dojo.fx.slideTo({
+									top: 224,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 7;
+								break;
+							case 7:
+								dojo.fx.slideTo({
+									top: 228,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 8;
+								break;
+							case 8:
+								dojo.fx.slideTo({
+									top: 233,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 9;
+								break;
 						}
 					}
-				}, "rodDownButton");
-			
+				};
+				var rodDownButtonId = dojo.byId('rodDownButtonDiv');
+				var handleRodDown = on(rodDownButtonId, "click", rod_Down_Button.onClick);
 			
 			
 			
 				//Button : Rod : Up
-				var rodUpButton = new dijit.form.Button({
+				var rod_Up_Button = {
 					label: "Rod: Up",
 					onClick: function(){ //checks the rod level and slides it up to the appropriate place
-						if (rodlevel == 9){
-							dojo.fx.slideTo({
-								top: 149,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 8
-						}
-						else if (rodlevel == 8){
-							dojo.fx.slideTo({
-								top: 143,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 7
-						}
-						else if (rodlevel == 7){
-							dojo.fx.slideTo({
-								top: 138,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 6
-						}
-						else if (rodlevel == 6){
-							dojo.fx.slideTo({
-								top: 132,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 5
-						}
-						else if (rodlevel == 5){
-							dojo.fx.slideTo({
-								top: 125,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 4
-						}
-						else if (rodlevel == 4){
-							dojo.fx.slideTo({
-								top: 120,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 3
-						}
-						else if (rodlevel == 3){
-							dojo.fx.slideTo({
-								top: 115,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 2
-						}
-						else if (rodlevel == 2){
-							dojo.fx.slideTo({
-								top: 108,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 1
-						}
-						else if (rodlevel == 1){
-							dojo.fx.slideTo({
-								top: 100,
-								left: 92,
-								node: rods
-							}).play();
-							rodlevel = 0
+						switch(rodlevel){
+							case 9:
+								dojo.fx.slideTo({
+									top: 228,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 8;
+								break;
+							case 8:
+								dojo.fx.slideTo({
+									top: 224,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 7;
+								break;
+							case 7:
+								dojo.fx.slideTo({
+									top: 218,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 6;
+								break;
+							case 6:
+								dojo.fx.slideTo({
+									top: 212,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 5;
+								break;
+							case 5:
+								dojo.fx.slideTo({
+									top: 206,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 4;
+								break;
+							case 4:
+								dojo.fx.slideTo({
+									top: 200,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 3;
+							case 3:
+								dojo.fx.slideTo({
+									top: 194,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 2;
+								break;
+							case 2:
+								dojo.fx.slideTo({
+									top: 188,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 1;
+								break;
+							case 1:
+								dojo.fx.slideTo({
+									top: 182,
+									left: 94,
+									node: rods
+								}).play();
+								rodlevel = 0;
+								break;
 						}
 					}
-				}, "rodUpButton");
-			
+				};
+				var rodUpButtonId = dojo.byId('rodUpButtonDiv');
+				var handleRodUp = on(rodUpButtonId, "click", rod_Up_Button.onClick);
 /*
 				var testButton = new domConstruct.create("div", {id: 'test'}, 'body');
 				new domStyle.set('test', {height: '100px', width: '100px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundRepeat: 'no-repeat'});
