@@ -92,8 +92,8 @@
 				var rods = new domConstruct.create("img", {id: 'rods', src: 'images/elements/rods.png'}, "main"); //create the rods image
 
 				
-				var rodDownButton = new domConstruct.create("div", {id: 'rodDownButton'}, "main"); //create the rod down button div
-				var rodUpButton = new domConstruct.create("div", {id: 'rodUpButton'}, "main"); //create the rod up button div	
+				var rodDownButtonDiv = new domConstruct.create("div", {id: 'rodDownButtonDiv'}, "main"); //create the rod down button div
+				var rodUpButtonDiv = new domConstruct.create("div", {id: 'rodUpButtonDiv'}, "main"); //create the rod up button div	
 				
 				//construct gaugeBottomLeft divs and gaugeBottomLeftDown buttons
 				var gaugeBottomLeftDownButton = new domConstruct.create("div", {id: 'gaugeBottomLeftDownButton'}, "main");//create the gauge bottom left Down button div
@@ -142,42 +142,45 @@
 				
 				var mainStyle = new domStyle.set("main", {
 							backgroundImage: 'url(images/background.png)', 
-							width: '1000px', height: '601px', 
+							width: '1000px', height: '723px', 
 							backgroundRepeat: 'no-repeat', 
-							backgroundSize: '1000px 601px'});
+							backgroundSize: '1000px 723px'});
 				
 				//rods
 				
 
-				new domStyle.set("rods", {width: "68px", position: "fixed", left: "92px", top: "100px"}); //max 156 px min 100 px
-				
-				new domStyle.set("gauge_bottom_left_div", {position: "fixed", top: "453px", left: "235px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeBottomLeftDownButton', {position: "fixed", top: "453px", left: "150px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeBottomLeftUpButton', {position: "fixed", top: "453px", left: "300px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("rods", {width: "66px", height: '53px', position: "fixed", left: "94px", top: "182px"}); //max 233 px min 182 px
+				new domStyle.set('rodDownButtonDiv', {position: "fixed", top: "263px", left: "20px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('rodUpButtonDiv', {position: "fixed", top: "243px", left: "20px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set("gauge_middle_bottom_div", {position: "fixed", top: "453px", left: "624px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeMiddleBottomDownButton', {position: "fixed", top: "453px", left: "560px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeMiddleBottomUpButton', {position: "fixed", top: "453px", left: "675px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_bottom_left_div", {position: "fixed", top: "500px", left: "235px", width: "30px", height: "40px"});
+				new domStyle.set('gaugeBottomLeftDownButton', {position: "fixed", top: "575px", left: "185px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('gaugeBottomLeftUpButton', {position: "fixed", top: "555px", left: "185px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set("gauge_top_left_div", {position: "fixed", top: "340px", left: "317px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeTopLeftDownButton', {position: "fixed", top: "340px", left: "250px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeTopLeftUpButton', {position: "fixed", top: "340px", left: "350px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_middle_bottom_div", {position: "fixed", top: "500px", left: "624px", width: "30px", height: "40px"});
+				new domStyle.set('gaugeMiddleBottomDownButton', {position: "fixed", top: "575px", left: "670px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('gaugeMiddleBottomUpButton', {position: "fixed", top: "555px", left: "670px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set("gauge_middle_top_div", {position: "fixed", top: "340px", left: "629px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeMiddleTopDownButton', {position: "fixed", top: "365px", left: "550px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeMiddleTopUpButton', {position: "fixed", top: "335px", left: "550px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_top_left_div", {position: "fixed", top: "395px", left: "317px", width: "30px", height: "40px"});
+				new domStyle.set('gaugeTopLeftDownButton', {position: "fixed", top: "460px", left: "275px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('gaugeTopLeftUpButton', {position: "fixed", top: "440px", left: "275px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set("gauge_top_right_div", {position: "fixed", top: "340px", left: "711px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeTopRightDownButton', {position: "fixed", top: "365px", left: "780px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeTopRightUpButton', {position: "fixed", top: "335px", left: "780px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '40px 20px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_middle_top_div", {position: "fixed", top: "395px", left: "629px", width: "30px", height: "40px"});
+				new domStyle.set('gaugeMiddleTopDownButton', {position: "fixed", top: "375px", left: "580px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('gaugeMiddleTopUpButton', {position: "fixed", top: "355px", left: "580px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
-				new domStyle.set('stats_0', {width: '30px', height: '40px', position: 'fixed', top: '500px', left: '970px'});
-				new domStyle.set('stats_1', {width: '15px', height: '40px', position: 'fixed', top: '500px', left: '940px'});
+				new domStyle.set("gauge_top_right_div", {position: "fixed", top: "395px", left: "711px", width: "30px", height: "40px"});
+				new domStyle.set('gaugeTopRightDownButton', {position: "fixed", top: "375px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set('gaugeTopRightUpButton', {position: "fixed", top: "355px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+
+				
+				new domStyle.set('stats_0', {width: '30px', height: '40px', position: 'fixed', top: '625px', left: '970px'});
+				new domStyle.set('stats_1', {width: '15px', height: '40px', position: 'fixed', top: '625px', left: '940px'});
 				
 				//rods
 				
@@ -185,7 +188,7 @@
 				
 
 				var rodlevel = 0;
-				
+				//you've got to fix this button. it needs switched into the pictures located to the left of the tank
 				
 				var rod_Down_Button = new dijit.form.Button({
 					backgroundImage: 'url(images/elements/upBtn.png)',
