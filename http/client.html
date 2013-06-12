@@ -85,7 +85,7 @@
 				
 				*/
 				
-				var bodyDiv = new domConstruct.create("body", {id: 'body'}, "html");
+				var bodyDiv = new domConstruct.create("body", {id: 'body', class: 'claro'}, "html");
 				var mainDiv = new domConstruct.create("div", {id: "main"}, "body");//create main div that will hold the scramBackground image
 				
 				//construct rods divs and rod buttons
@@ -99,19 +99,33 @@
 				var gaugeBottomLeftDownButton = new domConstruct.create("div", {id: 'gaugeBottomLeftDownButton'}, "main");//create the gauge bottom left Down button div
 				var gaugeBottomLeftUpButton = new domConstruct.create("div", {id: 'gaugeBottomLeftUpButton'}, "main");//create the gauge bottom left up button div
 				var gauge_bottom_left_div = new domConstruct.create("div", {id: 'gauge_bottom_left_div'}, "main");
-				var gauge_bottom_left = new domConstruct.create("img", {id: 'gauge_bottom_left', src: '4.png', width: "17px", height: '35px'}, "gauge_bottom_left_div");
+				var gauge_bottom_left = new domConstruct.create("img", {id: 'gauge_bottom_left', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, "gauge_bottom_left_div");
 				
 				//gauge middle bottom
-				var gauge_middle_bottom = new domConstruct.create("div", {id: 'gauge_middle_bottom'}, "main");
+				var gaugeMiddleBottomDownButton = new domConstruct.create('div', {id: 'gaugeMiddleBottomDownButton'}, 'main');
+				var gaugeMiddleBottomUpButton = new domConstruct.create('div', {id: 'gaugeMiddleBottomUpButton'}, 'main');
+				var gauge_middle_bottom_div = new domConstruct.create("div", {id: 'gauge_middle_bottom_div'}, "main");
+				var gauge_middle_bottom = new domConstruct.create("img", {id: 'gauge_middle_bottom', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_middle_bottom_div')
+				
+				
 				
 				//gauge top left
-				var gauge_top_left = new domConstruct.create("div", {id: 'gauge_top_left'}, "main");
+				var gaugeTopLeftDownButton = new domConstruct.create('div', {id: 'gaugeTopLeftDownButton'}, 'main');
+				var gaugeTopLeftUpButton = new domConstruct.create('div', {id: 'gaugeTopLeftUpButton'}, 'main');
+				var gauge_top_left_div = new domConstruct.create("div", {id: 'gauge_top_left_div'}, "main");
+				var gauge_top_left = new domConstruct.create('img', {id: 'gauge_top_left', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_left_div');
 				
 				//gauge middle top
-				var gauge_middle_top = new domConstruct.create("div", {id: 'gauge_middle_top'}, "main");
+				var gaugeMiddleTopDownButton = new domConstruct.create('div', {id: 'gaugeMiddleTopDownButton'}, 'main');
+				var gaugeMiddleTopUpButton = new domConstruct.create('div', {id: 'gaugeMiddleTopUpButton'}, 'main');
+				var gauge_middle_top_div = new domConstruct.create("div", {id: 'gauge_middle_top_div'}, "main");
+				var gauge_middle_top = new domConstruct.create('img', {id: 'gauge_middle_top', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_middle_top_div');
 				
 				//gauge top right
-				var gauge_top_right = new domConstruct.create("div", {id: 'gauge_top_right'}, "main");
+				var gaugeTopRightDownButton = domConstruct.create('div', {id: 'gaugeTopRightDownButton'}, 'main');
+				var gaugeTopRightUpButton = domConstruct.create('div', {id: 'gaugeTopRightUpButton'}, 'main');
+				var gauge_top_right_div = new domConstruct.create("div", {id: 'gauge_top_right_div'}, "main");
+				var gauge_top_right = new domConstruct.create('img', {id: 'gauge_top_right', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_right_div');
 				
 				//stats bar
 				var stats_0 = new domConstruct.create("img", {id: 'stats_0', src: 'images/statsValues/0.png'}, 'main');
@@ -137,15 +151,17 @@
 
 				new domStyle.set("rods", {width: "68px", position: "fixed", left: "92px", top: "100px"}); //max 156 px min 100 px
 				
-				new domStyle.set("gauge_bottom_left_div", {backgroundColor: "yellow", position: "fixed", top: "450px", left: "236px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_bottom_left_div", {position: "fixed", top: "453px", left: "235px", width: "30px", height: "40px"});
+				new domStyle.set("gaugeBottomLeftDownButton", {position: "fixed", top: "453px", left: "215px"});
+				new domStyle.set("gaugeBottomLeftUpButton", {position: "fixed", top: "453px", left: "255px"});
 				
-				new domStyle.set("gauge_middle_bottom", {backgroundColor: "green", position: "fixed", top: "450px", left: "620px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_middle_bottom_div", {position: "fixed", top: "453px", left: "624px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gauge_top_left", {backgroundColor: "blue", position: "fixed", top: "340px", left: "315px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_top_left_div", {position: "fixed", top: "340px", left: "317px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gauge_middle_top", {backgroundColor: "purple", position: "fixed", top: "340px", left: "628px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_middle_top_div", {position: "fixed", top: "340px", left: "629px", width: "30px", height: "40px"});
 				
-				new domStyle.set("gauge_top_right", {backgroundColor: "red", position: "fixed", top: "340px", left: "710px", width: "30px", height: "40px"});
+				new domStyle.set("gauge_top_right_div", {position: "fixed", top: "340px", left: "711px", width: "30px", height: "40px"});
 				
 				new domStyle.set('stats_0', {width: '30px', height: '40px', position: 'fixed', top: '500px', left: '970px'});
 				new domStyle.set('stats_1', {width: '15px', height: '40px', position: 'fixed', top: '500px', left: '940px'});
@@ -330,52 +346,54 @@
 
 
 
-				imgNumber = 4;
+				gaugeBLCount = 0;
 				var gaugeBottomLeftDownButton = new dijit.form.Button({
 					label: "Gauge Bottom Left: Down",
+					showLabel: false,
 					onClick: function(){
-						switch(imgNumber){
+						switch(gaugeBLCount){
 							case 4:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
-								imgNumber -= 1;
+								gaugeBLCount -= 1;
 								break;
 							case 3:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
-								imgNumber -= 1;
+								gaugeBLCount -= 1;
 								break;
 							case 2:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
-								imgNumber -= 1;
+								gaugeBLCount -= 1;
 								break;
 							case 1:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
-								imgNumber -= 1;
+								gaugeBLCount -= 1;
 								break;
 							}	
 						
 						}
 					}, "gaugeBottomLeftDownButton");
 
-				imgNumber = 4;
-				var gaugeBottomLeftDownButton = new dijit.form.Button({
-					label: "Gauge Bottom Left: Down",
+				
+				var gaugeBottomLeftUpButton = new dijit.form.Button({
+					label: "Gauge Bottom Left: Up",
+					showLabel: false,
 					onClick: function(){
-						switch(imgNumber){
+						switch(gaugeBLCount){
 							case 0:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
-								imgNumber += 1;
+								gaugeBLCount += 1;
 								break;
 							case 1:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
-								imgNumber += 1;
+								gaugeBLCount += 1;
 								break;
 							case 2:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
-								imgNumber += 1;
+								gaugeBLCount += 1;
 								break;
 							case 3:
 								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
-								imgNumber += 1;
+								gaugeBLCount += 1;
 								break;
 							}	
 						
@@ -384,6 +402,226 @@
 
 
 
+
+				gaugeMBCount = 0;
+				var gaugeMiddleBottomDownButton = new dijit.form.Button({
+					label: "Gauge Middle Bottom: Down",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeMBCount){
+							case 4:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								gaugeMBCount -= 1;
+								break;
+							case 3:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeMBCount -= 1;
+								break;
+							case 2:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeMBCount -= 1;
+								break;
+							case 1:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								gaugeMBCount -= 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeMiddleBottomDownButton");
+
+
+				var gaugeMiddleBottomUpButton = new dijit.form.Button({
+					label: "Gauge Middle Bottom: Up",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeMBCount){
+							case 0:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeMBCount += 1;
+								break;
+							case 1:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeMBCount += 1;
+								break;
+							case 2:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								gaugeMBCount += 1;
+								break;
+							case 3:
+								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								gaugeMBCount += 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeMiddleBottomUpButton");
+
+
+				gaugeTLCount = 0;
+				var gaugeTopLeftDownButton = new dijit.form.Button({
+					label: "Gauge Top Left: Down",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeTLCount){
+							case 4:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								gaugeTLCount -= 1;
+								break;
+							case 3:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeTLCount -= 1;
+								break;
+							case 2:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeTLCount -= 1;
+								break;
+							case 1:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								gaugeTLCount -= 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeTopLeftDownButton");
+
+
+				var gaugeTopLeftUpButton = new dijit.form.Button({
+					label: "Gauge Top Left: Up",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeTLCount){
+							case 0:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeTLCount += 1;
+								break;
+							case 1:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeTLCount += 1;
+								break;
+							case 2:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								gaugeTLCount += 1;
+								break;
+							case 3:
+								domAttr.set('gauge_top_left', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								gaugeTLCount += 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeTopLeftUpButton");
+
+
+				gaugeMTCount = 0;
+				var gaugeMiddleTopDownButton = new dijit.form.Button({
+					label: "Gauge MiddleTop: Down",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeMTCount){
+							case 4:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								gaugeMTCount -= 1;
+								break;
+							case 3:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeMTCount -= 1;
+								break;
+							case 2:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeMTCount -= 1;
+								break;
+							case 1:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								gaugeMTCount -= 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeMiddleTopDownButton");
+
+
+				var gaugeMiddleTopUpButton = new dijit.form.Button({
+					label: "Gauge Middle Top: Up",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeMTCount){
+							case 0:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeMTCount += 1;
+								break;
+							case 1:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeMTCount += 1;
+								break;
+							case 2:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								gaugeMTCount += 1;
+								break;
+							case 3:
+								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								gaugeMTCount += 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeMiddleTopUpButton");
+
+
+
+				gaugeTRCount = 0;
+				var gaugeTopRightDownButton = new dijit.form.Button({
+					label: "Gauge Top Right: Down",
+					showLabel: false,
+					onClick: function(){
+						switch(gaugeTRCount){
+							case 4:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								gaugeTRCount -= 1;
+								break;
+							case 3:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeTRCount -= 1;
+								break;
+							case 2:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeTRCount -= 1;
+								break;
+							case 1:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								gaugeTRCount -= 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeTopRightDownButton");
+
+
+				var gaugeMiddleTopUpButton = new dijit.form.Button({
+					showLabel: false,
+					label: "Gauge Top Right: Up",
+					onClick: function(){
+						switch(gaugeTRCount){
+							case 0:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								gaugeTRCount += 1;
+								break;
+							case 1:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								gaugeTRCount += 1;
+								break;
+							case 2:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								gaugeTRCount += 1;
+								break;
+							case 3:
+								domAttr.set('gauge_top_right', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								gaugeTRCount += 1;
+								break;
+							}	
+						
+						}
+					}, "gaugeTopRightUpButton");
 				
 			});
 			
