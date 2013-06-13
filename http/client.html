@@ -20,8 +20,15 @@
 				this.onPollMsg = function(event){
 					//console.log("PollMsg:",event.data);
 					var obj = JSON.parse(event.data);
-					//console.log(obj)
-					MWH.innerHTML=obj.mwh;
+					console.log(obj)
+					MWH.innerHTML=Math.round(obj.mwh);
+					reactorTemp.innerHTML=Math.round(obj.reactortemp);
+					rcsColdLegTemp.innerHTML=Math.round(obj.rcscoldlegtemp);
+					rcsHotLegTemp.innerHTML=Math.round(obj.rcshotlegtemp);
+					simtime.innerHTML=Math.round(obj.simtime);
+					generalPowerOutput.innerHTML=Math.round(obj.genmw);
+					circulatingSystemColdLegTemp.innerHTML=Math.round(obj.cscoldlegtemp);
+					circulatingSystemHotLegTemp.innerHTML=Math.round(obj.cshotlegtemp);
 				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
 				//end new stuff
@@ -160,10 +167,6 @@
 				
 				
 				//rods
-				
-
-				
-
 				var rodlevel = 0;
 				//you've got to fix this button. it needs switched into the pictures located to the left of the tank
 				
