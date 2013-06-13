@@ -20,7 +20,7 @@
 				this.onPollMsg = function(event){
 					//console.log("PollMsg:",event.data);
 					var obj = JSON.parse(event.data);
-					
+					//console.log(obj)
 					MWH.innerHTML=obj.mwh;
 				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
@@ -70,20 +70,28 @@
 				var gauge_top_right = new domConstruct.create('img', {id: 'gauge_top_right', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_right_div');
 				
 				
-				//megawatthours
+				//stats bar
 				var MWH = new domConstruct.create('div', {id: 'MWH'}, 'main');
-				
-				//risk
+				var simtime = new domConstruct.create('div', {id: 'simtime'}, 'main');
+				var rcspressure = new domConstruct.create('div', {id: 'rcspressure'}, 'main');
+				var boilingtemp = new domConstruct.create('div', {id: 'boilingtemp'}, 'main');
+				var workers = new domConstruct.create('div', {id: 'workers'}, 'main');
 				var risk = new domConstruct.create('div', {id: 'risk'}, 'main');
 				
 				
+				//temperature 
+				var reactorTemp = new domConstruct.create('div', {id: 'reactorTemp'}, 'main');
+				var rcsColdLegTemp = new domConstruct.create('div', {id: 'rcsColdLegTemp'}, 'main');
+				var rcsHotLegTemp = new domConstruct.create('div', {id: 'rcsHotLegTemp'}, 'main');
+				var feedwaterColdLegTemp = new domConstruct.create('div', {id: 'feedwaterColdLegTemp'}, 'main');
+				var feedwaterHotLegTemp = new domConstruct.create('div', {id: 'feedwaterHotLegTemp'}, 'main');
+				var circulatingSystemColdLegTemp = new domConstruct.create('div', {id: 'circulatingSystemColdLegTemp'}, 'main');
+				var circulatingSystemHotLegTemp = new domConstruct.create('div', {id: 'circulatingSystemHotLegTemp'}, 'main');
+				
+				//power
+				var generalPowerOutput = new domConstruct.create('div', {id: 'generalPowerOutput'}, 'main');
 				
 				
-				//stats bar
-				var stats_0 = new domConstruct.create("img", {id: 'stats_0', src: 'images/statsValues/0.png'}, 'MWH');
-				var stats_1 = new domConstruct.create('img', {id: 'stats_1', src: 'images/statsValues/1.png'}, 'MWH');
-				
-
 				
 				
 				//main container tags
@@ -130,10 +138,26 @@
 				
 				//stats bar styles
 				new domStyle.set('MWH', {backgroundColor: 'green', width: '100px', height: '20px', position: 'fixed', top: '700px', left: '775px'});
-				new domStyle.set('risk', {backgroundColor: 'blue', width: '100px', height: '20px', position: 'fixed', top: '630px', left: '700px'});
+				new domStyle.set('simtime', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '655px', left: '490px'});
+				new domStyle.set('rcspressure', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '655px', left: '120px'});
+				new domStyle.set('boilingtemp', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '700px', left: '100px'});
+				new domStyle.set('workers', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '700px', left: '490px'});
+				new domStyle.set('risk', {backgroundColor: 'green', width: '50px', height: '40px', position: 'fixed', top: '625px', left: '950px'});
 				
-				new domStyle.set('stats_0', {width: '10px', height: '20px'});
-				new domStyle.set('stats_1', {width: '5px', height: '20px'});
+				//temperature 
+				new domStyle.set('reactorTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '300px', left: '75px'});
+				new domStyle.set('rcsColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '375px', left: '75px'});
+				new domStyle.set('rcsHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '250px'});
+				new domStyle.set('feedwaterColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '393px', left: '492px'});
+				new domStyle.set('feedwaterHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '500px'});
+				new domStyle.set('circulatingSystemColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '453px', left: '830px'});
+				new domStyle.set('circulatingSystemHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '250px', left: '715px'});
+				
+				//power
+				new domStyle.set('generalPowerOutput', {backgroundColor: 'red', width: '100px', height: '30px', position: 'fixed', top: '173px', left: '715px'});
+				
+				
+				
 				
 				//rods
 				
