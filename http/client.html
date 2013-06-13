@@ -12,80 +12,20 @@
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/on", "dojox/socket", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], 
-			function(on, Socket, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
-				var echoSocket = new Socket("ws://127.0.0.1:10002/api");
-				var pingSocket = new Socket("ws://127.0.0.1:10001/api");
-				var pollSocket = new Socket("ws://127.0.0.1:8081/api");
-				echoSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Echo Data", data);
-				});
-				echoSocket.on("open", function(event) {
-					echoSocket.send("hi server");
-				});
-				pingSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Ping Data", data);
-				});
-				pingSocket.on("open", function(event) {
-					pingSocket.send("ping");
-				});
-				var myButtonClick = function(){
-					//make some payload
-					var myJSON = {'foo':2,'bar':3}
-					//call my socket send func w/ payload
-					echoSocket.send(myJSON);
-
+			require(["dojo/on", "dojo/_base/lang", "scram/sockets", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], 
+			function(on, lang, Sockets, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
+				
+				//start new stuff
+				this.sockets = new Sockets();
+				this.onPollMsg = function(event){
+					//console.log("PollMsg:",event.data);
+					//alert("PollMsg:",event.data);
 				};
-			/*
-			 //Edited by Joe Pecsi...not sure if the below is correct or not
-				pollSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Poll Data", data);
-				});
-				pollSocket.on("open", function(event) {
-					echoSocket.send("Hey guys...polling");
-				});
-				signupSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Signup Data", data);
-				});
-				signupSocket.on("open", function(event) {
-					pingSocket.send("signup");
-				});
-				loginSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("User Data", data);
-				});
-				loginSocket.on("open", function(event) {
-					echoSocket.send("hi user");
-				});
-				rodSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Rod State", data);
-				});
-				rodSocket.on("open", function(event) {
-					pingSocket.send("rod change");
-				});
-				valveSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Valve State", data);
-				});
-				valveSocket.on("open", function(event) {
-					pingSocket.send("valve change");
-				});
-				gaugeSocket.on("message", function(event) {
-					var data = event.data;
-					console.log("Gauge State", data);
-				});
-				gaugeSocket.on("open", function(event) {
-					echoSocket.send("gauge change");
-				});
+				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
+				//end new stuff
 				
-				*/
 				
-				var bodyDiv = new domConstruct.create("body", {id: 'body', class: 'claro'}, "html");
+				var bodyDiv = new domConstruct.create("body", {id: 'body'}, "html");
 				var mainDiv = new domConstruct.create("div", {id: "main"}, "body");//create main div that will hold the scramBackground image
 				
 				//construct rods divs and rod buttons
@@ -130,6 +70,11 @@
 				
 				//megawatthours
 				var MWH = new domConstruct.create('div', {id: 'MWH'}, 'main');
+				
+				//risk
+				var risk = new domConstruct.create('div', {id: 'risk'}, 'main');
+				
+				
 				
 				
 				//stats bar
@@ -181,8 +126,9 @@
 				new domStyle.set('gaugeTopRightUpButton', {position: "fixed", top: "355px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
 
 				
+				//stats bar styles
 				new domStyle.set('MWH', {backgroundColor: 'green', width: '100px', height: '20px', position: 'fixed', top: '700px', left: '775px'});
-				
+				new domStyle.set('risk', {backgroundColor: 'blue', width: '100px', height: '20px', position: 'fixed', top: '630px', left: '700px'});
 				
 				new domStyle.set('stats_0', {width: '10px', height: '20px'});
 				new domStyle.set('stats_1', {width: '5px', height: '20px'});
@@ -196,8 +142,6 @@
 				//you've got to fix this button. it needs switched into the pictures located to the left of the tank
 				
 				var rod_Down_Button = {
-					backgroundImage: 'url(images/elements/upBtn.png)',
-					title: "Rod: Down",
 					onClick: function(){ //checks the rod level and slides it down to the appropriate place
 						switch(rodlevel){
 							case 0:
@@ -282,7 +226,6 @@
 			
 				//Button : Rod : Up
 				var rod_Up_Button = {
-					label: "Rod: Up",
 					onClick: function(){ //checks the rod level and slides it up to the appropriate place
 						switch(rodlevel){
 							case 9:
@@ -376,8 +319,6 @@
 
 				gaugeBLCount = 0;
 				var gaugeBLDButton = {
-					label: "Gauge Bottom Left: Down",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeBLCount){
 							case 4:
@@ -404,8 +345,6 @@
 					var handleBLD = on(gaugeBLDButtonId, "click", gaugeBLDButton.onClick);
 				
 				var gaugeBLUButton = {
-					label: "Gauge Bottom Left: Up",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeBLCount){
 							case 0:
@@ -436,8 +375,6 @@
 
 				gaugeMBCount = 0;
 				var gaugeMBDButton = {
-					label: "Gauge Middle Bottom: Down",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeMBCount){
 							case 3:
@@ -461,8 +398,6 @@
 
 
 				var gaugeMBUButton = {
-					label: "Gauge Middle Bottom: Up",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeMBCount){
 							case 0:
@@ -487,8 +422,6 @@
 
 				gaugeTLCount = 0;
 				var gaugeTLDButton = {
-					label: "Gauge Top Left: Down",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeTLCount){
 							case 4:
@@ -516,8 +449,6 @@
 
 
 				var gaugeTLUButton = {
-					label: "Gauge Top Left: Up",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeTLCount){
 							case 0:
@@ -546,8 +477,6 @@
 
 				gaugeMTCount = 0;
 				var gaugeMTDButton = {
-					label: "Gauge MiddleTop: Down",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeMTCount){
 							case 2:
@@ -567,8 +496,6 @@
 
 
 				var gaugeMTUButton = {
-					label: "Gauge Middle Top: Up",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeMTCount){
 							case 0:
@@ -590,8 +517,6 @@
 
 				gaugeTRCount = 0;
 				var gaugeTRDButton = {
-					label: "Gauge Top Right: Down",
-					showLabel: false,
 					onClick: function(){
 						switch(gaugeTRCount){
 							case 2:
@@ -611,8 +536,6 @@
 
 
 				var gaugeTRUButton = {
-					showLabel: false,
-					label: "Gauge Top Right: Up",
 					onClick: function(){
 						switch(gaugeTRCount){
 							case 0:
