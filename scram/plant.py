@@ -155,7 +155,18 @@ class Plant(object):
     
     def poll(self):
         #self.display()
-        return self.generatorMWH
+        #return self.generatorMWH
+        return {'mwh':self.generatorMWH,
+                'simtime':self.elapsedTime,
+                'reactortemp':self.reactorTemp,
+                'rcshotlegtemp':self.rcsHotLegTemp,
+                'rcscoldlegtemp':self.rcsColdLegTemp,
+                'afshotlegtemp':self.afsHotLegTemp,
+                'afscoldlegtemp':self.afsColdLegTemp,
+                'genmw':self.generatorMW,
+                'cshotlegtemp':self.csHotLegTemp,
+                'cscoldlegtemp':self.csColdLegTemp
+                }
     
     def display(self):
         print"*****************************" 

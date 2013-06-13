@@ -79,7 +79,17 @@ class PollPlant(Command):
     """
     Get the run time data from the plant
     """
-    arguments = [('updateid',String()),('mwh',String())] 
+    arguments = [('updateid',String()),
+                 ('mwh',String()),
+                ('simtime',String()),
+                ('reactortemp',String()),
+                ('rcshotlegtemp',String()),
+                ('rcscoldlegtemp',String()),
+                ('afshotlegtemp',String()),
+                ('afscoldlegtemp',String()),
+                ('genmw',String()),
+                ('cshotlegtemp',String()),
+                ('cscoldlegtemp',String())]
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -121,9 +131,29 @@ class NetworkController(AMP):
         d.addCallback(cbHs)
         return d
     
-    def pollPlant(self,updateid,mwh):
-        print "Poll Plant Got update: %s %s"%(updateid,mwh)
-        j = {'identifier':updateid,'mwh':mwh}
+    def pollPlant(self,updateid,
+                 mwh,
+                simtime,
+                reactortemp,
+                rcshotlegtemp,
+                rcscoldlegtemp,
+                afshotlegtemp,
+                afscoldlegtemp,
+                genmw,
+                cshotlegtemp,
+                cscoldlegtemp):
+        
+        j = {'mwh':mwh,
+                'simtime':simtime,
+                'reactortemp':reactortemp,
+                'rcshotlegtemp':rcshotlegtemp,
+                'rcscoldlegtemp':rcscoldlegtemp,
+                'afshotlegtemp':afshotlegtemp,
+                'afscoldlegtemp':afscoldlegtemp,
+                'genmw':genmw,
+                'cshotlegtemp':cshotlegtemp,
+                'cscoldlegtemp':cscoldlegtemp
+                }
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
                 

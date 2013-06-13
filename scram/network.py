@@ -38,9 +38,19 @@ class ScramServer(AMP):
     
     def pollPlant(self):
         self.update +=1       
-        mwh = self.world.plant.poll()  
-        print "Poll Plant: %s"%(mwh)    
-        self.callRemote(PollPlant,updateid=str(self.update),mwh=str(mwh))
+        poll = self.world.plant.poll()  
+        self.callRemote(PollPlant,updateid=str(self.update),
+                        mwh=str(poll['mwh']),
+                        simtime = str(poll['simtime']),
+                reactortemp = str(poll['reactortemp']),
+                rcshotlegtemp = str(poll['rcshotlegtemp']),
+                rcscoldlegtemp = str(poll['rcscoldlegtemp']),
+                afshotlegtemp = str(poll['afshotlegtemp']),
+                afscoldlegtemp = str(poll['afscoldlegtemp']),
+                genmw = str(poll['genmw']),
+                cshotlegtemp = str(poll['cshotlegtemp']),
+                cscoldlegtemp = str(poll['cscoldlegtemp'])
+                        )
         return{}
         
     def sendExistingState(self):
