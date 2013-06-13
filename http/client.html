@@ -87,13 +87,34 @@
 				
 				
 				//temperature 
-				var reactorTemp = new domConstruct.create('div', {id: 'reactorTemp'}, 'main');
-				var rcsColdLegTemp = new domConstruct.create('div', {id: 'rcsColdLegTemp'}, 'main');
-				var rcsHotLegTemp = new domConstruct.create('div', {id: 'rcsHotLegTemp'}, 'main');
-				var feedwaterColdLegTemp = new domConstruct.create('div', {id: 'feedwaterColdLegTemp'}, 'main');
-				var feedwaterHotLegTemp = new domConstruct.create('div', {id: 'feedwaterHotLegTemp'}, 'main');
-				var circulatingSystemColdLegTemp = new domConstruct.create('div', {id: 'circulatingSystemColdLegTemp'}, 'main');
-				var circulatingSystemHotLegTemp = new domConstruct.create('div', {id: 'circulatingSystemHotLegTemp'}, 'main');
+				var reactorTempContainer = new domConstruct.create('div', {id: 'reactorTempContainer'}, 'main');
+				var reactorTemp = new domConstruct.create('div', {id: 'reactorTemp'}, 'reactorTempContainer');
+				var reactorTempDegree = new domConstruct.create('div', {id: 'reactorTempDegree'}, 'reactorTempContainer');				
+				
+				var rcsColdLegTempContainer = new domConstruct.create('div', {id: 'rcsColdLegTempContainer'}, 'main');
+				var rcsColdLegTemp = new domConstruct.create('div', {id: 'rcsColdLegTemp'}, 'rcsColdLegTempContainer');
+				var rcsColdLegTempDegree = new domConstruct.create('div', {id: 'rcsColdLegTempDegree'}, 'rcsColdLegTempContainer');
+				
+				var rcsHotLegTempContainer = new domConstruct.create('div', {id: 'rcsHotLegTempContainer'}, 'main');
+				var rcsHotLegTemp = new domConstruct.create('div', {id: 'rcsHotLegTemp'}, 'rcsHotLegTempContainer');
+				var rcsHotLegTempDegree = new domConstruct.create('div', {id: 'rcsHotLegTempDegree'}, 'rcsHotLegTempContainer');
+				
+				var feedwaterColdLegTempContainer = new domConstruct.create('div', {id: 'feedwaterColdLegTempContainer'}, 'main');
+				var feedwaterColdLegTemp = new domConstruct.create('div', {id: 'feedwaterColdLegTemp'}, 'feedwaterColdLegTempContainer');
+				var feedwaterColdLegTempDegree = new domConstruct.create('div', {id: 'feedwaterColdLegTempDegree'}, 'feedwaterColdLegTempContainer');
+				
+				var feedwaterHotLegTempContainer = new domConstruct.create('div', {id: 'feedwaterHotLegTempContainer'}, 'main');
+				var feedwaterHotLegTemp = new domConstruct.create('div', {id: 'feedwaterHotLegTemp'}, 'feedwaterHotLegTempContainer');
+				var feedwaterHotLegTempDegree = new domConstruct.create('div', {id: 'feedwaterHotLegTempDegree'}, 'feedwaterHotLegTempContainer');
+				
+				var circulatingSystemColdLegTempContainer = new domConstruct.create('div', {id: 'circulatingSystemColdLegTempContainer'}, 'main');
+				var circulatingSystemColdLegTemp = new domConstruct.create('div', {id: 'circulatingSystemColdLegTemp'}, 'circulatingSystemColdLegTempContainer');
+				var circulatingSystemColdLegTempDegree = new domConstruct.create('div', {id: 'circulatingSystemColdLegTempDegree'}, 'circulatingSystemColdLegTempContainer');
+				
+				var circulatingSystemHotLegTempContainer = new domConstruct.create('div', {id: 'circulatingSystemHotLegTempContainer'}, 'main');
+				var circulatingSystemHotLegTemp = new domConstruct.create('div', {id: 'circulatingSystemHotLegTemp'}, 'circulatingSystemHotLegTempContainer');
+				var circulatingSystemHotLegTempDegree = new domConstruct.create('div', {id: 'circulatingSystemHotLegTempDegree'}, 'circulatingSystemHotLegTempContainer');
+				
 				
 				//power
 				var generalPowerOutput = new domConstruct.create('div', {id: 'generalPowerOutput'}, 'main');
@@ -152,13 +173,22 @@
 				new domStyle.set('risk', {backgroundColor: 'green', width: '50px', height: '40px', position: 'fixed', top: '625px', left: '950px'});
 				
 				//temperature 
-				new domStyle.set('reactorTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '300px', left: '75px'});
-				new domStyle.set('rcsColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '375px', left: '75px'});
-				new domStyle.set('rcsHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '250px'});
-				new domStyle.set('feedwaterColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '393px', left: '492px'});
-				new domStyle.set('feedwaterHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '500px'});
-				new domStyle.set('circulatingSystemColdLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '453px', left: '830px'});
-				new domStyle.set('circulatingSystemHotLegTemp', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '250px', left: '715px'});
+				
+				new domStyle.set('reactorTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '300px', left: '75px'});
+				new domStyle.set('rcsColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '375px', left: '75px'});
+				new domStyle.set('rcsHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '250px'});
+				new domStyle.set('feedwaterColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '393px', left: '492px'});
+				new domStyle.set('feedwaterHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '500px'});
+				new domStyle.set('circulatingSystemColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '453px', left: '830px'});
+				new domStyle.set('circulatingSystemHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '250px', left: '715px'});
+				
+				new domStyle.set('reactorTempDegree', {backgroundImage: 'url(images/degree.png)', backgroundSize: '10px 10px'});
+				new domStyle.set('rcsColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
+				new domStyle.set('rcsHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
+				new domStyle.set('feedwaterColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
+				new domStyle.set('feedwaterHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
+				new domStyle.set('circulatingSystemColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
+				new domStyle.set('circulatingSystemHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
 				
 				//power
 				new domStyle.set('generalPowerOutput', {backgroundColor: 'red', width: '100px', height: '30px', position: 'fixed', top: '173px', left: '715px'});
