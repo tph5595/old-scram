@@ -1,5 +1,5 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
-	return Declare("scram.socket", null, {
+	return Declare("scram.sockets", null, {
 		///
 		/// This is the class for standing up all the sockets and dealing with the comms.
 		///
@@ -13,9 +13,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 			console.log("Poll Socket Open");
 			this.pollSocket.send("test");
 		},
-		//dojo.connect(myScramSocket.onPollMsg, myFunc)
 		onPollMsg: function(event){
-			console.log("Poll Msg:",event.data)
 		} //stub
 	});
 });

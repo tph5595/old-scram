@@ -12,12 +12,15 @@
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/_base/lang","scram/socket","dojo/_base/connect"], function(lang,Socket,Connect) {
-				var scramSocket = new Socket();
-				var myFunc = function(event){
+			require(["dojo/_base/lang","scram/sockets"], function(lang,Sockets) {
+				this.sockets = new Sockets();
+				this.myFunc = function(event){
 					console.log("Poll Message:",event.data)
-				}
-				Connect.connect(scramSocket,"onPollMsg",this,'myFunc')
+				};
+				this.onPollMsg = function(event){
+					console.log("PollMsg:",event.data);
+				};
+				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
 			});
 
 		</script>
