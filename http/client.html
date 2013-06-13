@@ -29,6 +29,9 @@
 					generalPowerOutput.innerHTML=Math.round(obj.genmw);
 					circulatingSystemColdLegTemp.innerHTML=Math.round(obj.cscoldlegtemp);
 					circulatingSystemHotLegTemp.innerHTML=Math.round(obj.cshotlegtemp);
+					feedwaterColdLegTemp.innerHTML=Math.round(obj.afscoldlegtemp);
+					feedwaterHotLegTemp.innerHTML=Math.round(obj.afshotlegtemp);
+					
 				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
 				//end new stuff
