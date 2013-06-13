@@ -19,7 +19,9 @@
 				this.sockets = new Sockets();
 				this.onPollMsg = function(event){
 					//console.log("PollMsg:",event.data);
-					//alert("PollMsg:",event.data);
+					var obj = JSON.parse(event.data);
+					
+					MWH.innerHTML=obj.mwh;
 				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
 				//end new stuff
