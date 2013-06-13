@@ -40,6 +40,7 @@ The game client and server depend on several packages.
  * NumPy - numeric processing       <http://numpy.scipy.org/>
  * PyOpenGL - accelerated graphics  <http://pyopengl.sourceforge.net/>
  * Epsilon - useful utility package <http://launchpad.net/divmod.org/>
+ * autobahn - websocket package for twisted <https://github.com/tavendo/AutobahnPython>
 
 These libraries are packaged for many operating systems.  For example, on
 Debian/Ubuntu systems, you can install several of them with:
