@@ -1,0 +1,324 @@
+
+
+/*rods*/ 
+#rods{
+	width: "66px", 
+	height: '53px', 
+	position: "fixed", 
+	left: "94px", 
+	top: "182px"	
+},
+#rodDownButtonDiv{
+	position: "fixed", 
+	top: "263px", 
+	left: "20px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat	
+},
+#rodUpButtonDiv{
+	position: "fixed", 
+	top: "243px", 
+	left: "20px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+
+/*gauges*/ 
+#gauge_bottom_left_div{
+	position: "fixed", 
+	top: "500px", 
+	left: "235px", 
+	width: "30px", 
+	height: "40px"
+},
+#gaugeBottomLeftDownButton{
+	position: "fixed", 
+	top: "575px", 
+	left: "185px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gaugeBottomLeftUpButton{
+	position: "fixed", 
+	top: "555px", 
+	left: "185px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gauge_middle_bottom_div{
+	position: "fixed", 
+	top: "500px", 
+	left: "624px", 
+	width: "30px", 
+	height: "40px"
+},	
+#gaugeMiddleBottomDownButton{
+	position: "fixed", 
+	top: "575px", 
+	left: "670px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gaugeMiddleBottomUpButton{
+	position: "fixed", 
+	top: "555px", 
+	left: "670px", 
+	height: '20px',
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gauge_top_left_div{
+	position: "fixed", 
+	top: "395px", 
+	left: "317px", 
+	width: "30px", 
+	height: "40px"
+},
+#gaugeTopLeftDownButton{
+	position: "fixed", 
+	top: "460px", 
+	left: "275px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gaugeTopLeftUpButton{
+	position: "fixed", 
+	top: "440px", 
+	left: "275px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gauge_middle_top_div{
+	position: "fixed", 
+	top: "395px", 
+	left: "629px", 
+	width: "30px", 
+	height: "40px"
+},
+#gaugeMiddleTopDownButton{
+	position: "fixed", 
+	top: "375px", 
+	left: "580px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gaugeMiddleTopUpButton{
+	position: "fixed", 
+	top: "355px", 
+	left: "580px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: no-repeat
+},
+#gauge_top_right_div{
+	position: "fixed", 
+	top: "395px", 
+	left: "711px", 
+	width: "30px", 
+	height: "40px"
+},
+#gaugeTopRightDownButton{
+	position: "fixed", 
+	top: "375px", 
+	left: "755px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/downBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: 'no-repeat'
+},
+#gaugeTopRightUpButton{
+	position: "fixed", 
+	top: "355px", 
+	left: "755px", 
+	height: '20px', 
+	width: '40px', 
+	background-image: 'url(images/elements/upBtn.png)', 
+	background-size: '30px 15px', 
+	background-repeat: 'no-repeat'
+},
+
+/*stats bar*/
+#MWH{
+	background-color: 'green', 
+	width: '100px', 
+	height: '20px', 
+	position: 'fixed', 
+	top: '700px', 
+	left: '775px'
+},
+#simtime{
+	background-color: 'green',
+	width: '100px', 
+	height: '20px', 
+	position: 'fixed', 
+	top: '655px', 
+	left: '490px'
+},
+#rcspressure{
+	background-color: 'green',
+	width: '100px', 
+	height: '20px', 
+	position: 'fixed', 
+	top: '655px', 
+	left: '120px'
+},
+#boilingtemp{
+	background-color: 'green',
+	width: '100px', 
+	height: '20px', 
+	position: 'fixed', 
+	top: '700px', 
+	left: '100px'
+},
+#workers{
+	background-color: 'green',
+	width: '100px', 
+	height: '20px', 
+	position: 'fixed', 
+	top: '700px', 
+	left: '490px'
+},
+#risk{
+	background-color: 'green', 
+	width: '50px', 
+	height: '40px', 
+	position: 'fixed', 
+	top: '625px', 
+	left: '950px'
+},
+
+/*temperature*/ 
+#reactorTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '300px', 
+	left: '75px'
+},
+#rcsColdLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '375px', 
+	left: '75px'
+},
+#rcsHotLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '125px', 
+	left: '250px'
+},
+#feedwaterColdLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '393px', 
+	left: '492px'
+},
+#feedwaterHotLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '125px', 
+	left: '500px'
+},
+#circulatingSystemColdLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '453px', 
+	left: '830px'
+},
+#circulatingSystemHotLegTempContainer{
+	background-color: 'purple', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '250px', 
+	left: '715px'
+},
+				
+#reactorTempDegree{
+	background-image: 'url(images/degree.png)', 
+	background-size: '10px 10px'
+},
+#rcsColdLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+#rcsHotLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+#feedwaterColdLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+#feedwaterHotLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+#circulatingSystemColdLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+#circulatingSystemHotLegTempDegree{
+	background-image: 'url(images/degree.png)'
+},
+				
+/*power*/
+#generalPowerOutput{
+	background-color: 'red', 
+	width: '100px', 
+	height: '30px', 
+	position: 'fixed', 
+	top: '173px', 
+	left: '715px'
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
