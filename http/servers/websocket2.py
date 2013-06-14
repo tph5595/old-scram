@@ -19,12 +19,31 @@ from autobahn.websocket import WebSocketServerFactory, \
 class EchoServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
-        WebSocketServerProtocol.connectionMade(self)
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        WebSocketServerProtocol.connectionLost(self, reason)
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
+        self.sendMessage(msg)
+        
+class PollServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
         for f in self.factory.observers:
-            resp = f(msg)
-            self.sendMessage(resp)
+            f(self,msg)

@@ -16,7 +16,7 @@ from Queue import Queue, Empty
 from game.network import NetworkController
 
 #front end listeners
-from http.servers.websocket2 import EchoServerProtocol
+from http.servers.websocket2 import PollServerProtocol
 
 from autobahn.websocket import WebSocketServerFactory, \
                                WebSocketServerProtocol, \
@@ -61,10 +61,14 @@ class UI(object):
 
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
+        #HACK: provide the front end listeners to the client protocol
+        clientFactory.frontEndListeners = self.frontEndListeners
+        
         clientFactory.protocol = lambda: NetworkController(
             self.reactor)
         factory = ConnectionNotificationFactory(clientFactory)
-        self.reactor.connectTCP(host, port, factory)
+              
+        self.reactor.connectTCP(host, port,factory)
         return factory.connectionNotification
 
     def handshake(self, protocol):
@@ -95,30 +99,30 @@ class UI(object):
         return finishedDeferred
 
     def gotHandshake(self, environment):
-        print dir(environment)
         environment.start()
         self.reactor.callLater(0,self.setUpListeners)
         self.go()
         
-    def echo(self,msg):
+    def echo(self,protocol,msg):
         """
         This is the socket hook
         """
         print "Echo in UI got MSG: %s"%msg  
-        return "Blargh"
+        protocol.sendMessage("Blargh")
          
     def setUpListeners(self):
-        echoFactory = WebSocketServerFactory("ws://localhost:8081",
+        pollFactory = WebSocketServerFactory("ws://localhost:8081",
                                         debug=True,
                                         debugCodePaths=True)
     
-        echoFactory.protocol = EchoServerProtocol
-        echoFactory.setProtocolOptions(allowHixie76=True)
+        pollFactory.protocol = PollServerProtocol
+        pollFactory.setProtocolOptions(allowHixie76=True)
         #HACK: add an array for observing messages
-        echoFactory.observers = []
-        echoFactory.observers.append(self.echo)
-        self.frontEndListeners['echo'] = echoFactory
-        listenWS(self.frontEndListeners['echo'])     
+        pollFactory.observers = []
+        pollFactory.connections = []
+        pollFactory.observers.append(self.echo)
+        self.frontEndListeners['poll'] = pollFactory
+        listenWS(self.frontEndListeners['poll'])     
            
     def start(self, (host, port)):
         """

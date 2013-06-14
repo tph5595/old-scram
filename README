@@ -2,32 +2,33 @@ THE GAME
 ========
 
 This is a game.  It uses Twisted, pygame, and OpenGL.
+
+Based on the Gam3 located:
 http://bazaar.launchpad.net/~game-hackers/game/trunk/view/head:/game/player.py
-http://bazaar.launchpad.net/~game-hackers/game/trunk/view/head:/game/player.py
+
+SETUP
+-----------
+Clone the repo
+Run a web server locally to serve the Javascript and the HTML for the Web Client
+Config the web server to serve the files by using links or a HTTP config. This is based on the web server you are using 
+	and the platform.
 
 RUNNING
 -------
 
-To run the game server, issue the command:
+To run the game server, issue the command in the /SCRAM folder:
   twistd scram
 
-This will start twistd, the Twisted daemon, acting as a gam3 server.
-By default, it will run on TCP port 1337.  To load a terrain file, use
-the --terrain option:
-  twistd scram --terrain terrain/tiny.txt
+This will start twistd, the Twisted daemon, acting as a SCRAM server.
+By default, it will run on TCP port 1337.
 
-To run the game client:
-  ./bin/network-client localhost 1337
+To run the game client from the /SCRAM folder:
+  PYTHONPATH=./ python ./game/scripts/network_client.py
 
-The network-client script assumes that the game source path is part of
-Python's search path.  If you do not include the current directory in
-your Python path by default, you will need to add it when running the
-client.  For example, in a bash shell on Ubuntu:
-  PYTHONPATH=. ./bin/network-client localhost 1337
+Once the SCRAM client is running, it will listen for connections to the various services:
+	* port 8081 is the Poll Service
+	
 
-Once the client is running, click inside the Pygame window and wave
-the mouse up and down until you see terrain.  Use the W, A, S, D keys
-to move around.  Click again to release the mouse.
 
 
 DEPENDENCIES
@@ -39,6 +40,7 @@ The game client and server depend on several packages.
  * NumPy - numeric processing       <http://numpy.scipy.org/>
  * PyOpenGL - accelerated graphics  <http://pyopengl.sourceforge.net/>
  * Epsilon - useful utility package <http://launchpad.net/divmod.org/>
+ * autobahn - websocket package for twisted <https://github.com/tavendo/AutobahnPython>
 
 These libraries are packaged for many operating systems.  For example, on
 Debian/Ubuntu systems, you can install several of them with:
