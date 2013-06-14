@@ -47,20 +47,21 @@ class Plant(object):
         self.maxPumps = 4
         
         #reactor
-        self.rodLevel = 10 #Rods Step 1-10 10=max
+        self.energy = [0,36,144,324,576,900,1296,1600,2116,2700]
+        self.rodLevel = 9 #Rods Step 1-10 10=max
         self.rodConst = 200 #generic energy produced by the rods at level 1
         self.energyOutputRate = 1 #between 0-1
         self.reactorPumps = 1 #Reactor pump step 1-4 4=max
         #WAGing the TC rate based on http://www.nist.gov/data/PDFfiles/jpcrd493.pdf
-        self.rcsTcRate = 0.85 #thermal conductivity rate of water in RCS Loop; between 0-1
-        self.reactorTemp = 0 #5000 is max; 200 is scrammed
+        self.rcsTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
+        self.reactorTemp = 500 #5000 is max; 200 is scrammed
         self.reactorResidualTemp = 0 #this is what is left over after tc
         self.rcsHotLegTemp = 0
         self.rcsColdLegTemp = 0
         self.rcsPressure = 2200 #2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
          
         #steam generator
-        self.sgTcRate = 0.99 #thermal conductivity rate of water in RCS Loop; between 0-1
+        self.sgTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
         
         #Aux Feed Water System
         self.afsHotLegTemp = 0
@@ -81,7 +82,7 @@ class Plant(object):
         self.conPumps = 2 # 0-2 2=max
         
         #tower
-        self.towerTcRate = 0.99
+        self.towerTcRate = 0.8
         self.towerPumps = 2
         
         #HPI 
@@ -101,19 +102,23 @@ class Plant(object):
     def _energyProduction(self):
         #this is energy production of the reactor
         #TODO: not sure if we need to deal w/ prev core temp as a factor
-        self.reactorTemp = (self.rodConst*self.rodLevel)*self.energyOutputRate
-
+        #self.reactorTemp = (self.rodConst*self.rodLevel)*self.energyOutputRate
+        self.reactorTemp = self.energy[self.rodLevel]
         
     def _exchangeRate(self,tcRate,numPumps):
-        rate= (numPumps/self.maxPumps)*tcRate
-        #print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
+        rate = (numPumps/self.maxPumps)*tcRate
+        #rate= numPumps*tcRate
+        print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
         return rate
     
     def _xferEnergyToRcsLoop(self):
         rate = self._exchangeRate(self.rcsTcRate, self.reactorPumps)
-        newTemp = self.rcsColdLegTemp + self.reactorTemp + self.reactorResidualTemp
+        
+        #newTemp = self.rcsColdLegTemp + self.reactorTemp + self.reactorResidualTemp
+        newTemp = self.reactorTemp + self.reactorResidualTemp - (self.rcsColdLegTemp/2)
+        
         self.rcsHotLegTemp = (newTemp)*(rate)
-        self.reactorResidualTemp = self.reactorTemp - self.rcsHotLegTemp
+        self.reactorResidualTemp = self.reactorTemp - (self.reactorTemp*rate)
         
     def _xferEnergyToAfs(self):
         rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
@@ -167,6 +172,7 @@ class Plant(object):
                 'cshotlegtemp':self.csHotLegTemp,
                 'cscoldlegtemp':self.csColdLegTemp
                 }
+        
     def setRod(self,level):
         self.rodLevel = level
         
@@ -174,6 +180,7 @@ class Plant(object):
         print"*****************************" 
         print "Sim Time: %s"%(str(self.elapsedTime))
         print "RCS Reactor Temp: %s"%(str(self.reactorTemp))
+        print "RCS Reactor Residual Temp: %s"%(str(self.reactorResidualTemp))
         print "RCS Hot Leg Temp: %s"%(str(self.rcsHotLegTemp)) 
         print "RCS Cold Leg Temp: %s"%(str(self.rcsColdLegTemp))
         print "AFS Hot Leg Temp: %s"%(str(self.afsHotLegTemp))  
@@ -199,6 +206,7 @@ class Plant(object):
         self._xferSteamToCondenser()
         #then on to the tower
         self._xferToTower()
+        self.display()
 
         
     
