@@ -176,7 +176,12 @@ class Plant(object):
                 'rcspressure':self.rcsPressure,
                 'boilingtemp':self.boilingTemp,
                 'workers':self.workers,
-                'risk':self.risk
+                'risk':self.risk,
+                'rcs':self.reactorPumps,
+                'hpiTank':self.hpiPump,
+                'auxTank':self.afsPumps,
+                'feedwater':self.conPumps,
+                'cs':self.towerPumps
                 }
         
     def setRod(self,level):

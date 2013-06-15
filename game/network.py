@@ -49,7 +49,7 @@ class SetPump(Command):
                 ('hpiTank',Integer()),
                 ('auxTank',Integer()),
                 ('feedwater',Integer()),
-                ('cs',Integer()),
+                ('cs',Integer())
                 ]
     
 class SetRod(Command):
@@ -111,7 +111,12 @@ class PollPlant(Command):
                 ('rcspressure',String()),
                 ('boilingtemp',String()),
                 ('workers',String()),
-                ('risk',String())]
+                ('risk',String()),
+                ('rcs',Integer()),
+                ('hpiTank',Integer()),
+                ('auxTank',Integer()),
+                ('feedwater',Integer()),
+                ('cs',Integer())]
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -187,7 +192,12 @@ class NetworkController(AMP):
                 rcspressure,
                 boilingtemp,
                 workers,
-                risk):
+                risk,
+                rcs,
+                hpiTank,
+                auxTank,
+                feedwater,
+                cs):
         
         j = {'mwh':mwh,
                 'simtime':simtime,
@@ -202,7 +212,12 @@ class NetworkController(AMP):
                 'rcspressure':rcspressure,
                 'boilingtemp':boilingtemp,
                 'workers':workers,
-                'risk':risk
+                'risk':risk,
+                'rcs':rcs,
+                'hpiTank':hpiTank,
+                'auxTank':auxTank,
+                'feedwater':feedwater,
+                'cs':cs
                 }
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
