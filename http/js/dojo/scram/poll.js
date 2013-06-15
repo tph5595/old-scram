@@ -47,9 +47,30 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 				id: 'rcsColdLegTemp',
 				'class' : 'rcscoldlegtemp temperatureelements'
 			}, this.parent);
-			this.inherited(arguments);
-			this.reactorTemp.innerHTML="12345";
-			this.rcsColdLegTemp.innerHTML="12345";
+			this.rcsHotLegTemp = new domConstruct.create('div', {
+				id: 'rcsHotLegTemp',
+				'class' : 'rcshotlegtemp temperatureelements'
+			}, this.parent);
+			this.circulatingSystemColdLegTemp = new domConstruct.create('div', {
+				id: 'circulatingSystemColdLegTemp',
+				'class' : 'circulatingsystemcoldlegtemp temperatureelements'
+			}, this.parent);
+			this.circulatingSystemHotLegTemp = new domConstruct.create('div', {
+				id: 'circulatingSystemHotLegTemp',
+				'class' : 'circulatingsystemhotlegtemp temperatureelements'
+			}, this.parent);
+			this.feedwaterColdLegTemp = new domConstruct.create('div', {
+				id: 'feedwaterColdLegTemp',
+				'class' : 'feedwatercoldlegtemp temperatureelements'
+			}, this.parent);
+			this.feedwaterHotLegTemp = new domConstruct.create('div', {
+				id: 'feedwaterHotLegTemp',
+				'class' : 'feedwaterhotlegtemp temperatureelements'
+			}, this.parent);
+			this.generalPowerOutput = new domConstruct.create('div', {
+				id: 'generalPowerOutput',
+				'class' : 'generalpoweroutput temperatureelements'
+			}, this.parent);
 		},
 		
 		pollMsg : function() {
@@ -57,15 +78,15 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			try {
 				var obj = JSON.parse(event.data);
 				this.mwh.innerHTML = Math.round(obj.mwh);
-				reactorTemp.innerHTML = Math.round(obj.reactortemp);
-				rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
-				rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
-				simtime.innerHTML = Math.round(obj.simtime);
-				generalPowerOutput.innerHTML = Math.round(obj.genmw);
-				circulatingSystemColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
-				circulatingSystemHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);
-				feedwaterColdLegTemp.innerHTML = Math.round(obj.afscoldlegtemp);
-				feedwaterHotLegTemp.innerHTML = Math.round(obj.afshotlegtemp);
+				this.reactorTemp.innerHTML = Math.round(obj.reactortemp);
+				this.rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
+				this.rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
+				this.simtime.innerHTML = Math.round(obj.simtime);
+				this.generalPowerOutput.innerHTML = Math.round(obj.genmw);
+				this.circulatingSystemColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
+				this.circulatingSystemHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);
+				this.feedwaterColdLegTemp.innerHTML = Math.round(obj.afscoldlegtemp);
+				this.feedwaterHotLegTemp.innerHTML = Math.round(obj.afshotlegtemp);
 				this.rcspressure.innerHTML=Math.round(obj.rcspressure);
 				this.boilingtemp.innerHTML=Math.round(obj.boilingtemp);
 				this.workers.innerHTML=Math.round(obj.workers);
