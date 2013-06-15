@@ -1,21 +1,18 @@
-/*rods*/
-.ui{
-	background-image : url(../images/background.png);
-	width : 1000px;
-	height : 723px;
-	background-repeat : no-repeat;
-	background-size : 1000px 723px;
+.ui {
+	background-image: url(../images/background.png);
+	width: 1000px;
+	height: 723px;
+	background-repeat: no-repeat;
+	background-size: 1000px 723px;
 }
-.z0{
+.z0 {
 	z-index: 0;
 }
-.z1{
+.z1 {
 	z-index: 1;
 }
-.rods {
-	left: 94px;
-	top: 182px;
-	background-image: url(images/elements/rods.png);
+.z2 {
+	z-index: 2;
 }
 .downbutton {
 	height: 20px;
@@ -24,201 +21,165 @@
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
 }
-.rodDownButton {
+.upbutton {
+	height: 20px;
+	width: 40px;
+	background-image: url(images/elements/upBtn.png);
+	background-size: 30px 15px;
+	background-repeat: no-repeat;
+}
+.statsbarelements {
+	background-color: green;
+	width: 100px;
+	height: 20px;
+}
+.temperatureelements { /*not including any temps on the stats bar*/
+	background-color: purple;
+	width: 100px;
+	height: 30px;
+}
+.degree {
+	background-image: url(images/degree.png);
+	background-size: 10px 10px;
+}
+
+/*power*/
+.generalpoweroutput {
+	background-color: red;
+	width: 100px;
+	height: 30px;
+	position: fixed;
+	top: 173px;
+	left: 715px
+}
+
+/*rods*/
+.rods {
+	left: 94px;
+	top: 182px;
+	background-image: url(images/elements/rods.png);
+	background-size: 66px 53px;
+}
+}
+.roddownbutton {
 	position: fixed;
 	top: 263px;
 	left: 20px;
 }
-#rodUpButtonDiv {
+.rodUpButton {
 	position: fixed;
 	top: 243px;
 	left: 20px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
 
 /*gauges*/
-#gauge_bottom_left_div {
+.gaugedivsize {
+	width: 30px;
+	height: 40px;
+}
+.gaugebottomleft {
 	position: fixed;
 	top: 500px;
 	left: 235px;
-	width: 30px;
-	height: 40px;
 }
-#gaugeBottomLeftDownButton {
+.gaugebottomleftdownbutton {
 	position: fixed;
 	top: 575px;
 	left: 185px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/downBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gaugeBottomLeftUpButton {
+.gaugebottomleftupbutton {
 	position: fixed;
 	top: 555px;
 	left: 185px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gauge_middle_bottom_div {
+.gaugemiddlebottomdiv {
 	position: fixed;
 	top: 500px;
 	left: 624px;
-	width: 30px;
-	height: 40px;
 }
-#gaugeMiddleBottomDownButton {
+.gaugemiddlebottomdownbutton {
 	position: fixed;
 	top: 575px;
 	left: 670px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/downBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gaugeMiddleBottomUpButton {
+.gaugemiddlebottomupbutton {
 	position: fixed;
 	top: 555px;
 	left: 670px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gauge_top_left_div {
+.gaugetopleftdiv {
 	position: fixed;
 	top: 395px;
 	left: 317px;
-	width: 30px;
-	height: 40px;
 }
-#gaugeTopLeftDownButton {
+.gaugetopleftdownbutton {
 	position: fixed;
 	top: 460px;
 	left: 275px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/downBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gaugeTopLeftUpButton {
+.gaugetopleftupbutton {
 	position: fixed;
 	top: 440px;
 	left: 275px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gauge_middle_top_div {
+.gaugemiddletopdiv {
 	position: fixed;
 	top: 395px;
 	left: 629px;
-	width: 30px;
-	height: 40px;
 }
-#gaugeMiddleTopDownButton {
+.gaugemiddletopdownbutton {
 	position: fixed;
 	top: 375px;
 	left: 580px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/downBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gaugeMiddleTopUpButton {
+.gaugemiddletopupbutton {
 	position: fixed;
 	top: 355px;
 	left: 580px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gauge_top_right_div {
+.gaugetoprightdiv {
 	position: fixed;
 	top: 395px;
 	left: 711px;
-	width: 30px;
-	height: 40px;
 }
-#gaugeTopRightDownButton {
+.gaugetoprightdownbutton {
 	position: fixed;
 	top: 375px;
 	left: 755px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/downBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
-#gaugeTopRightUpButton {
+.gaugetoprightupbutton {
 	position: fixed;
 	top: 355px;
 	left: 755px;
-	height: 20px;
-	width: 40px;
-	background-image: url(images/elements/upBtn.png);
-	background-size: 30px 15px;
-	background-repeat: no-repeat;
 }
 
 /*stats bar*/
-#MWH {
-	background-color: green;
-	width: 100px;
-	height: 20px;
+.mwh {
 	position: fixed;
 	top: 700px;
 	left: 775px;
 }
-#simtime {
-	background-color: green;
-	width: 100px;
-	height: 20px;
+.simtime {
 	position: fixed;
 	top: 655px;
 	left: 490px;
 }
-#rcspressure {
-	background-color: green;
-	width: 100px;
-	height: 20px;
+.rcspressure {
 	position: fixed;
 	top: 655px;
 	left: 120px;
 }
-#boilingtemp {
-	background-color: green;
-	width: 100px;
-	height: 20px;
+.boilingtemp {
 	position: fixed;
 	top: 700px;
 	left: 100px;
 }
-#workers {
-	background-color: green;
-	width: 100px;
-	height: 20px;
+.workers {
 	position: fixed;
 	top: 700px;
 	left: 490px;
 }
-#risk {
+.risk {/*This one has different properties than the rest*/
 	background-color: green;
 	width: 50px;
 	height: 40px;
@@ -228,93 +189,39 @@
 }
 
 /*temperature*/
-#reactorTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+.reactortemp {
 	position: fixed;
 	top: 300px;
 	left: 75px;
 }
-#rcsColdLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+.rcscoldlegtemp {
 	position: fixed;
 	top: 375px;
 	left: 75px;
 }
-#rcsHotLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+.rcshotlegtemp {
 	position: fixed;
 	top: 125px;
 	left: 250px;
 }
-#feedwaterColdLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+.feedwatercoldLegtemp {
 	position: fixed;
 	top: 393px;
 	left: 492px;
 }
-#feedwaterHotLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+#feedwaterhotlegtemp {
 	position: fixed;
 	top: 125px;
 	left: 500px;
 }
-#circulatingSystemColdLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+#circulatingsystemcoldlegtemp {
 	position: fixed;
 	top: 453px;
 	left: 830px;
 }
-#circulatingSystemHotLegTempContainer {
-	background-color: purple;
-	width: 100px;
-	height: 30px;
+#circulatingsystemhotlegtemp {
 	position: fixed;
 	top: 250px;
 	left: 715px;
-}
-
-#reactorTempDegree {
-	background-image: url(images/degree.png);
-	background-size: 10px 10px
-}
-#rcsColdLegTempDegree {
-	background-image: url(images/degree.png);
-}
-#rcsHotLegTempDegree {
-	background-image: url(images/degree.png);
-}
-#feedwaterColdLegTempDegree {
-	background-image: url(images/degree.png);
-}
-#feedwaterHotLegTempDegree {
-	background-image: url(images/degree.png);
-}
-#circulatingSystemColdLegTempDegree {
-	background-image: url(images/degree.png);
-}
-#circulatingSystemHotLegTempDegree {
-	background-image: url(images/degree.png);
-}
-
-/*power*/
-#generalPowerOutput {
-	background-color: red;
-	width: 100px;
-	height: 30px;
-	position: fixed;
-	top: 173px;
-	left: 715px
 }
 
