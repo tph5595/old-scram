@@ -1,30 +1,31 @@
-.ui {
-	background-image: url(../images/background.png);
-	width: 1000px;
-	height: 723px;
-	background-repeat: no-repeat;
-	background-size: 1000px 723px;
+
+.ui{
+	background-image : url(../images/background.png);
+	width : 1000px;
+	height : 723px;
+	background-repeat : no-repeat;
+	background-size : 1000px 723px;
 }
-.z0 {
+.z0{
 	z-index: 0;
 }
-.z1 {
+.z1{
 	z-index: 1;
 }
-.z2 {
+.z2{
 	z-index: 2;
 }
 .downbutton {
 	height: 20px;
 	width: 40px;
-	background-image: url(images/elements/downBtn.png);
+	background-image: url(../images/elements/downBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
 }
 .upbutton {
 	height: 20px;
 	width: 40px;
-	background-image: url(images/elements/upBtn.png);
+	background-image: url(../images/elements/upBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
 }
@@ -33,14 +34,14 @@
 	width: 100px;
 	height: 20px;
 }
-.temperatureelements { /*not including any temps on the stats bar*/
+.temperatureelements {/*not including stats bar temperatures*/
 	background-color: purple;
 	width: 100px;
 	height: 30px;
 }
-.degree {
+.degreeelement {
 	background-image: url(images/degree.png);
-	background-size: 10px 10px;
+	background-size: 10px 10px
 }
 
 /*power*/
@@ -48,180 +49,183 @@
 	background-color: red;
 	width: 100px;
 	height: 30px;
-	position: fixed;
+	position: relative;
 	top: 173px;
 	left: 715px
 }
 
 /*rods*/
 .rods {
+	position: relative;
 	left: 94px;
 	top: 182px;
-	background-image: url(images/elements/rods.png);
+	background-image: url(../images/elements/rods.png);
 	background-size: 66px 53px;
+	background-repeat: no-repeat;
 }
-}
-.roddownbutton {
-	position: fixed;
+
+.roddown {
+	position: relative;
 	top: 263px;
 	left: 20px;
 }
-.rodUpButton {
-	position: fixed;
+.rodup {
+	position: relative;
 	top: 243px;
 	left: 20px;
 }
 
 /*gauges*/
-.gaugedivsize {
+.gaugesize {
 	width: 30px;
 	height: 40px;
 }
-.gaugebottomleft {
-	position: fixed;
+.gaugebottomleft{
+	position: relative;
 	top: 500px;
 	left: 235px;
 }
-.gaugebottomleftdownbutton {
-	position: fixed;
+.gaugebottomleftdown {
+	position: relative;
 	top: 575px;
 	left: 185px;
 }
-.gaugebottomleftupbutton {
-	position: fixed;
+.gaugebottomleftup {
+	position: relative;
 	top: 555px;
 	left: 185px;
 }
-.gaugemiddlebottomdiv {
-	position: fixed;
+.gaugemiddlebottom {
+	position: relative;
 	top: 500px;
 	left: 624px;
 }
-.gaugemiddlebottomdownbutton {
-	position: fixed;
+.gaugemiddlebottomdown {
+	position: relative;
 	top: 575px;
 	left: 670px;
 }
-.gaugemiddlebottomupbutton {
-	position: fixed;
+.gaugemiddlebottomup {
+	position: relative;
 	top: 555px;
 	left: 670px;
 }
-.gaugetopleftdiv {
-	position: fixed;
+.gaugetopleft {
+	position: relative;
 	top: 395px;
 	left: 317px;
 }
-.gaugetopleftdownbutton {
-	position: fixed;
+.gaugetopleftdown {
+	position: relative;
 	top: 460px;
 	left: 275px;
 }
-.gaugetopleftupbutton {
-	position: fixed;
+.gaugetopleftup {
+	position: relative;
 	top: 440px;
 	left: 275px;
 }
-.gaugemiddletopdiv {
-	position: fixed;
+.gaugemiddletop {
+	position: relative;
 	top: 395px;
 	left: 629px;
 }
-.gaugemiddletopdownbutton {
-	position: fixed;
+.gaugemiddletopdown {
+	position: relative;
 	top: 375px;
 	left: 580px;
 }
-.gaugemiddletopupbutton {
-	position: fixed;
+.gaugemiddletopup {
+	position: relative;
 	top: 355px;
 	left: 580px;
 }
-.gaugetoprightdiv {
-	position: fixed;
+.gaugetopright {
+	position: relative;
 	top: 395px;
 	left: 711px;
 }
-.gaugetoprightdownbutton {
-	position: fixed;
+.gaugetoprightdown {
+	position: relative;
 	top: 375px;
 	left: 755px;
 }
-.gaugetoprightupbutton {
-	position: fixed;
+.gaugetoprightup {
+	position: relative;
 	top: 355px;
 	left: 755px;
 }
 
 /*stats bar*/
+
 .mwh {
-	position: fixed;
+	position: relative;
 	top: 700px;
 	left: 775px;
 }
 .simtime {
-	position: fixed;
+	position: relative;
 	top: 655px;
 	left: 490px;
 }
 .rcspressure {
-	position: fixed;
+	position: relative;
 	top: 655px;
 	left: 120px;
 }
 .boilingtemp {
-	position: fixed;
+	position: relative;
 	top: 700px;
 	left: 100px;
 }
 .workers {
-	position: fixed;
+	position: relative;
 	top: 700px;
 	left: 490px;
 }
-.risk {/*This one has different properties than the rest*/
+.risk {/*different properties than the rest of the stats bar*/
 	background-color: green;
 	width: 50px;
 	height: 40px;
-	position: fixed;
+	position: relative;
 	top: 625px;
 	left: 950px;
 }
 
 /*temperature*/
+
 .reactortemp {
-	position: fixed;
+	position: relative;
 	top: 300px;
 	left: 75px;
 }
 .rcscoldlegtemp {
-	position: fixed;
+	position: relative;
 	top: 375px;
 	left: 75px;
 }
 .rcshotlegtemp {
-	position: fixed;
+	position: relative;
 	top: 125px;
 	left: 250px;
 }
-.feedwatercoldLegtemp {
-	position: fixed;
+.feedwatercoldlegtemp {
+	position: relative;
 	top: 393px;
 	left: 492px;
 }
-#feedwaterhotlegtemp {
-	position: fixed;
+.feedwaterhotlegtemp {
+	position: relative;
 	top: 125px;
 	left: 500px;
 }
-#circulatingsystemcoldlegtemp {
-	position: fixed;
+.circulatingsystemcoldlegtemp {
+	position: relative;
 	top: 453px;
 	left: 830px;
 }
-#circulatingsystemhotlegtemp {
-	position: fixed;
+.circulatingsystemhotlegtemp {
+	position: relative;
 	top: 250px;
 	left: 715px;
 }
-
