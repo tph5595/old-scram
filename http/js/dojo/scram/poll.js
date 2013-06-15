@@ -16,7 +16,6 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 				id : 'mwh',
 				'class' : 'mwh statsbarelements'
 			}, this.parent);
-
 			this.simtime = new domConstruct.create('div', {
 				id : 'simtime',
 				'class' : "simtime statsbarelements"
@@ -40,8 +39,19 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.generalPowerOutput = new domConstruct.create('div', {
 				id : 'generalPowerOutput'
 			}, this.parent);
+			this.reactorTemp = new domConstruct.create('div', {
+				id: 'reactorTemp',
+				'class' : 'reactortemp temperatureelements'
+			}, this.parent);
+			this.rcsColdLegTemp = new domConstruct.create('div', {
+				id: 'rcsColdLegTemp',
+				'class' : 'rcscoldlegtemp temperatureelements'
+			}, this.parent);
 			this.inherited(arguments);
+			this.reactorTemp.innerHTML="12345";
+			this.rcsColdLegTemp.innerHTML="12345";
 		},
+		
 		pollMsg : function() {
 
 			try {

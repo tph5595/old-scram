@@ -66,6 +66,11 @@
 	background-color: purple;
 	width: 100px;
 	height: 30px;
+	line-height: 30px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 30px;
+	color: yellow;
 }
 .degreeelement {
 	background-image: url(images/degree.png);
@@ -251,12 +256,13 @@
 
 .reactortemp {
 	position: relative;
-	top: 300px;
+	top: -450px;
 	left: 75px;
+	color: yellow;
 }
 .rcscoldlegtemp {
 	position: relative;
-	top: 375px;
+	top: -400px;
 	left: 75px;
 }
 .rcshotlegtemp {
