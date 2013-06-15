@@ -1,4 +1,5 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", "dojo/dom-construct", "dojo/dom-class", "dojo/fx"], function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx) {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", "dojo/dom-construct", "dojo/dom-class", "dojo/fx", "dijit/Tooltip"], 
+function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx, Tooltip) {
 	return Declare("scram.pumps", [_WidgetBase, _Contained], {
 		///
 		/// This is the class for the pumps
@@ -42,6 +43,11 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.pump = new domConstruct.create("div", {
 				'class' : this.pumpClass
 			}, this.parent);
+			
+			this.pumpTooltip = new Tooltip({
+				'connectId': this.pump,
+				'label': "test"
+			});
 
 			this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpUpdate, -1));
 			this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpUpdate, 1));
