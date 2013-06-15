@@ -75,7 +75,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 2,
 				'pumpId' : 'cs',
 				'parent' : this.ui,
-				pumpClass :'cspump pumpsize',
+				pumpClass :'cspump pumpsize pump0',
 				pumpUpClass : 'cspumpup upbutton',
 				pumpDownClass : 'cspumpdown downbutton',
 			});

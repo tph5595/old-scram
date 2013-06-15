@@ -39,6 +39,12 @@
 	background-color: green;
 	width: 100px;
 	height: 20px;
+	line-height: 20px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 20px;
+	color: yellow;
+	
 }
 .temperatureelements {/*not including stats bar temperatures*/
 	background-color: purple;
@@ -189,27 +195,27 @@
 
 .mwh {
 	position: relative;
-	top: 700px;
+	top: 200px;
 	left: 775px;
 }
 .simtime {
 	position: relative;
-	top: 153px;
+	top: 132px;
 	left: 490px;
 }
 .rcspressure {
 	position: relative;
-	top: 655px;
+	top: 113px;
 	left: 120px;
 }
 .boilingtemp {
 	position: relative;
-	top: 700px;
+	top: 138px;
 	left: 100px;
 }
 .workers {
 	position: relative;
-	top: 700px;
+	top: 118px;
 	left: 490px;
 }
 .risk {/*different properties than the rest of the stats bar*/
@@ -217,8 +223,12 @@
 	width: 50px;
 	height: 40px;
 	position: relative;
-	top: 625px;
-	left: 950px;
+	top: 25px;
+	left: 935px;
+	line-height: 40px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 40px;
 }
 
 /*temperature*/
