@@ -257,3 +257,11 @@
 	top: 250px;
 	left: 715px;
 }
+
+/*valve*/
+.valve {
+	background-image: ../images/elements/Water.png;
+	background-size: 5px 5px;
+	width: 5px;
+	height: 5px;	
+}
