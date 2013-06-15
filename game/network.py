@@ -90,7 +90,11 @@ class PollPlant(Command):
                 ('afscoldlegtemp',String()),
                 ('genmw',String()),
                 ('cshotlegtemp',String()),
-                ('cscoldlegtemp',String())]
+                ('cscoldlegtemp',String()),
+                ('rcspressure',String()),
+                ('boilingtemp',String()),
+                ('workers',String()),
+                ('risk',String())]
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -161,7 +165,11 @@ class NetworkController(AMP):
                 afscoldlegtemp,
                 genmw,
                 cshotlegtemp,
-                cscoldlegtemp):
+                cscoldlegtemp,
+                rcspressure,
+                boilingtemp,
+                workers,
+                risk):
         
         j = {'mwh':mwh,
                 'simtime':simtime,
@@ -172,7 +180,11 @@ class NetworkController(AMP):
                 'afscoldlegtemp':afscoldlegtemp,
                 'genmw':genmw,
                 'cshotlegtemp':cshotlegtemp,
-                'cscoldlegtemp':cscoldlegtemp
+                'cscoldlegtemp':cscoldlegtemp,
+                'rcspressure':rcspressure,
+                'boilingtemp':boilingtemp,
+                'workers':workers,
+                'risk':risk
                 }
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:

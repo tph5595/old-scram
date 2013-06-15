@@ -52,6 +52,7 @@ class Plant(object):
         self.rodConst = 200 #generic energy produced by the rods at level 1
         self.energyOutputRate = 1 #between 0-1
         self.reactorPumps = 1 #Reactor pump step 1-4 4=max
+        
         #WAGing the TC rate based on http://www.nist.gov/data/PDFfiles/jpcrd493.pdf
         self.rcsTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
         self.reactorTemp = 500 #5000 is max; 200 is scrammed
@@ -59,6 +60,7 @@ class Plant(object):
         self.rcsHotLegTemp = 0
         self.rcsColdLegTemp = 0
         self.rcsPressure = 2200 #2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
+        self.boilingTemp = 655
          
         #steam generator
         self.sgTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
@@ -108,7 +110,7 @@ class Plant(object):
     def _exchangeRate(self,tcRate,numPumps):
         rate = (numPumps/self.maxPumps)*tcRate
         #rate= numPumps*tcRate
-        print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
+        #print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
         return rate
     
     def _xferEnergyToRcsLoop(self):
@@ -170,7 +172,11 @@ class Plant(object):
                 'afscoldlegtemp':self.afsColdLegTemp,
                 'genmw':self.generatorMW,
                 'cshotlegtemp':self.csHotLegTemp,
-                'cscoldlegtemp':self.csColdLegTemp
+                'cscoldlegtemp':self.csColdLegTemp,
+                'rcspressure':self.rcsPressure,
+                'boilingtemp':self.boilingTemp,
+                'workers':self.workers,
+                'risk':self.risk
                 }
         
     def setRod(self,level):
@@ -179,11 +185,11 @@ class Plant(object):
     def setPump(self,pumpid,level):
         if pumpid == 'rcs':
             self.reactorPumps = level
-        if pumpid == 'hpi':
+        if pumpid == 'hpiTank':
             self.hpiPump = level
-        if pumpid == 'aux':
+        if pumpid == 'auxTank':
             self.afsPumps = level
-        if pumpid == 'afs':
+        if pumpid == 'feedwater':
             self.conPumps = level
         if pumpid == 'cs':
             self.towerPumps = level
