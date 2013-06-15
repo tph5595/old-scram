@@ -30,57 +30,74 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			//the widget has been rendered by now
 			//no sizing has happened
 			//child widgets in the containierNode have not been rendered
+			this.bgBlack = new domConstruct.create('div', {
+				id: 'bgBlack',
+				'class': 'bgblack z1'
+			}, ui);
+			this.bgOrange = new domConstruct.create('div', {
+				id: 'bgOrange',
+				'class': 'bgorange z1'
+			}, ui);
+			this.main = new domConstruct.create("div", {
+				id: 'main',
+				'class' : "scrambackground z1"
+			}, bgBlack);
+			this.poll = new domConstruct.create("div", {
+				id: 'poll',
+				'class' : "statsbarbackground z1"
+			}, bgOrange);
 			this.rods = new Rods({
 				"socket" : this._sockets.rodSocket,
-				"parent" : this.ui
+				"parent" : this.main,
+				'class' : "z2"
 			});
 			this.rcsPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
 				'pumpLevelMax' : 4,
 				'pumpId' : 'rcs',
-				'parent' : this.ui,
-				pumpClass :'rcspump pumpsize pump0',
-				pumpUpClass : 'rcspumpup upbutton',
-				pumpDownClass : 'rcspumpdown downbutton',
+				'parent' : this.main,
+				pumpClass :'rcspump pumpsize pump0 z2',
+				pumpUpClass : 'rcspumpup upbutton z2',
+				pumpDownClass : 'rcspumpdown downbutton z2',
 			});
 			this.hpiTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
 				'pumpLevelMax' : 4,
 				'pumpId' : 'hpiTank',
-				'parent' : this.ui,
-				pumpClass :'hpitankpump pumpsize pump0',
-				pumpUpClass : 'hpitankpumpup upbutton',
-				pumpDownClass : 'hpitankpumpdown downbutton',
+				'parent' : this.main,
+				pumpClass :'hpitankpump pumpsize pump0 z2',
+				pumpUpClass : 'hpitankpumpup upbutton z2',
+				pumpDownClass : 'hpitankpumpdown downbutton z2',
 			});
 			this.auxTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
 				'pumpLevelMax' : 3,
 				'pumpId' : 'auxTank',
-				'parent' : this.ui,
-				pumpClass :'auxtankpump pumpsize pump0',
-				pumpUpClass : 'auxtankpumpup upbutton',
-				pumpDownClass : 'auxtankpumpdown downbutton',
+				'parent' : this.main,
+				pumpClass :'auxtankpump pumpsize pump0 z2',
+				pumpUpClass : 'auxtankpumpup upbutton z2',
+				pumpDownClass : 'auxtankpumpdown downbutton z2',
 			});
 			this.feedwaterPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
 				'pumpLevelMax' : 2,
 				'pumpId' : 'feedwater',
-				'parent' : this.ui,
-				pumpClass :'feedwaterpump pumpsize pump0',
-				pumpUpClass : 'feedwaterpumpup upbutton',
-				pumpDownClass : 'feedwaterpumpdown downbutton',
+				'parent' : this.main,
+				pumpClass :'feedwaterpump pumpsize pump0 z2',
+				pumpUpClass : 'feedwaterpumpup upbutton z2',
+				pumpDownClass : 'feedwaterpumpdown downbutton z2',
 			});
 			this.csPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
 				'pumpLevelMax' : 2,
 				'pumpId' : 'cs',
-				'parent' : this.ui,
-				pumpClass :'cspump pumpsize pump0',
-				pumpUpClass : 'cspumpup upbutton',
-				pumpDownClass : 'cspumpdown downbutton',
+				'parent' : this.main,
+				pumpClass :'cspump pumpsize pump0 z2',
+				pumpUpClass : 'cspumpup upbutton z2',
+				pumpDownClass : 'cspumpdown downbutton z2',
 			});
 			this.poll = new Poll({
-				parent: this.ui,
+				parent: this.poll,
 				socket: this._sockets.pollSocket
 			});
 			

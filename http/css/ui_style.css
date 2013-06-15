@@ -1,16 +1,33 @@
-.ui {/*!!!!!!!!!!!!!!!!change this backround to black!!!!!!!!!!!!!!!!!!!!!!!!!!!111*/
-	background-image: url(../images/background.png);
-	width: 1000px;
-	height: 723px;
-	background-repeat: no-repeat;
-	background-size: 1000px 723px;
+.ui {
+	background-color: black;
+	height: 690px;
+}
+.bgorange {
+	background-image: url(../images/mainSample.png);
+	height: 300px;
+}
+.bgorange {
+	background-image: url(../images/statsSample.png);
 }
 .scrambackground {
-	background-image: url(../images/background.png);
+	background-image: url(../images/main.png);
 	width: 1000px;
-	height: 723px;
+	height: 615px;
 	background-repeat: no-repeat;
-	background-size: 1000px 723px;
+	background-size: 1000px 615px;
+	background-position: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 75px;
+}
+.statsbarbackground {
+	background-image: url(../images/statsBar.png);
+	width: 1000px;
+	height: 108px;
+	background-repeat: no-repeat;
+	background-size: 1000px 108px;
+	margin-left: auto;
+	margin-right: auto;
 }
 .z0 {
 	z-index: 0;
@@ -44,7 +61,6 @@
 	text-align: center;
 	font-size: 20px;
 	color: yellow;
-	
 }
 .temperatureelements {/*not including stats bar temperatures*/
 	background-color: purple;
@@ -195,27 +211,27 @@
 
 .mwh {
 	position: relative;
-	top: 200px;
+	top: 77px;
 	left: 775px;
 }
 .simtime {
 	position: relative;
-	top: 132px;
+	top: 9px;
 	left: 490px;
 }
 .rcspressure {
 	position: relative;
-	top: 113px;
+	top: -10px;
 	left: 120px;
 }
 .boilingtemp {
 	position: relative;
-	top: 138px;
+	top: 15px;
 	left: 100px;
 }
 .workers {
 	position: relative;
-	top: 118px;
+	top: -5px;
 	left: 490px;
 }
 .risk {/*different properties than the rest of the stats bar*/
@@ -223,7 +239,7 @@
 	width: 50px;
 	height: 40px;
 	position: relative;
-	top: 25px;
+	top: -98px;
 	left: 935px;
 	line-height: 40px;
 	vertical-align: middle;
@@ -271,8 +287,8 @@
 
 /*valve*/
 .valve {
-	background-image: ../images/elements/Water.png;
+	background-image: ../images/elements/Water .png;
 	background-size: 5px 5px;
 	width: 5px;
-	height: 5px;	
+	height: 5px;
 }
