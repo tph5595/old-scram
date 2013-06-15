@@ -1,18 +1,20 @@
-
-.ui{
-	background-image : url(../images/background.png);
-	width : 1000px;
-	height : 723px;
-	background-repeat : no-repeat;
-	background-size : 1000px 723px;
+.ui {/*!!!!!!!!!!!!!!!!change this backround to black!!!!!!!!!!!!!!!!!!!!!!!!!!!111*/
+	background-image: url(../images/background.png);
+	width: 1000px;
+	height: 723px;
+	background-repeat: no-repeat;
+	background-size: 1000px 723px;
 }
-.z0{
+.scrambackground {
+	background-image: url(../images/background.png);
+}
+.z0 {
 	z-index: 0;
 }
-.z1{
+.z1 {
 	z-index: 1;
 }
-.z2{
+.z2 {
 	z-index: 2;
 }
 .downbutton {
@@ -56,8 +58,8 @@
 
 /*rods*/
 .rods {
-	width:66px;
-	height:53px;
+	width: 66px;
+	height: 53px;
 	position: relative;
 	left: 94px;
 	top: 182px;
@@ -78,11 +80,31 @@
 }
 
 /*pumps*/
+.pump0 {
+	background-image: url(../images/gaugeValues/0.png);
+	background-size: 25px 35px;
+}
+.pump1 {
+	background-image: url(../images/gaugeValues/1.png);
+	background-size: 17px 35px;
+}
+.pump2 {
+	background-image: url(../images/gaugeValues/2.png);
+	background-size: 20px 35px;
+}
+.pump3 {
+	background-image: url(../images/gaugeValues/3.png);
+	background-size: 20px 35px;
+}
+.pump4 {
+	background-image: url(../images/gaugeValues/4.png);
+	background-size: 25px 35px;
+}
 .pumpsize {
 	width: 30px;
 	height: 40px;
 }
-.hpitankpump{
+.hpitankpump {
 	position: relative;
 	top: 500px;
 	left: 235px;
