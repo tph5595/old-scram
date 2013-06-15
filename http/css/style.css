@@ -65,7 +65,7 @@
 	width: 66px;
 	height: 53px;
 	position: relative;
-	left: 94px;
+	left: 90px;
 	top: 182px;
 	background-image: url(../images/elements/rods.png);
 	background-size: 66px 53px;
@@ -74,12 +74,12 @@
 
 .roddown {
 	position: relative;
-	top: 265px;
+	top: 250px;
 	left: 20px;
 }
 .rodup {
 	position: relative;
-	top: 235px;
+	top: 200px;
 	left: 20px;
 }
 
@@ -140,18 +140,18 @@
 }
 .rcspump {
 	position: relative;
-	top: 395px;
-	left: 317px;
+	top: 250px;
+	left: 200px;
 }
 .rcspumpdown {
 	position: relative;
-	top: 460px;
-	left: 275px;
+	top: 310px;
+	left: 160px;
 }
 .rcspumpup {
 	position: relative;
-	top: 440px;
-	left: 275px;
+	top: 290px;
+	left: 160px;
 }
 .feedwaterpump {
 	position: relative;
