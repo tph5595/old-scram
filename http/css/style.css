@@ -7,6 +7,10 @@
 }
 .scrambackground {
 	background-image: url(../images/background.png);
+	width: 1000px;
+	height: 723px;
+	background-repeat: no-repeat;
+	background-size: 1000px 723px;
 }
 .z0 {
 	z-index: 0;

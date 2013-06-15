@@ -40,7 +40,42 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				pumpClass :'rcspump pumpsize pump0',
 				pumpUpClass : 'rcspumpup',
 				pumpDownClass : 'rcspumpdown',
-
+			});
+			this.hpiTankPump = new Pump({
+				'socket' : this._sockets.pumpSocket,
+				'pumpLevelMax' : 4,
+				'pumpId' : 'hpiTank',
+				'parent' : this.ui,
+				pumpClass :'hpitankpump pumpsize pump0',
+				pumpUpClass : 'hpitankpumpup',
+				pumpDownClass : 'hpitankpumpdown',
+			});
+			this.auxTankPump = new Pump({
+				'socket' : this._sockets.pumpSocket,
+				'pumpLevelMax' : 3,
+				'pumpId' : 'auxTank',
+				'parent' : this.ui,
+				pumpClass :'auxtankpump pumpsize pump0',
+				pumpUpClass : 'auxtankpumpup',
+				pumpDownClass : 'auxtankpumpdown',
+			});
+			this.feedwaterPump = new Pump({
+				'socket' : this._sockets.pumpSocket,
+				'pumpLevelMax' : 2,
+				'pumpId' : 'feedwater',
+				'parent' : this.ui,
+				pumpClass :'feedwaterpump pumpsize pump0',
+				pumpUpClass : 'feedwaterpumpup',
+				pumpDownClass : 'feedwaterpumpdown',
+			});
+			this.csPump = new Pump({
+				'socket' : this._sockets.pumpSocket,
+				'pumpLevelMax' : 2,
+				'pumpId' : 'cs',
+				'parent' : this.ui,
+				pumpClass :'cspump pumpsize pump0',
+				pumpUpClass : 'cspumpup',
+				pumpDownClass : 'cspumpdown',
 			});
 
 			this.addChild(this.rods);
