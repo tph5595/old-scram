@@ -65,8 +65,8 @@
 	width: 66px;
 	height: 53px;
 	position: relative;
-	left: 90px;
-	top: 182px;
+	left: 86px;
+	top: 174px;
 	background-image: url(../images/elements/rods.png);
 	background-size: 66px 53px;
 	background-repeat: no-repeat;
@@ -74,13 +74,13 @@
 
 .roddown {
 	position: relative;
-	top: 250px;
-	left: 20px;
+	top: 205px;
+	left: 10px;
 }
 .rodup {
 	position: relative;
-	top: 200px;
-	left: 20px;
+	top: 165px;
+	left: 10px;
 }
 
 /*pumps*/
@@ -107,81 +107,82 @@
 .pumpsize {
 	width: 30px;
 	height: 40px;
+	background-repeat: no-repeat;
 }
 .hpitankpump {
 	position: relative;
-	top: 500px;
-	left: 235px;
+	top: 276px;
+	left: 228px;
 }
 .hpitankpumpdown {
 	position: relative;
-	top: 575px;
+	top: 380px;
 	left: 185px;
 }
 .hpitankpumpup {
 	position: relative;
-	top: 555px;
+	top: 340px;
 	left: 185px;
 }
 .auxtankpump {
 	position: relative;
-	top: 500px;
-	left: 624px;
+	top: 198px;
+	left: 615px;
 }
 .auxtankpumpdown {
 	position: relative;
-	top: 575px;
+	top: 310px;
 	left: 670px;
 }
 .auxtankpumpup {
 	position: relative;
-	top: 555px;
+	top: 270px;
 	left: 670px;
 }
 .rcspump {
 	position: relative;
-	top: 250px;
-	left: 200px;
+	top: 255px;
+	left: 310px;
 }
 .rcspumpdown {
 	position: relative;
-	top: 310px;
-	left: 160px;
+	top: 355px;
+	left: 265px;
 }
 .rcspumpup {
 	position: relative;
-	top: 290px;
-	left: 160px;
+	top: 315px;
+	left: 265px;
 }
 .feedwaterpump {
 	position: relative;
-	top: 395px;
-	left: 629px;
+	top: 16px;
+	left: 622px;
 }
 .feedwaterpumpdown {
 	position: relative;
-	top: 375px;
+	top: 30px;
 	left: 580px;
 }
 .feedwaterpumpup {
 	position: relative;
-	top: 355px;
+	top: -10px;
 	left: 580px;
 }
 .cspump {
 	position: relative;
-	top: 395px;
-	left: 711px;
+	top: -65px;
+	left: 703px;
 }
 .cspumpdown {
 	position: relative;
-	top: 375px;
-	left: 755px;
+	top: -50px;
+	left: 745px;
 }
 .cspumpup {
 	position: relative;
-	top: 355px;
-	left: 755px;
+	top: -90px;
+	left: 745px;
 }
 
 /*stats bar*/
