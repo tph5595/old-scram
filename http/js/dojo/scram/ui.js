@@ -57,6 +57,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			this.rods = new Rods({
 				"socket" : this._sockets.rodSocket,
 				"parent" : this.main,
+				'tip': 'Reactor Core Rods',
 				'class' : "z2"
 			});
 			this.rcsPump = new Pump({
@@ -65,6 +66,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 4,
 				'pumpId' : 'rcs',
 				'parent' : this.main,
+				'tip': 'Reactor Coolant System Pump',
 				pumpClass :'rcspump pumpsize pump0 z2',
 				pumpUpClass : 'rcspumpup upbutton z2',
 				pumpDownClass : 'rcspumpdown downbutton z2',
@@ -86,6 +88,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 3,
 				'pumpId' : 'auxTank',
 				'parent' : this.main,
+				'tip': 'Auxiliary Tank Pump',
 				pumpClass :'auxtankpump pumpsize pump0 z2',
 				pumpUpClass : 'auxtankpumpup upbutton z2',
 				pumpDownClass : 'auxtankpumpdown downbutton z2',
@@ -96,6 +99,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 2,
 				'pumpId' : 'feedwater',
 				'parent' : this.main,
+				'tip': 'Auxiliary Feedwater System Pump',
 				pumpClass :'feedwaterpump pumpsize pump0 z2',
 				pumpUpClass : 'feedwaterpumpup upbutton z2',
 				pumpDownClass : 'feedwaterpumpdown downbutton z2',
@@ -106,6 +110,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 2,
 				'pumpId' : 'cs',
 				'parent' : this.main,
+				'tip': 'Circulating Systems Pump',
 				pumpClass :'cspump pumpsize pump0 z2',
 				pumpUpClass : 'cspumpup upbutton z2',
 				pumpDownClass : 'cspumpdown downbutton z2',

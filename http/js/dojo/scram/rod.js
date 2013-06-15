@@ -11,17 +11,20 @@ define(["dojo/_base/lang", "dojo/on","dojo/_base/declare", "dijit/_WidgetBase","
 		state : null,
 		_socket : null,
 		rodLevel : null,
+		tip: null,
 		rodTop : [226, 220, 216, 212, 204, 198, 192, 186, 180, 172],
 
 		constructor : function(args) {
 			this._socket = args.socket;
 			this.parent = args.parent;
+			this.tip = args.tip;
 			this.rodLevel = 9;
 		},
 		postCreate : function() {
 			this.rods = new domConstruct.create("div", {
 				id : 'rods',
-				'class':'rods z1'
+				'class':'rods z1',
+				'title': this.tip
 			}, this.parent);
 			
 			this.rodDown = new domConstruct.create("div", {
