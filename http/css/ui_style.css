@@ -38,6 +38,9 @@
 .z2 {
 	z-index: 2;
 }
+.z3 {
+	z-index: 3;
+}
 .downbutton {
 	height: 20px;
 	width: 40px;
@@ -292,8 +295,23 @@
 
 /*valve*/
 .valve {
+	background-color: yellow;
+	height: 20px;
+	width: 20px;
+	position: relative;
+	top: 600px;
+	left: 800px;
+	/*
 	background-image: ../images/elements/Water .png;
 	background-size: 5px 5px;
 	width: 5px;
 	height: 5px;
+	*/
+}
+/*water levels*/
+.water {
+	background-color: yellow;
+	background-size: 100px 25px;
+	height: 25px;
+	width: 25px;
 }

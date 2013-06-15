@@ -100,7 +100,6 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				parent: this.poll,
 				socket: this._sockets.pollSocket
 			});
-			
 			this.addChild(this.rods);
 			this.inherited(arguments);
 		},
