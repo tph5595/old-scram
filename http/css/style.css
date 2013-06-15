@@ -68,91 +68,91 @@
 
 .roddown {
 	position: relative;
-	top: 263px;
+	top: 265px;
 	left: 20px;
 }
 .rodup {
 	position: relative;
-	top: 243px;
+	top: 235px;
 	left: 20px;
 }
 
-/*gauges*/
-.gaugesize {
+/*pumps*/
+.pumpsize {
 	width: 30px;
 	height: 40px;
 }
-.gaugebottomleft{
+.hpitankpump{
 	position: relative;
 	top: 500px;
 	left: 235px;
 }
-.gaugebottomleftdown {
+.hpitankpumpdown {
 	position: relative;
 	top: 575px;
 	left: 185px;
 }
-.gaugebottomleftup {
+.hpitankpumpup {
 	position: relative;
 	top: 555px;
 	left: 185px;
 }
-.gaugemiddlebottom {
+.auxtankpump {
 	position: relative;
 	top: 500px;
 	left: 624px;
 }
-.gaugemiddlebottomdown {
+.auxtankpumpdown {
 	position: relative;
 	top: 575px;
 	left: 670px;
 }
-.gaugemiddlebottomup {
+.auxtankpumpup {
 	position: relative;
 	top: 555px;
 	left: 670px;
 }
-.gaugetopleft {
+.rcspump {
 	position: relative;
 	top: 395px;
 	left: 317px;
 }
-.gaugetopleftdown {
+.rcspumpdown {
 	position: relative;
 	top: 460px;
 	left: 275px;
 }
-.gaugetopleftup {
+.rcspumpup {
 	position: relative;
 	top: 440px;
 	left: 275px;
 }
-.gaugemiddletop {
+.feedwaterpump {
 	position: relative;
 	top: 395px;
 	left: 629px;
 }
-.gaugemiddletopdown {
+.feedwaterpumpdown {
 	position: relative;
 	top: 375px;
 	left: 580px;
 }
-.gaugemiddletopup {
+.feedwaterpumpup {
 	position: relative;
 	top: 355px;
 	left: 580px;
 }
-.gaugetopright {
+.cspump {
 	position: relative;
 	top: 395px;
 	left: 711px;
 }
-.gaugetoprightdown {
+.cspumpdown {
 	position: relative;
 	top: 375px;
 	left: 755px;
 }
-.gaugetoprightup {
+.cspumpup {
 	position: relative;
 	top: 355px;
 	left: 755px;
