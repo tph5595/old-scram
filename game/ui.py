@@ -9,17 +9,20 @@ from twisted.protocols.policies import ProtocolWrapper, WrappingFactory
 from twisted.internet.defer import Deferred
 from twisted.internet import reactor
 from twisted.internet.task import LoopingCall
-from twisted.web import server, resource
 
 from Queue import Queue, Empty
 
 from game.network import NetworkController
 
 #front end listeners
-from http.servers.websocket2 import PollServerProtocol
+from http.servers.websocket2 import PollServerProtocol, \
+                                    ValveServerProtocol, \
+                                    PumpServerProtocol, \
+                                    RodServerProtocol, \
+                                    UserServerProtocol, \
+                                    EarthquakeServerProtocol
 
 from autobahn.websocket import WebSocketServerFactory, \
-                               WebSocketServerProtocol, \
                                listenWS
 
 class ConnectionNotificationWrapper(ProtocolWrapper):
@@ -47,7 +50,6 @@ class ConnectionNotificationFactory(WrappingFactory):
     def __init__(self, realFactory):
         WrappingFactory.__init__(self, realFactory)
         self.connectionNotification = Deferred()
-
           
 class UI(object):
     """
@@ -62,12 +64,9 @@ class UI(object):
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
         #HACK: provide the front end listeners to the client protocol
-        clientFactory.frontEndListeners = self.frontEndListeners
-        
-        clientFactory.protocol = lambda: NetworkController(
-            self.reactor)
-        factory = ConnectionNotificationFactory(clientFactory)
-              
+        clientFactory.frontEndListeners = self.frontEndListeners        
+        clientFactory.protocol = lambda: NetworkController(self.reactor)
+        factory = ConnectionNotificationFactory(clientFactory)              
         self.reactor.connectTCP(host, port,factory)
         return factory.connectionNotification
 
@@ -83,8 +82,7 @@ class UI(object):
             pass
             
     def _handleCommand(self,event):
-        #TODO: do something with the command by call the protocol method
-        print "Event: %s"%event      
+        print "Event from UI queue: %s"%event      
     
     def stop(self):
         print"Calling stop"
@@ -92,7 +90,7 @@ class UI(object):
     
     def go(self):
         """
-        this is the loop that keeps the AMP client alive
+        this is the loop that keeps the AMP client alive; deosn't really do anything
         """
         self._inputCall = LoopingCall(self.handleInput)
         finishedDeferred = self._inputCall.start(0.04,now=True)
@@ -102,28 +100,42 @@ class UI(object):
         environment.start()
         self.reactor.callLater(0,self.setUpListeners)
         self.go()
-        
-    def echo(self,protocol,msg):
-        """
-        This is the socket hook
-        """
-        print "Echo in UI got MSG: %s"%msg  
-        protocol.sendMessage("Blargh")
          
-    def setUpListeners(self):
-        pollFactory = WebSocketServerFactory("ws://localhost:8081",
-                                        debug=True,
-                                        debugCodePaths=True)
-    
-        pollFactory.protocol = PollServerProtocol
-        pollFactory.setProtocolOptions(allowHixie76=True)
+    def _setUpListener(self, serviceName, port, protocol, handler=None):
+        url = "ws://localhost:%n"%(port)       
+        factory = WebSocketServerFactory(url, debug=True, debugCodePaths=True)    
+        factory.protocol = protocol
+        factory.setProtocolOptions(allowHixie76=True)
+        
         #HACK: add an array for observing messages
-        pollFactory.observers = []
-        pollFactory.connections = []
-        pollFactory.observers.append(self.echo)
-        self.frontEndListeners['poll'] = pollFactory
-        listenWS(self.frontEndListeners['poll'])     
-           
+        factory.observers = [] #called for every message; for the ui to listen
+        
+        if handler !=None:
+            factory.observers.append(handler)
+        
+        factory.connections = [] #all connections that are active; for the protocol to send data
+        self.frontEndListeners[serviceName] = factory
+        listenWS(self.frontEndListeners[serviceName]) 
+        
+    def _handleValve(self):
+        pass
+    def _handlePump(self):
+        pass
+    def _handleRod(self):
+        pass
+    def _handleUser(self):
+        pass
+    def _handleEarthquake(self):
+        pass
+    
+    def setUpListeners(self):
+        self._setUpListener("poll", 8081, PollServerProtocol)
+        self._setUpListener("valve", 8082, ValveServerProtocol,self._handleValve)
+        self._setUpListener("pump", 8083, PumpServerProtocol,self._handlePump)
+        self._setUpListener("rod", 8084, RodServerProtocol,self._handleRod)
+        self._setUpListener("user", 8085, UserServerProtocol,self._handleUser)
+        self._setUpListener("earthquake", 8086, EarthquakeServerProtocol,self._handleEarthquake)
+                   
     def start(self, (host, port)):
         """
         Let's Go!

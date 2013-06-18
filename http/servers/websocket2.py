@@ -1,11 +1,4 @@
-from twisted.internet import reactor
-from twisted.python import log
-from twisted.web.server import Site
-from twisted.web.static import File
-
-from autobahn.websocket import WebSocketServerFactory, \
-                               WebSocketServerProtocol, \
-                               listenWS
+from autobahn.websocket import WebSocketServerProtocol
 
 """
     factory = WebSocketServerFactory("ws://localhost:8081",
@@ -47,3 +40,88 @@ class PollServerProtocol(WebSocketServerProtocol):
         print"onMessage"
         for f in self.factory.observers:
             f(self,msg)
+            
+class ValveServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
+        for f in self.factory.observers:
+            f(self,msg)  
+
+class PumpServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
+        for f in self.factory.observers:
+            f(self,msg)           
+
+class RodServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
+        for f in self.factory.observers:
+            f(self,msg) 
+            
+class UserServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
+        for f in self.factory.observers:
+            f(self,msg)  
+            
+class EarthquakeServerProtocol(WebSocketServerProtocol):
+       
+    def connectionMade(self):
+        WebSocketServerProtocol.connectionMade(self)#always before your code
+        print "Connection Made"
+        self.factory.connections.append(self)
+        
+    def connectionLost(self,reason):
+        print "Connection Lost"
+        self.factory.connections.remove(self)
+        WebSocketServerProtocol.connectionLost(self, reason)#always after your code
+        
+    def onMessage(self, msg, binary):
+        print"onMessage"
+        for f in self.factory.observers:
+            f(self,msg)            

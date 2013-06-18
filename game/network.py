@@ -156,36 +156,11 @@ class NetworkController(AMP):
                 }
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
-                
-                self.factory.frontEndListeners['poll'].connections[0].sendMessage(json.dumps(j))
+                for conn in self.factory.frontEndListeners['poll'].connections:
+                    conn.sendMessage(json.dumps(j))
         except KeyError:
             pass   
         return j
     PollPlant.responder(pollPlant)
         
-
-    def objectByIdentifier(self, identifier):
-        """
-        Look up a pre-existing model object by its network identifier.
-
-        @type identifier: C{int}
-
-        @raise KeyError: If no existing model object has the given identifier.
-        """
-        return self.modelObjects[identifier]
-
-
-    def identifierByObject(self, modelObject):
-        """
-        Look up the network identifier for a given model object.
-
-        @raise ValueError: If no network identifier is associated with the
-            given model object.
-
-        @rtype: L{int}
-        """
-        for identifier, object in self.modelObjects.iteritems():
-            if object is modelObject:
-                return identifier
-        raise ValueError("identifierByObject passed unknown model objects")
 
