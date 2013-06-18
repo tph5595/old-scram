@@ -44,7 +44,7 @@ class _ScramPlugin(object):
         from twisted.application.service import MultiService
         from twisted.protocols.policies import TrafficLoggingFactory
 
-        world = World(granularity=60, platformClock=reactor)
+        world = World(granularity=1, platformClock=reactor)
 
         service = MultiService()
 

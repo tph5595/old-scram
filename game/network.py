@@ -12,6 +12,7 @@ from game.environment import Environment
 #from game.vector import Vector
 
 import json
+from pprint import pprint
 
 """
 rjweiss - define AMP protocol for the game here! The network controller (client) can be defined below. 
@@ -119,7 +120,16 @@ class NetworkController(AMP):
     def storeHandshakeResponse(self,identifier, modelObject):
         print "Got Identifier %s"%(identifier)
         #self.addModelObject(identifier, modelObject)
-        
+    
+    def rod(self,msg):
+        print "Rod Msg: %s"%msg
+        j = json.loads(msg)
+        d = self.callRemote(SetRod, level=j['level'])
+        def cb(box):
+            pass
+        d.addCallback(cb)
+        return d
+    
     def handshake(self):
         d = self.callRemote(Handshake)
         def cbHs(box):
@@ -130,6 +140,7 @@ class NetworkController(AMP):
             return self.environment
         d.addCallback(cbHs)
         return d
+    
     
     def pollPlant(self,updateid,
                  mwh,

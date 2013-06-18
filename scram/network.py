@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
 #from game.terrain import CHUNK_GRANULARITY
-from game.network import (Handshake, PollPlant)
+from game.network import (Handshake, PollPlant, SetRod)
 
 class ScramServer(AMP):
     """
@@ -35,6 +35,12 @@ class ScramServer(AMP):
         return{"granularity": self.world.granularity,
                 "identifier": self.player.id}
     Handshake.responder(handshake)
+    
+    def rod(self,level):
+        print "Setting Rod Level to: %s"%str(level)
+        self.world.plant.setRod(level)
+        return {"response":True}
+    SetRod.responder(rod)
     
     def pollPlant(self):
         self.update +=1       

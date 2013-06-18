@@ -167,7 +167,9 @@ class Plant(object):
                 'cshotlegtemp':self.csHotLegTemp,
                 'cscoldlegtemp':self.csColdLegTemp
                 }
-    
+    def setRod(self,level):
+        self.rodLevel = level
+        
     def display(self):
         print"*****************************" 
         print "Sim Time: %s"%(str(self.elapsedTime))

@@ -14,13 +14,15 @@
 		<script type="text/javascript" charset="utf-8">
 			require(["dojo/_base/lang","scram/sockets"], function(lang,Sockets) {
 				this.sockets = new Sockets();
-				this.myFunc = function(event){
-					console.log("Poll Message:",event.data)
-				};
 				this.onPollMsg = function(event){
 					console.log("PollMsg:",event.data);
 				};
+				this.onRodOpen = function(event){
+					console.log("Rod Socket Open");
+					this.sockets.rodSocket.send('{"level":4}');
+				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
+				this.sockets.rodSocket.on("open",lang.hitch(this, this.onRodOpen));
 			});
 
 		</script>
