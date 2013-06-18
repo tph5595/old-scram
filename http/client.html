@@ -31,6 +31,10 @@
 					circulatingSystemHotLegTemp.innerHTML=Math.round(obj.cshotlegtemp);
 					feedwaterColdLegTemp.innerHTML=Math.round(obj.afscoldlegtemp);
 					feedwaterHotLegTemp.innerHTML=Math.round(obj.afshotlegtemp);
+					//rcspressure.innerHTML=Math.round(obj.rcspressure);
+					//boilingtemp.innerHTML=Math.round(obj.boilingtemp);
+					//workers.innerHTML=Math.round(obj.workers);
+					//risk.innerHTML=Math.round(obj.risk);
 					
 				};
 				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
