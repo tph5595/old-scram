@@ -103,7 +103,7 @@ class UI(object):
          
     def _setUpListener(self, serviceName, port, protocol, handler=None):
         url = "ws://localhost:%d"%(port)       
-        factory = WebSocketServerFactory(url, debug=True, debugCodePaths=True)    
+        factory = WebSocketServerFactory(url, debug=False, debugCodePaths=False)    
         factory.protocol = protocol
         factory.setProtocolOptions(allowHixie76=True)
         

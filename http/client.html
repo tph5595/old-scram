@@ -4,624 +4,949 @@
 		<title>SCRAM CTF Tester</title>
 		<script>
 			dojoConfig = {
-			"isDebug": true,
-			"debugAtAllCosts": true,
-			"parseOnLoad": true,
-			"baseUrl": "./js/dojo/dojo"
+				"isDebug" : true,
+				"debugAtAllCosts" : true,
+				"parseOnLoad" : true,
+				"baseUrl" : "./js/dojo/dojo"
 			}
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/on", "dojo/_base/lang", "scram/sockets", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], 
-			function(on, lang, Sockets, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
-				
+			require(["dojo/on", "dojo/_base/lang", "scram/sockets", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], function(on, lang, Sockets, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
+
 				//start new stuff
 				this.sockets = new Sockets();
-				this.onPollMsg = function(event){
+				this.onPollMsg = function(event) {
 					//console.log("PollMsg:",event.data);
 					var obj = JSON.parse(event.data);
 					console.log(obj)
-					MWH.innerHTML=Math.round(obj.mwh);
-					reactorTemp.innerHTML=Math.round(obj.reactortemp);
-					rcsColdLegTemp.innerHTML=Math.round(obj.rcscoldlegtemp);
-					rcsHotLegTemp.innerHTML=Math.round(obj.rcshotlegtemp);
-					simtime.innerHTML=Math.round(obj.simtime);
-					generalPowerOutput.innerHTML=Math.round(obj.genmw);
-					circulatingSystemColdLegTemp.innerHTML=Math.round(obj.cscoldlegtemp);
-					circulatingSystemHotLegTemp.innerHTML=Math.round(obj.cshotlegtemp);
-					feedwaterColdLegTemp.innerHTML=Math.round(obj.afscoldlegtemp);
-					feedwaterHotLegTemp.innerHTML=Math.round(obj.afshotlegtemp);
+					MWH.innerHTML = Math.round(obj.mwh);
+					reactorTemp.innerHTML = Math.round(obj.reactortemp);
+					rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
+					rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
+					simtime.innerHTML = Math.round(obj.simtime);
+					generalPowerOutput.innerHTML = Math.round(obj.genmw);
+					circulatingSystemColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
+					circulatingSystemHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);
+					feedwaterColdLegTemp.innerHTML = Math.round(obj.afscoldlegtemp);
+					feedwaterHotLegTemp.innerHTML = Math.round(obj.afshotlegtemp);
 					//rcspressure.innerHTML=Math.round(obj.rcspressure);
 					//boilingtemp.innerHTML=Math.round(obj.boilingtemp);
 					//workers.innerHTML=Math.round(obj.workers);
 					//risk.innerHTML=Math.round(obj.risk);
-					
+
 				};
-				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
+				this.sockets.pollSocket.on("message", lang.hitch(this, this.onPollMsg));
 				//end new stuff
-				
-				
-				var bodyDiv = new domConstruct.create("body", {id: 'body'}, "html");
-				var mainDiv = new domConstruct.create("div", {id: "main"}, "body");//create main div that will hold the scramBackground image
-				
+
+				var bodyDiv = new domConstruct.create("body", {
+					id : 'body'
+				}, "html");
+				var mainDiv = new domConstruct.create("div", {
+					id : "main"
+				}, "body");
+				//create main div that will hold the scramBackground image
+
 				//construct rods divs and rod buttons
-				var rods = new domConstruct.create("img", {id: 'rods', src: 'images/elements/rods.png'}, "main"); //create the rods image
+				var rods = new domConstruct.create("img", {
+					id : 'rods',
+					src : 'images/elements/rods.png'
+				}, "main");
+				//create the rods image
 
-				
-				var rodDownButtonDiv = new domConstruct.create("div", {id: 'rodDownButtonDiv'}, "main"); //create the rod down button div
-				var rodUpButtonDiv = new domConstruct.create("div", {id: 'rodUpButtonDiv'}, "main"); //create the rod up button div	
-				
+				var rodDownButtonDiv = new domConstruct.create("div", {
+					id : 'rodDownButtonDiv'
+				}, "main");
+				//create the rod down button div
+				var rodUpButtonDiv = new domConstruct.create("div", {
+					id : 'rodUpButtonDiv'
+				}, "main");
+				//create the rod up button div
+
 				//construct gaugeBottomLeft divs and gaugeBottomLeftDown buttons
-				var gaugeBottomLeftDownButton = new domConstruct.create("div", {id: 'gaugeBottomLeftDownButton'}, "main");//create the gauge bottom left Down button div
-				var gaugeBottomLeftUpButton = new domConstruct.create("div", {id: 'gaugeBottomLeftUpButton'}, "main");//create the gauge bottom left up button div
-				var gauge_bottom_left_div = new domConstruct.create("div", {id: 'gauge_bottom_left_div'}, "main");
-				var gauge_bottom_left = new domConstruct.create("img", {id: 'gauge_bottom_left', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, "gauge_bottom_left_div");
-				
+				var gaugeBottomLeftDownButton = new domConstruct.create("div", {
+					id : 'gaugeBottomLeftDownButton'
+				}, "main");
+				//create the gauge bottom left Down button div
+				var gaugeBottomLeftUpButton = new domConstruct.create("div", {
+					id : 'gaugeBottomLeftUpButton'
+				}, "main");
+				//create the gauge bottom left up button div
+				var gauge_bottom_left_div = new domConstruct.create("div", {
+					id : 'gauge_bottom_left_div'
+				}, "main");
+				var gauge_bottom_left = new domConstruct.create("img", {
+					id : 'gauge_bottom_left',
+					src : 'images/gaugeValues/0.png',
+					width : "25px",
+					height : '35px'
+				}, "gauge_bottom_left_div");
+
 				//gauge middle bottom
-				var gaugeMiddleBottomDownButton = new domConstruct.create('div', {id: 'gaugeMiddleBottomDownButton'}, 'main');
-				var gaugeMiddleBottomUpButton = new domConstruct.create('div', {id: 'gaugeMiddleBottomUpButton'}, 'main');
-				var gauge_middle_bottom_div = new domConstruct.create("div", {id: 'gauge_middle_bottom_div'}, "main");
-				var gauge_middle_bottom = new domConstruct.create("img", {id: 'gauge_middle_bottom', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_middle_bottom_div')
-				
-				
-				
+				var gaugeMiddleBottomDownButton = new domConstruct.create('div', {
+					id : 'gaugeMiddleBottomDownButton'
+				}, 'main');
+				var gaugeMiddleBottomUpButton = new domConstruct.create('div', {
+					id : 'gaugeMiddleBottomUpButton'
+				}, 'main');
+				var gauge_middle_bottom_div = new domConstruct.create("div", {
+					id : 'gauge_middle_bottom_div'
+				}, "main");
+				var gauge_middle_bottom = new domConstruct.create("img", {
+					id : 'gauge_middle_bottom',
+					src : 'images/gaugeValues/0.png',
+					width : "25px",
+					height : '35px'
+				}, 'gauge_middle_bottom_div')
+
 				//gauge top left
-				var gaugeTopLeftDownButton = new domConstruct.create('div', {id: 'gaugeTopLeftDownButton'}, 'main');
-				var gaugeTopLeftUpButton = new domConstruct.create('div', {id: 'gaugeTopLeftUpButton'}, 'main');
-				var gauge_top_left_div = new domConstruct.create("div", {id: 'gauge_top_left_div'}, "main");
-				var gauge_top_left = new domConstruct.create('img', {id: 'gauge_top_left', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_left_div');
-				
+				var gaugeTopLeftDownButton = new domConstruct.create('div', {
+					id : 'gaugeTopLeftDownButton'
+				}, 'main');
+				var gaugeTopLeftUpButton = new domConstruct.create('div', {
+					id : 'gaugeTopLeftUpButton'
+				}, 'main');
+				var gauge_top_left_div = new domConstruct.create("div", {
+					id : 'gauge_top_left_div'
+				}, "main");
+				var gauge_top_left = new domConstruct.create('img', {
+					id : 'gauge_top_left',
+					src : 'images/gaugeValues/0.png',
+					width : "25px",
+					height : '35px'
+				}, 'gauge_top_left_div');
+
 				//gauge middle top
-				var gaugeMiddleTopDownButton = new domConstruct.create('div', {id: 'gaugeMiddleTopDownButton'}, 'main');
-				var gaugeMiddleTopUpButton = new domConstruct.create('div', {id: 'gaugeMiddleTopUpButton'}, 'main');
-				var gauge_middle_top_div = new domConstruct.create("div", {id: 'gauge_middle_top_div'}, "main");
-				var gauge_middle_top = new domConstruct.create('img', {id: 'gauge_middle_top', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_middle_top_div');
-				
+				var gaugeMiddleTopDownButton = new domConstruct.create('div', {
+					id : 'gaugeMiddleTopDownButton'
+				}, 'main');
+				var gaugeMiddleTopUpButton = new domConstruct.create('div', {
+					id : 'gaugeMiddleTopUpButton'
+				}, 'main');
+				var gauge_middle_top_div = new domConstruct.create("div", {
+					id : 'gauge_middle_top_div'
+				}, "main");
+				var gauge_middle_top = new domConstruct.create('img', {
+					id : 'gauge_middle_top',
+					src : 'images/gaugeValues/0.png',
+					width : "25px",
+					height : '35px'
+				}, 'gauge_middle_top_div');
+
 				//gauge top right
-				var gaugeTopRightDownButton = domConstruct.create('div', {id: 'gaugeTopRightDownButton'}, 'main');
-				var gaugeTopRightUpButton = domConstruct.create('div', {id: 'gaugeTopRightUpButton'}, 'main');
-				var gauge_top_right_div = new domConstruct.create("div", {id: 'gauge_top_right_div'}, "main");
-				var gauge_top_right = new domConstruct.create('img', {id: 'gauge_top_right', src: 'images/gaugeValues/0.png', width: "25px", height: '35px'}, 'gauge_top_right_div');
-				
-				
+				var gaugeTopRightDownButton = domConstruct.create('div', {
+					id : 'gaugeTopRightDownButton'
+				}, 'main');
+				var gaugeTopRightUpButton = domConstruct.create('div', {
+					id : 'gaugeTopRightUpButton'
+				}, 'main');
+				var gauge_top_right_div = new domConstruct.create("div", {
+					id : 'gauge_top_right_div'
+				}, "main");
+				var gauge_top_right = new domConstruct.create('img', {
+					id : 'gauge_top_right',
+					src : 'images/gaugeValues/0.png',
+					width : "25px",
+					height : '35px'
+				}, 'gauge_top_right_div');
+
 				//stats bar
-				var MWH = new domConstruct.create('div', {id: 'MWH'}, 'main');
-				var simtime = new domConstruct.create('div', {id: 'simtime'}, 'main');
-				var rcspressure = new domConstruct.create('div', {id: 'rcspressure'}, 'main');
-				var boilingtemp = new domConstruct.create('div', {id: 'boilingtemp'}, 'main');
-				var workers = new domConstruct.create('div', {id: 'workers'}, 'main');
-				var risk = new domConstruct.create('div', {id: 'risk'}, 'main');
-				
-				
-				//temperature 
-				var reactorTempContainer = new domConstruct.create('div', {id: 'reactorTempContainer'}, 'main');
-				var reactorTemp = new domConstruct.create('div', {id: 'reactorTemp'}, 'reactorTempContainer');
-				var reactorTempDegree = new domConstruct.create('div', {id: 'reactorTempDegree'}, 'reactorTempContainer');				
-				
-				var rcsColdLegTempContainer = new domConstruct.create('div', {id: 'rcsColdLegTempContainer'}, 'main');
-				var rcsColdLegTemp = new domConstruct.create('div', {id: 'rcsColdLegTemp'}, 'rcsColdLegTempContainer');
-				var rcsColdLegTempDegree = new domConstruct.create('div', {id: 'rcsColdLegTempDegree'}, 'rcsColdLegTempContainer');
-				
-				var rcsHotLegTempContainer = new domConstruct.create('div', {id: 'rcsHotLegTempContainer'}, 'main');
-				var rcsHotLegTemp = new domConstruct.create('div', {id: 'rcsHotLegTemp'}, 'rcsHotLegTempContainer');
-				var rcsHotLegTempDegree = new domConstruct.create('div', {id: 'rcsHotLegTempDegree'}, 'rcsHotLegTempContainer');
-				
-				var feedwaterColdLegTempContainer = new domConstruct.create('div', {id: 'feedwaterColdLegTempContainer'}, 'main');
-				var feedwaterColdLegTemp = new domConstruct.create('div', {id: 'feedwaterColdLegTemp'}, 'feedwaterColdLegTempContainer');
-				var feedwaterColdLegTempDegree = new domConstruct.create('div', {id: 'feedwaterColdLegTempDegree'}, 'feedwaterColdLegTempContainer');
-				
-				var feedwaterHotLegTempContainer = new domConstruct.create('div', {id: 'feedwaterHotLegTempContainer'}, 'main');
-				var feedwaterHotLegTemp = new domConstruct.create('div', {id: 'feedwaterHotLegTemp'}, 'feedwaterHotLegTempContainer');
-				var feedwaterHotLegTempDegree = new domConstruct.create('div', {id: 'feedwaterHotLegTempDegree'}, 'feedwaterHotLegTempContainer');
-				
-				var circulatingSystemColdLegTempContainer = new domConstruct.create('div', {id: 'circulatingSystemColdLegTempContainer'}, 'main');
-				var circulatingSystemColdLegTemp = new domConstruct.create('div', {id: 'circulatingSystemColdLegTemp'}, 'circulatingSystemColdLegTempContainer');
-				var circulatingSystemColdLegTempDegree = new domConstruct.create('div', {id: 'circulatingSystemColdLegTempDegree'}, 'circulatingSystemColdLegTempContainer');
-				
-				var circulatingSystemHotLegTempContainer = new domConstruct.create('div', {id: 'circulatingSystemHotLegTempContainer'}, 'main');
-				var circulatingSystemHotLegTemp = new domConstruct.create('div', {id: 'circulatingSystemHotLegTemp'}, 'circulatingSystemHotLegTempContainer');
-				var circulatingSystemHotLegTempDegree = new domConstruct.create('div', {id: 'circulatingSystemHotLegTempDegree'}, 'circulatingSystemHotLegTempContainer');
-				
-				
+				var MWH = new domConstruct.create('div', {
+					id : 'MWH'
+				}, 'main');
+				var simtime = new domConstruct.create('div', {
+					id : 'simtime'
+				}, 'main');
+				var rcspressure = new domConstruct.create('div', {
+					id : 'rcspressure'
+				}, 'main');
+				var boilingtemp = new domConstruct.create('div', {
+					id : 'boilingtemp'
+				}, 'main');
+				var workers = new domConstruct.create('div', {
+					id : 'workers'
+				}, 'main');
+				var risk = new domConstruct.create('div', {
+					id : 'risk'
+				}, 'main');
+
+				//temperature
+				var reactorTempContainer = new domConstruct.create('div', {
+					id : 'reactorTempContainer'
+				}, 'main');
+				var reactorTemp = new domConstruct.create('div', {
+					id : 'reactorTemp'
+				}, 'reactorTempContainer');
+				var reactorTempDegree = new domConstruct.create('div', {
+					id : 'reactorTempDegree'
+				}, 'reactorTempContainer');
+
+				var rcsColdLegTempContainer = new domConstruct.create('div', {
+					id : 'rcsColdLegTempContainer'
+				}, 'main');
+				var rcsColdLegTemp = new domConstruct.create('div', {
+					id : 'rcsColdLegTemp'
+				}, 'rcsColdLegTempContainer');
+				var rcsColdLegTempDegree = new domConstruct.create('div', {
+					id : 'rcsColdLegTempDegree'
+				}, 'rcsColdLegTempContainer');
+
+				var rcsHotLegTempContainer = new domConstruct.create('div', {
+					id : 'rcsHotLegTempContainer'
+				}, 'main');
+				var rcsHotLegTemp = new domConstruct.create('div', {
+					id : 'rcsHotLegTemp'
+				}, 'rcsHotLegTempContainer');
+				var rcsHotLegTempDegree = new domConstruct.create('div', {
+					id : 'rcsHotLegTempDegree'
+				}, 'rcsHotLegTempContainer');
+
+				var feedwaterColdLegTempContainer = new domConstruct.create('div', {
+					id : 'feedwaterColdLegTempContainer'
+				}, 'main');
+				var feedwaterColdLegTemp = new domConstruct.create('div', {
+					id : 'feedwaterColdLegTemp'
+				}, 'feedwaterColdLegTempContainer');
+				var feedwaterColdLegTempDegree = new domConstruct.create('div', {
+					id : 'feedwaterColdLegTempDegree'
+				}, 'feedwaterColdLegTempContainer');
+
+				var feedwaterHotLegTempContainer = new domConstruct.create('div', {
+					id : 'feedwaterHotLegTempContainer'
+				}, 'main');
+				var feedwaterHotLegTemp = new domConstruct.create('div', {
+					id : 'feedwaterHotLegTemp'
+				}, 'feedwaterHotLegTempContainer');
+				var feedwaterHotLegTempDegree = new domConstruct.create('div', {
+					id : 'feedwaterHotLegTempDegree'
+				}, 'feedwaterHotLegTempContainer');
+
+				var circulatingSystemColdLegTempContainer = new domConstruct.create('div', {
+					id : 'circulatingSystemColdLegTempContainer'
+				}, 'main');
+				var circulatingSystemColdLegTemp = new domConstruct.create('div', {
+					id : 'circulatingSystemColdLegTemp'
+				}, 'circulatingSystemColdLegTempContainer');
+				var circulatingSystemColdLegTempDegree = new domConstruct.create('div', {
+					id : 'circulatingSystemColdLegTempDegree'
+				}, 'circulatingSystemColdLegTempContainer');
+
+				var circulatingSystemHotLegTempContainer = new domConstruct.create('div', {
+					id : 'circulatingSystemHotLegTempContainer'
+				}, 'main');
+				var circulatingSystemHotLegTemp = new domConstruct.create('div', {
+					id : 'circulatingSystemHotLegTemp'
+				}, 'circulatingSystemHotLegTempContainer');
+				var circulatingSystemHotLegTempDegree = new domConstruct.create('div', {
+					id : 'circulatingSystemHotLegTempDegree'
+				}, 'circulatingSystemHotLegTempContainer');
+
 				//power
-				var generalPowerOutput = new domConstruct.create('div', {id: 'generalPowerOutput'}, 'main');
-				
-				
-				
-				
+				var generalPowerOutput = new domConstruct.create('div', {
+					id : 'generalPowerOutput'
+				}, 'main');
+
 				//main container tags
-				var htmlPos = new domStyle.set("html", "position", "fixed"); //set html tag to a fixed position
-				
+				var htmlPos = new domStyle.set("html", "position", "fixed");
+				//set html tag to a fixed position
+
 				var mainStyle = new domStyle.set("main", {
-							backgroundImage: 'url(images/background.png)', 
-							width: '1000px', height: '723px', 
-							backgroundRepeat: 'no-repeat', 
-							backgroundSize: '1000px 723px'});
-				
+					backgroundImage : 'url(images/background.png)',
+					width : '1000px',
+					height : '723px',
+					backgroundRepeat : 'no-repeat',
+					backgroundSize : '1000px 723px'
+				});
+
 				//rods
-				
 
-				new domStyle.set("rods", {width: "66px", height: '53px', position: "fixed", left: "94px", top: "182px"}); //max 233 px min 182 px
-				new domStyle.set('rodDownButtonDiv', {position: "fixed", top: "263px", left: "20px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('rodUpButtonDiv', {position: "fixed", top: "243px", left: "20px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("rods", {
+					width : "66px",
+					height : '53px',
+					position : "fixed",
+					left : "94px",
+					top : "182px"
+				});
+				//max 233 px min 182 px
+				new domStyle.set('rodDownButtonDiv', {
+					position : "fixed",
+					top : "263px",
+					left : "20px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('rodUpButtonDiv', {
+					position : "fixed",
+					top : "243px",
+					left : "20px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
-				new domStyle.set("gauge_bottom_left_div", {position: "fixed", top: "500px", left: "235px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeBottomLeftDownButton', {position: "fixed", top: "575px", left: "185px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeBottomLeftUpButton', {position: "fixed", top: "555px", left: "185px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_bottom_left_div", {
+					position : "fixed",
+					top : "500px",
+					left : "235px",
+					width : "30px",
+					height : "40px"
+				});
+				new domStyle.set('gaugeBottomLeftDownButton', {
+					position : "fixed",
+					top : "575px",
+					left : "185px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('gaugeBottomLeftUpButton', {
+					position : "fixed",
+					top : "555px",
+					left : "185px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
-				new domStyle.set("gauge_middle_bottom_div", {position: "fixed", top: "500px", left: "624px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeMiddleBottomDownButton', {position: "fixed", top: "575px", left: "670px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeMiddleBottomUpButton', {position: "fixed", top: "555px", left: "670px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_middle_bottom_div", {
+					position : "fixed",
+					top : "500px",
+					left : "624px",
+					width : "30px",
+					height : "40px"
+				});
+				new domStyle.set('gaugeMiddleBottomDownButton', {
+					position : "fixed",
+					top : "575px",
+					left : "670px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('gaugeMiddleBottomUpButton', {
+					position : "fixed",
+					top : "555px",
+					left : "670px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
-				new domStyle.set("gauge_top_left_div", {position: "fixed", top: "395px", left: "317px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeTopLeftDownButton', {position: "fixed", top: "460px", left: "275px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeTopLeftUpButton', {position: "fixed", top: "440px", left: "275px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_top_left_div", {
+					position : "fixed",
+					top : "395px",
+					left : "317px",
+					width : "30px",
+					height : "40px"
+				});
+				new domStyle.set('gaugeTopLeftDownButton', {
+					position : "fixed",
+					top : "460px",
+					left : "275px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('gaugeTopLeftUpButton', {
+					position : "fixed",
+					top : "440px",
+					left : "275px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
-				new domStyle.set("gauge_middle_top_div", {position: "fixed", top: "395px", left: "629px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeMiddleTopDownButton', {position: "fixed", top: "375px", left: "580px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeMiddleTopUpButton', {position: "fixed", top: "355px", left: "580px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_middle_top_div", {
+					position : "fixed",
+					top : "395px",
+					left : "629px",
+					width : "30px",
+					height : "40px"
+				});
+				new domStyle.set('gaugeMiddleTopDownButton', {
+					position : "fixed",
+					top : "375px",
+					left : "580px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('gaugeMiddleTopUpButton', {
+					position : "fixed",
+					top : "355px",
+					left : "580px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
-				new domStyle.set("gauge_top_right_div", {position: "fixed", top: "395px", left: "711px", width: "30px", height: "40px"});
-				new domStyle.set('gaugeTopRightDownButton', {position: "fixed", top: "375px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/downBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
-				new domStyle.set('gaugeTopRightUpButton', {position: "fixed", top: "355px", left: "755px", height: '20px', width: '40px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundSize: '30px 15px', backgroundRepeat: 'no-repeat'});
+				new domStyle.set("gauge_top_right_div", {
+					position : "fixed",
+					top : "395px",
+					left : "711px",
+					width : "30px",
+					height : "40px"
+				});
+				new domStyle.set('gaugeTopRightDownButton', {
+					position : "fixed",
+					top : "375px",
+					left : "755px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/downBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
+				new domStyle.set('gaugeTopRightUpButton', {
+					position : "fixed",
+					top : "355px",
+					left : "755px",
+					height : '20px',
+					width : '40px',
+					backgroundImage : 'url(images/elements/upBtn.png)',
+					backgroundSize : '30px 15px',
+					backgroundRepeat : 'no-repeat'
+				});
 
-				
 				//stats bar styles
-				new domStyle.set('MWH', {backgroundColor: 'green', width: '100px', height: '20px', position: 'fixed', top: '700px', left: '775px'});
-				new domStyle.set('simtime', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '655px', left: '490px'});
-				new domStyle.set('rcspressure', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '655px', left: '120px'});
-				new domStyle.set('boilingtemp', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '700px', left: '100px'});
-				new domStyle.set('workers', {backgroundColor: 'green',width: '100px', height: '20px', position: 'fixed', top: '700px', left: '490px'});
-				new domStyle.set('risk', {backgroundColor: 'green', width: '50px', height: '40px', position: 'fixed', top: '625px', left: '950px'});
-				
-				//temperature 
-				
-				new domStyle.set('reactorTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '300px', left: '75px'});
-				new domStyle.set('rcsColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '375px', left: '75px'});
-				new domStyle.set('rcsHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '250px'});
-				new domStyle.set('feedwaterColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '393px', left: '492px'});
-				new domStyle.set('feedwaterHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '125px', left: '500px'});
-				new domStyle.set('circulatingSystemColdLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '453px', left: '830px'});
-				new domStyle.set('circulatingSystemHotLegTempContainer', {backgroundColor: 'purple', width: '100px', height: '30px', position: 'fixed', top: '250px', left: '715px'});
-				
-				new domStyle.set('reactorTempDegree', {backgroundImage: 'url(images/degree.png)', backgroundSize: '10px 10px'});
-				new domStyle.set('rcsColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				new domStyle.set('rcsHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				new domStyle.set('feedwaterColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				new domStyle.set('feedwaterHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				new domStyle.set('circulatingSystemColdLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				new domStyle.set('circulatingSystemHotLegTempDegree', {backgroundImage: 'url(images/degree.png)'});
-				
+				new domStyle.set('MWH', {
+					backgroundColor : 'green',
+					width : '100px',
+					height : '20px',
+					position : 'fixed',
+					top : '700px',
+					left : '775px'
+				});
+				new domStyle.set('simtime', {
+					backgroundColor : 'green',
+					width : '100px',
+					height : '20px',
+					position : 'fixed',
+					top : '655px',
+					left : '490px'
+				});
+				new domStyle.set('rcspressure', {
+					backgroundColor : 'green',
+					width : '100px',
+					height : '20px',
+					position : 'fixed',
+					top : '655px',
+					left : '120px'
+				});
+				new domStyle.set('boilingtemp', {
+					backgroundColor : 'green',
+					width : '100px',
+					height : '20px',
+					position : 'fixed',
+					top : '700px',
+					left : '100px'
+				});
+				new domStyle.set('workers', {
+					backgroundColor : 'green',
+					width : '100px',
+					height : '20px',
+					position : 'fixed',
+					top : '700px',
+					left : '490px'
+				});
+				new domStyle.set('risk', {
+					backgroundColor : 'green',
+					width : '50px',
+					height : '40px',
+					position : 'fixed',
+					top : '625px',
+					left : '950px'
+				});
+
+				//temperature
+
+				new domStyle.set('reactorTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '300px',
+					left : '75px'
+				});
+				new domStyle.set('rcsColdLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '375px',
+					left : '75px'
+				});
+				new domStyle.set('rcsHotLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '125px',
+					left : '250px'
+				});
+				new domStyle.set('feedwaterColdLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '393px',
+					left : '492px'
+				});
+				new domStyle.set('feedwaterHotLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '125px',
+					left : '500px'
+				});
+				new domStyle.set('circulatingSystemColdLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '453px',
+					left : '830px'
+				});
+				new domStyle.set('circulatingSystemHotLegTempContainer', {
+					backgroundColor : 'purple',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '250px',
+					left : '715px'
+				});
+
+				new domStyle.set('reactorTempDegree', {
+					backgroundImage : 'url(images/degree.png)',
+					backgroundSize : '10px 10px'
+				});
+				new domStyle.set('rcsColdLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+				new domStyle.set('rcsHotLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+				new domStyle.set('feedwaterColdLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+				new domStyle.set('feedwaterHotLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+				new domStyle.set('circulatingSystemColdLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+				new domStyle.set('circulatingSystemHotLegTempDegree', {
+					backgroundImage : 'url(images/degree.png)'
+				});
+
 				//power
-				new domStyle.set('generalPowerOutput', {backgroundColor: 'red', width: '100px', height: '30px', position: 'fixed', top: '173px', left: '715px'});
-				
-				
-				
-				
+				new domStyle.set('generalPowerOutput', {
+					backgroundColor : 'red',
+					width : '100px',
+					height : '30px',
+					position : 'fixed',
+					top : '173px',
+					left : '715px'
+				});
+
 				//rods
-				var rodlevel = 0;
-				//you've got to fix this button. it needs switched into the pictures located to the left of the tank
+				this.rodLevel = 9;
 				
-				var rod_Down_Button = {
-					onClick: function(){ //checks the rod level and slides it down to the appropriate place
-						switch(rodlevel){
-							case 0:
-								dojo.fx.slideTo({
-									top: 188,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 1;
-								break;
-							case 1:
-								dojo.fx.slideTo({
-									top: 194,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 2;
-								break;
-							case 2:
-								dojo.fx.slideTo({
-									top: 200,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 3;
-								break;
-							case 3:
-								dojo.fx.slideTo({
-									top: 206,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 4;
-								break;
-							case 4:
-								dojo.fx.slideTo({
-									top: 212,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 5;
-								break;
-							case 5:
-								dojo.fx.slideTo({
-									top: 218,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 6;
-								break;
-							case 6:
-								dojo.fx.slideTo({
-									top: 224,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 7;
-								break;
-							case 7:
-								dojo.fx.slideTo({
-									top: 228,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 8;
-								break;
-							case 8:
-								dojo.fx.slideTo({
-									top: 233,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 9;
-								break;
-						}
+				this.rodTop = [233, 228, 224, 218, 212, 206, 200, 194, 188,182]
+				//you've got to fix this button. it needs switched into the pictures located to the left of the ta
+				this.rodMove = function(x) {
+					this.rodLevel = this.rodLevel + x
+					if (this.rodLevel < 0) {
+						this.rodLevel = 0
 					}
-				};
-				var rodDownButtonId = dojo.byId('rodDownButtonDiv');
-				var handleRodDown = on(rodDownButtonId, "click", rod_Down_Button.onClick);
-			
-			
-			
-				//Button : Rod : Up
-				var rod_Up_Button = {
-					onClick: function(){ //checks the rod level and slides it up to the appropriate place
-						switch(rodlevel){
-							case 9:
-								dojo.fx.slideTo({
-									top: 228,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 8;
-								break;
-							case 8:
-								dojo.fx.slideTo({
-									top: 224,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 7;
-								break;
-							case 7:
-								dojo.fx.slideTo({
-									top: 218,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 6;
-								break;
-							case 6:
-								dojo.fx.slideTo({
-									top: 212,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 5;
-								break;
-							case 5:
-								dojo.fx.slideTo({
-									top: 206,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 4;
-								break;
-							case 4:
-								dojo.fx.slideTo({
-									top: 200,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 3;
-							case 3:
-								dojo.fx.slideTo({
-									top: 194,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 2;
-								break;
-							case 2:
-								dojo.fx.slideTo({
-									top: 188,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 1;
-								break;
-							case 1:
-								dojo.fx.slideTo({
-									top: 182,
-									left: 94,
-									node: rods
-								}).play();
-								rodlevel = 0;
-								break;
-						}
+					if (this.rodLevel > 9) {
+						this.rodLevel = 9
 					}
-				};
-				var rodUpButtonId = dojo.byId('rodUpButtonDiv');
-				var handleRodUp = on(rodUpButtonId, "click", rod_Up_Button.onClick);
-/*
-				var testButton = new domConstruct.create("div", {id: 'test'}, 'body');
-				new domStyle.set('test', {height: '100px', width: '100px', backgroundImage: 'url(images/elements/upBtn.png)', backgroundRepeat: 'no-repeat'});
-				var myScopedButton = dojo.byId('test');
-				var myClick = {
-						id: 'myClick',
-						onClick: function(){
-								alert('hello there');
-						}
-				};
-				var handle = on(myScopedButton, "click", myClick.onClick);
-*/
+
+					j = {
+						"level" : this.rodLevel
+					};
+					console.log(JSON.stringify(j), j);
+					this.sockets.rodSocket.send(JSON.stringify(j));
+					dojo.fx.slideTo({
+						top : this.rodTop[this.rodLevel],
+						left : 94,
+						node : rods
+					}).play();
+				}
+				var handleRodDown = on(dojo.byId('rodDownButtonDiv'), "click", lang.hitch(this, this.rodMove, -1));
+				var handleRodUp = on(dojo.byId('rodUpButtonDiv'), "click", lang.hitch(this, this.rodMove, 1));
+
 
 				gaugeBLCount = 0;
 				var gaugeBLDButton = {
-					onClick: function(){
-						switch(gaugeBLCount){
+					onClick : function() {
+						switch(gaugeBLCount) {
 							case 4:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/3.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeBLCount -= 1;
 								break;
 							case 3:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeBLCount -= 1;
 								break;
 							case 2:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeBLCount -= 1;
 								break;
 							case 1:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/0.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeBLCount -= 1;
 								break;
-							}	
-						
 						}
-					} ;
-					var gaugeBLDButtonId = dojo.byId('gaugeBottomLeftDownButton');
-					var handleBLD = on(gaugeBLDButtonId, "click", gaugeBLDButton.onClick);
-				
+
+					}
+				};
+				var gaugeBLDButtonId = dojo.byId('gaugeBottomLeftDownButton');
+				var handleBLD = on(gaugeBLDButtonId, "click", gaugeBLDButton.onClick);
+
 				var gaugeBLUButton = {
-					onClick: function(){
-						switch(gaugeBLCount){
+					onClick : function() {
+						switch(gaugeBLCount) {
 							case 0:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeBLCount += 1;
 								break;
 							case 1:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeBLCount += 1;
 								break;
 							case 2:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/3.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeBLCount += 1;
 								break;
 							case 3:
-								domAttr.set('gauge_bottom_left', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_bottom_left', {
+									src : "images/gaugeValues/4.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeBLCount += 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeBLUButtonId = dojo.byId('gaugeBottomLeftUpButton');
-					var handleBLU = on(gaugeBLUButtonId, "click", gaugeBLUButton.onClick);
 
-
-
+					}
+				};
+				var gaugeBLUButtonId = dojo.byId('gaugeBottomLeftUpButton');
+				var handleBLU = on(gaugeBLUButtonId, "click", gaugeBLUButton.onClick);
 
 				gaugeMBCount = 0;
 				var gaugeMBDButton = {
-					onClick: function(){
-						switch(gaugeMBCount){
+					onClick : function() {
+						switch(gaugeMBCount) {
 							case 3:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeMBCount -= 1;
 								break;
 							case 2:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeMBCount -= 1;
 								break;
 							case 1:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/0.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeMBCount -= 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeMBDButtonId = dojo.byId('gaugeMiddleBottomDownButton');
-					var handleMBD = on(gaugeMBDButtonId, "click", gaugeMBDButton.onClick);
 
+					}
+				};
+				var gaugeMBDButtonId = dojo.byId('gaugeMiddleBottomDownButton');
+				var handleMBD = on(gaugeMBDButtonId, "click", gaugeMBDButton.onClick);
 
 				var gaugeMBUButton = {
-					onClick: function(){
-						switch(gaugeMBCount){
+					onClick : function() {
+						switch(gaugeMBCount) {
 							case 0:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeMBCount += 1;
 								break;
 							case 1:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeMBCount += 1;
 								break;
 							case 2:
-								domAttr.set('gauge_middle_bottom', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_middle_bottom', {
+									src : "images/gaugeValues/3.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeMBCount += 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeMBUButtonId = dojo.byId('gaugeMiddleBottomUpButton');
-					var handleMBU = on(gaugeMBUButtonId, "click", gaugeMBUButton.onClick);
 
+					}
+				};
+				var gaugeMBUButtonId = dojo.byId('gaugeMiddleBottomUpButton');
+				var handleMBU = on(gaugeMBUButtonId, "click", gaugeMBUButton.onClick);
 
 				gaugeTLCount = 0;
 				var gaugeTLDButton = {
-					onClick: function(){
-						switch(gaugeTLCount){
+					onClick : function() {
+						switch(gaugeTLCount) {
 							case 4:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/3.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/3.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeTLCount -= 1;
 								break;
 							case 3:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeTLCount -= 1;
 								break;
 							case 2:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeTLCount -= 1;
 								break;
 							case 1:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/0.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeTLCount -= 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeTLDButtonId = dojo.byId('gaugeTopLeftDownButton');
-					var handleTLD = on(gaugeTLDButtonId, "click", gaugeTLDButton.onClick);
 
+					}
+				};
+				var gaugeTLDButtonId = dojo.byId('gaugeTopLeftDownButton');
+				var handleTLD = on(gaugeTLDButtonId, "click", gaugeTLDButton.onClick);
 
 				var gaugeTLUButton = {
-					onClick: function(){
-						switch(gaugeTLCount){
+					onClick : function() {
+						switch(gaugeTLCount) {
 							case 0:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeTLCount += 1;
 								break;
 							case 1:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeTLCount += 1;
 								break;
 							case 2:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/3.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/3.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeTLCount += 1;
 								break;
 							case 3:
-								domAttr.set('gauge_top_left', {src: "images/gaugeValues/4.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_top_left', {
+									src : "images/gaugeValues/4.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeTLCount += 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeTLUButtonId = dojo.byId('gaugeTopLeftUpButton');
-					var handleTLU = on(gaugeTLUButtonId, "click", gaugeTLUButton.onClick);
 
+					}
+				};
+				var gaugeTLUButtonId = dojo.byId('gaugeTopLeftUpButton');
+				var handleTLU = on(gaugeTLUButtonId, "click", gaugeTLUButton.onClick);
 
 				gaugeMTCount = 0;
 				var gaugeMTDButton = {
-					onClick: function(){
-						switch(gaugeMTCount){
+					onClick : function() {
+						switch(gaugeMTCount) {
 							case 2:
-								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_middle_top', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeMTCount -= 1;
 								break;
 							case 1:
-								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_middle_top', {
+									src : "images/gaugeValues/0.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeMTCount -= 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeMTDButtonId = dojo.byId('gaugeMiddleTopDownButton');
-					var handleMTD = on(gaugeMTDButtonId, "click", gaugeMTDButton.onClick);
 
+					}
+				};
+				var gaugeMTDButtonId = dojo.byId('gaugeMiddleTopDownButton');
+				var handleMTD = on(gaugeMTDButtonId, "click", gaugeMTDButton.onClick);
 
 				var gaugeMTUButton = {
-					onClick: function(){
-						switch(gaugeMTCount){
+					onClick : function() {
+						switch(gaugeMTCount) {
 							case 0:
-								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_middle_top', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeMTCount += 1;
 								break;
 							case 1:
-								domAttr.set('gauge_middle_top', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_middle_top', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeMTCount += 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeMTUButtonId = dojo.byId('gaugeMiddleTopUpButton');
-					var handleMTU = on(gaugeMTUButtonId, "click", gaugeMTUButton.onClick);
 
-
+					}
+				};
+				var gaugeMTUButtonId = dojo.byId('gaugeMiddleTopUpButton');
+				var handleMTU = on(gaugeMTUButtonId, "click", gaugeMTUButton.onClick);
 
 				gaugeTRCount = 0;
 				var gaugeTRDButton = {
-					onClick: function(){
-						switch(gaugeTRCount){
+					onClick : function() {
+						switch(gaugeTRCount) {
 							case 2:
-								domAttr.set('gauge_top_right', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_top_right', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeTRCount -= 1;
 								break;
 							case 1:
-								domAttr.set('gauge_top_right', {src: "images/gaugeValues/0.png", width: "25px", height: '35px'});
+								domAttr.set('gauge_top_right', {
+									src : "images/gaugeValues/0.png",
+									width : "25px",
+									height : '35px'
+								});
 								gaugeTRCount -= 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeTRDButtonId = dojo.byId('gaugeTopRightDownButton');
-					var handleTRD = on(gaugeTRDButtonId, "click", gaugeTRDButton.onClick);
 
+					}
+				};
+				var gaugeTRDButtonId = dojo.byId('gaugeTopRightDownButton');
+				var handleTRD = on(gaugeTRDButtonId, "click", gaugeTRDButton.onClick);
 
 				var gaugeTRUButton = {
-					onClick: function(){
-						switch(gaugeTRCount){
+					onClick : function() {
+						switch(gaugeTRCount) {
 							case 0:
-								domAttr.set('gauge_top_right', {src: "images/gaugeValues/1.png", width: "17px", height: '35px'});
+								domAttr.set('gauge_top_right', {
+									src : "images/gaugeValues/1.png",
+									width : "17px",
+									height : '35px'
+								});
 								gaugeTRCount += 1;
 								break;
 							case 1:
-								domAttr.set('gauge_top_right', {src: "images/gaugeValues/2.png", width: "20px", height: '35px'});
+								domAttr.set('gauge_top_right', {
+									src : "images/gaugeValues/2.png",
+									width : "20px",
+									height : '35px'
+								});
 								gaugeTRCount += 1;
 								break;
-							}	
-						
 						}
-					};
-					var gaugeTRUButtonId = dojo.byId('gaugeTopRightUpButton');
-					var handleTRU = on(gaugeTRUButtonId, "click", gaugeTRUButton.onClick);
-				
+
+					}
+				};
+				var gaugeTRUButtonId = dojo.byId('gaugeTopRightUpButton');
+				var handleTRU = on(gaugeTRUButtonId, "click", gaugeTRUButton.onClick);
+
 			});
-			
-		
+
 		</script>
 	</head>
 </html>
