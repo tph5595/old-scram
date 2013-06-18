@@ -102,7 +102,7 @@ class UI(object):
         self.go()
          
     def _setUpListener(self, serviceName, port, protocol, handler=None):
-        url = "ws://localhost:%n"%(port)       
+        url = "ws://localhost:%d"%(port)       
         factory = WebSocketServerFactory(url, debug=True, debugCodePaths=True)    
         factory.protocol = protocol
         factory.setProtocolOptions(allowHixie76=True)
@@ -121,8 +121,10 @@ class UI(object):
         pass
     def _handlePump(self):
         pass
-    def _handleRod(self):
-        pass
+    
+    def _handleRod(self, conn, msg):
+        self.protocol.rod(msg)
+        
     def _handleUser(self):
         pass
     def _handleEarthquake(self):
