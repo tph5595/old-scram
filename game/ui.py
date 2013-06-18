@@ -119,8 +119,9 @@ class UI(object):
         
     def _handleValve(self):
         pass
-    def _handlePump(self):
-        pass
+    
+    def _handlePump(self,conn,msg):
+        self.protocol.pump(msg)
     
     def _handleRod(self, conn, msg):
         self.protocol.rod(msg)
