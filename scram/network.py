@@ -44,7 +44,7 @@ class ScramServer(AMP):
     
     def pump(self,pumpid,level):
         print "Setting Rod Level to: %s"%str(level)
-        self.world.plant.setRod(level)
+        self.world.plant.setPump(pumpid,level)
         return {"response":True}
     SetPump.responder(pump)
     

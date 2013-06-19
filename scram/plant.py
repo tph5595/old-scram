@@ -176,6 +176,19 @@ class Plant(object):
     def setRod(self,level):
         self.rodLevel = level
         
+    def setPump(self,pumpid,level):
+        if pumpid == 'rcs':
+            self.reactorPumps = level
+        if pumpid == 'hpi':
+            self.hpiPump = level
+        if pumpid == 'aux':
+            self.afsPumps = level
+        if pumpid == 'afs':
+            self.conPumps = level
+        if pumpid == 'cs':
+            self.towerPumps = level
+        
+        
     def display(self):
         print"*****************************" 
         print "Sim Time: %s"%(str(self.elapsedTime))
@@ -206,7 +219,7 @@ class Plant(object):
         self._xferSteamToCondenser()
         #then on to the tower
         self._xferToTower()
-        self.display()
+        #self.display()
 
         
     

@@ -38,8 +38,8 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpId' : 'rcs',
 				'parent' : this.ui,
 				pumpClass :'rcspump pumpsize pump0',
-				pumpUpClass : 'rcspumpup',
-				pumpDownClass : 'rcspumpdown',
+				pumpUpClass : 'rcspumpup upbutton',
+				pumpDownClass : 'rcspumpdown downbutton',
 			});
 			this.hpiTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
@@ -47,8 +47,8 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpId' : 'hpiTank',
 				'parent' : this.ui,
 				pumpClass :'hpitankpump pumpsize pump0',
-				pumpUpClass : 'hpitankpumpup',
-				pumpDownClass : 'hpitankpumpdown',
+				pumpUpClass : 'hpitankpumpup upbutton',
+				pumpDownClass : 'hpitankpumpdown downbutton',
 			});
 			this.auxTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
@@ -56,8 +56,8 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpId' : 'auxTank',
 				'parent' : this.ui,
 				pumpClass :'auxtankpump pumpsize pump0',
-				pumpUpClass : 'auxtankpumpup',
-				pumpDownClass : 'auxtankpumpdown',
+				pumpUpClass : 'auxtankpumpup upbutton',
+				pumpDownClass : 'auxtankpumpdown downbutton',
 			});
 			this.feedwaterPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
@@ -65,8 +65,8 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpId' : 'feedwater',
 				'parent' : this.ui,
 				pumpClass :'feedwaterpump pumpsize pump0',
-				pumpUpClass : 'feedwaterpumpup',
-				pumpDownClass : 'feedwaterpumpdown',
+				pumpUpClass : 'feedwaterpumpup upbutton',
+				pumpDownClass : 'feedwaterpumpdown downbutton',
 			});
 			this.csPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
@@ -74,8 +74,8 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpId' : 'cs',
 				'parent' : this.ui,
 				pumpClass :'cspump pumpsize pump0',
-				pumpUpClass : 'cspumpup',
-				pumpDownClass : 'cspumpdown',
+				pumpUpClass : 'cspumpup upbutton',
+				pumpDownClass : 'cspumpdown downbutton',
 			});
 
 			this.addChild(this.rods);
