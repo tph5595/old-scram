@@ -11,23 +11,15 @@
 			}
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/style.css"/> 
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/_base/lang","scram/sockets"], function(lang,Sockets) {
-				this.sockets = new Sockets();
-				this.onPollMsg = function(event){
-					console.log("PollMsg:",event.data);
-				};
-				this.onRodOpen = function(event){
-					console.log("Rod Socket Open");
-					this.sockets.rodSocket.send('{"level":4}');
-				};
-				this.sockets.pollSocket.on("message",lang.hitch(this, this.onPollMsg));
-				this.sockets.rodSocket.on("open",lang.hitch(this, this.onRodOpen));
+			require(["dojo/_base/lang","dojo/on","scram/sockets","scram/ui", "dojo/domReady!"], function(lang,on,Sockets, UI) {
+				this.ui = new UI({},"body");
+				this.ui.startup()
 			});
 
 		</script>
 	</head>
-	<body>
-		
+	<body id="body">		
 	</body>
 </html>

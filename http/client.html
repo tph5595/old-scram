@@ -12,109 +12,88 @@
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/on", "dojo/_base/lang", "scram/sockets", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], function(on, lang, Sockets, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
+			require(["dojo/on", "dojo/_base/lang", "scram/sockets", "scram/rod", "dojo/dom-construct", "dojo/_base/array", "dojo/dom-style", "dijit/form/Button", "dojo/dom", "dojo/fx", "dojo/dom-attr", "dojo/domReady!"], function(on, lang, Sockets, Rods, domConstruct, arrayUtil, domStyle, Button, dom, fx, domAttr) {
 
-				//start new stuff
-				this.sockets = new Sockets();
-				this.onPollMsg = function(event) {
-					//console.log("PollMsg:",event.data);
-					var obj = JSON.parse(event.data);
-					console.log(obj)
-					MWH.innerHTML = Math.round(obj.mwh);
-					reactorTemp.innerHTML = Math.round(obj.reactortemp);
-					rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
-					rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
-					simtime.innerHTML = Math.round(obj.simtime);
-					generalPowerOutput.innerHTML = Math.round(obj.genmw);
-					circulatingSystemColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
-					circulatingSystemHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);
-					feedwaterColdLegTemp.innerHTML = Math.round(obj.afscoldlegtemp);
-					feedwaterHotLegTemp.innerHTML = Math.round(obj.afshotlegtemp);
-					//rcspressure.innerHTML=Math.round(obj.rcspressure);
-					//boilingtemp.innerHTML=Math.round(obj.boilingtemp);
-					//workers.innerHTML=Math.round(obj.workers);
-					//risk.innerHTML=Math.round(obj.risk);
-
-				};
-				this.sockets.pollSocket.on("message", lang.hitch(this, this.onPollMsg));
 				//end new stuff
-
-				var bodyDiv = new domConstruct.create("body", {
-					id : 'body'
-				}, "html");
-				var mainDiv = new domConstruct.create("div", {
+				this.main = new domConstruct.create("div", {
 					id : "main"
-				}, "body");
+				}, this.node);
+
+
 				//create main div that will hold the scramBackground image
+				/*
 
 				//construct rods divs and rod buttons
 				var rods = new domConstruct.create("img", {
-					id : 'rods',
-					src : 'images/elements/rods.png'
+				id : 'rods',
+				src : 'images/elements/rods.png'
 				}, "main");
 				//create the rods image
 
 				var rodDownButtonDiv = new domConstruct.create("div", {
-					id : 'rodDownButtonDiv'
+				id : 'rodDownButtonDiv'
 				}, "main");
 				//create the rod down button div
 				var rodUpButtonDiv = new domConstruct.create("div", {
-					id : 'rodUpButtonDiv'
+				id : 'rodUpButtonDiv'
 				}, "main");
 				//create the rod up button div
-
+				*/
 				//construct gaugeBottomLeft divs and gaugeBottomLeftDown buttons
-				var gaugeBottomLeftDownButton = new domConstruct.create("div", {
+				this.gaugeBottomLeftDownButton = new domConstruct.create("div", {
 					id : 'gaugeBottomLeftDownButton'
-				}, "main");
+				}, this.main);
+				
 				//create the gauge bottom left Down button div
-				var gaugeBottomLeftUpButton = new domConstruct.create("div", {
+				this.gaugeBottomLeftUpButton = new domConstruct.create("div", {
 					id : 'gaugeBottomLeftUpButton'
-				}, "main");
+				}, this.main);
+				
 				//create the gauge bottom left up button div
-				var gauge_bottom_left_div = new domConstruct.create("div", {
+				this.gauge_bottom_left_div = new domConstruct.create("div", {
 					id : 'gauge_bottom_left_div'
-				}, "main");
-				var gauge_bottom_left = new domConstruct.create("img", {
+				}, this.main);
+				
+				this.gauge_bottom_left = new domConstruct.create("img", {
 					id : 'gauge_bottom_left',
 					src : 'images/gaugeValues/0.png',
 					width : "25px",
 					height : '35px'
-				}, "gauge_bottom_left_div");
+				}, this.gauge_bottom_left_div);
 
 				//gauge middle bottom
-				var gaugeMiddleBottomDownButton = new domConstruct.create('div', {
+				this.gaugeMiddleBottomDownButton = new domConstruct.create('div', {
 					id : 'gaugeMiddleBottomDownButton'
-				}, 'main');
-				var gaugeMiddleBottomUpButton = new domConstruct.create('div', {
+				}, this.main);
+				this.gaugeMiddleBottomUpButton = new domConstruct.create('div', {
 					id : 'gaugeMiddleBottomUpButton'
-				}, 'main');
-				var gauge_middle_bottom_div = new domConstruct.create("div", {
+				}, this.main);
+				this.gauge_middle_bottom_div = new domConstruct.create("div", {
 					id : 'gauge_middle_bottom_div'
-				}, "main");
-				var gauge_middle_bottom = new domConstruct.create("img", {
+				}, this.main);
+				this.gauge_middle_bottom = new domConstruct.create("img", {
 					id : 'gauge_middle_bottom',
 					src : 'images/gaugeValues/0.png',
 					width : "25px",
 					height : '35px'
-				}, 'gauge_middle_bottom_div')
+				}, this.gauge_middle_bottom_div)
 
 				//gauge top left
-				var gaugeTopLeftDownButton = new domConstruct.create('div', {
+				this.gaugeTopLeftDownButton = new domConstruct.create('div', {
 					id : 'gaugeTopLeftDownButton'
-				}, 'main');
-				var gaugeTopLeftUpButton = new domConstruct.create('div', {
+				}, this.main);
+				this.gaugeTopLeftUpButton = new domConstruct.create('div', {
 					id : 'gaugeTopLeftUpButton'
-				}, 'main');
-				var gauge_top_left_div = new domConstruct.create("div", {
+				}, this.main);
+				this.gauge_top_left_div = new domConstruct.create("div", {
 					id : 'gauge_top_left_div'
-				}, "main");
-				var gauge_top_left = new domConstruct.create('img', {
+				}, this.main);
+				this.gauge_top_left = new domConstruct.create('img', {
 					id : 'gauge_top_left',
 					src : 'images/gaugeValues/0.png',
 					width : "25px",
 					height : '35px'
-				}, 'gauge_top_left_div');
+				}, this.gauge_top_left_div);
 
 				//gauge middle top
 				var gaugeMiddleTopDownButton = new domConstruct.create('div', {
@@ -256,37 +235,6 @@
 					height : '723px',
 					backgroundRepeat : 'no-repeat',
 					backgroundSize : '1000px 723px'
-				});
-
-				//rods
-
-				new domStyle.set("rods", {
-					width : "66px",
-					height : '53px',
-					position : "fixed",
-					left : "94px",
-					top : "182px"
-				});
-				//max 233 px min 182 px
-				new domStyle.set('rodDownButtonDiv', {
-					position : "fixed",
-					top : "263px",
-					left : "20px",
-					height : '20px',
-					width : '40px',
-					backgroundImage : 'url(images/elements/downBtn.png)',
-					backgroundSize : '30px 15px',
-					backgroundRepeat : 'no-repeat'
-				});
-				new domStyle.set('rodUpButtonDiv', {
-					position : "fixed",
-					top : "243px",
-					left : "20px",
-					height : '20px',
-					width : '40px',
-					backgroundImage : 'url(images/elements/upBtn.png)',
-					backgroundSize : '30px 15px',
-					backgroundRepeat : 'no-repeat'
 				});
 
 				new domStyle.set("gauge_bottom_left_div", {
@@ -572,33 +520,34 @@
 				});
 
 				//rods
-				this.rodLevel = 9;
-				
-				this.rodTop = [233, 228, 224, 218, 212, 206, 200, 194, 188,182]
-				//you've got to fix this button. it needs switched into the pictures located to the left of the ta
-				this.rodMove = function(x) {
-					this.rodLevel = this.rodLevel + x
-					if (this.rodLevel < 0) {
-						this.rodLevel = 0
-					}
-					if (this.rodLevel > 9) {
-						this.rodLevel = 9
-					}
+				/*
+				 this.rodLevel = 9;
 
-					j = {
-						"level" : this.rodLevel
-					};
-					console.log(JSON.stringify(j), j);
-					this.sockets.rodSocket.send(JSON.stringify(j));
-					dojo.fx.slideTo({
-						top : this.rodTop[this.rodLevel],
-						left : 94,
-						node : rods
-					}).play();
-				}
-				var handleRodDown = on(dojo.byId('rodDownButtonDiv'), "click", lang.hitch(this, this.rodMove, -1));
-				var handleRodUp = on(dojo.byId('rodUpButtonDiv'), "click", lang.hitch(this, this.rodMove, 1));
+				 this.rodTop = [233, 228, 224, 218, 212, 206, 200, 194, 188,182]
+				 //you've got to fix this button. it needs switched into the pictures located to the left of the ta
+				 this.rodMove = function(x) {
+				 this.rodLevel = this.rodLevel + x
+				 if (this.rodLevel < 0) {
+				 this.rodLevel = 0
+				 }
+				 if (this.rodLevel > 9) {
+				 this.rodLevel = 9
+				 }
 
+				 j = {
+				 "level" : this.rodLevel
+				 };
+				 console.log(JSON.stringify(j), j);
+				 this.sockets.rodSocket.send(JSON.stringify(j));
+				 dojo.fx.slideTo({
+				 top : this.rodTop[this.rodLevel],
+				 left : 94,
+				 node : rods
+				 }).play();
+				 }
+				 var handleRodDown = on(dojo.byId('rodDownButtonDiv'), "click", lang.hitch(this, this.rodMove, -1));
+				 var handleRodUp = on(dojo.byId('rodUpButtonDiv'), "click", lang.hitch(this, this.rodMove, 1));
+				 */
 
 				gaugeBLCount = 0;
 				var gaugeBLDButton = {
@@ -944,9 +893,38 @@
 				};
 				var gaugeTRUButtonId = dojo.byId('gaugeTopRightUpButton');
 				var handleTRU = on(gaugeTRUButtonId, "click", gaugeTRUButton.onClick);
+				
+				this.sockets = new Sockets();
+				this.onPollMsg = function(event) {
+					try {
+						var obj = JSON.parse(event.data);
+						MWH.innerHTML = Math.round(obj.mwh);
+						reactorTemp.innerHTML = Math.round(obj.reactortemp);
+						rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
+						rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
+						simtime.innerHTML = Math.round(obj.simtime);
+						generalPowerOutput.innerHTML = Math.round(obj.genmw);
+						circulatingSystemColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
+						circulatingSystemHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);
+						feedwaterColdLegTemp.innerHTML = Math.round(obj.afscoldlegtemp);
+						feedwaterHotLegTemp.innerHTML = Math.round(obj.afshotlegtemp);
+						//rcspressure.innerHTML=Math.round(obj.rcspressure);
+						//boilingtemp.innerHTML=Math.round(obj.boilingtemp);
+						//workers.innerHTML=Math.round(obj.workers);
+						//risk.innerHTML=Math.round(obj.risk);
+					} catch(err) {
+						console.log("Error in socket:", err);
+					}
 
+				};
+				this.sockets.pollSocket.on("message", lang.hitch(this, this.onPollMsg));
+				
+				this.rods = new Rods(this.sockets.rodSocket);
 			});
 
 		</script>
 	</head>
+	<body>
+		<div dojo-data-attach-point="node"></div>
+	</body>
 </html>
