@@ -11,7 +11,7 @@ define(["dojo/_base/lang", "dojo/on","dojo/_base/declare", "dijit/_WidgetBase","
 		state : null,
 		_socket : null,
 		rodLevel : null,
-		rodTop : [233, 228, 224, 218, 212, 206, 200, 194, 188, 182],
+		rodTop : [226, 220, 216, 212, 204, 198, 192, 186, 180, 172],
 
 		constructor : function(args) {
 			this._socket = args.socket;
@@ -54,7 +54,7 @@ define(["dojo/_base/lang", "dojo/on","dojo/_base/declare", "dijit/_WidgetBase","
 			this._socket.send(JSON.stringify(j));
 			fx.slideTo({
 				top : this.rodTop[this.rodLevel],
-				left : 94,
+				left : 86,
 				node : this.rods
 			}).play();
 

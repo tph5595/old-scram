@@ -1,4 +1,6 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", "dojo/dom-construct", "dojo/dom-style", "dojo/fx"], function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domStyle, fx) {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", 
+"dojo/dom-construct", "dojo/dom-class", "dojo/fx"], 
+function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx) {
 	return Declare("scram.pumps", [_WidgetBase, _Contained], {
 		///
 		/// This is the class for the pumps
@@ -44,12 +46,12 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.inherited(arguments);
 		},
 		pumpMove : function(x) {
-			this.rodLevel = this.rodLevel + x
+			this.pumpLevel = this.pumpLevel + x
 			if (this.pumpLevel < 0) {
 				this.pumpLevel = 0
 			}
 			if (this.pumpLevel > this.pumpLevelMax) {
-				this.pumpLevelMax = this.pumpLevelMax;
+				this.pumpLevel = this.pumpLevelMax;
 			}
 			j = {
 				"level" : this.pumpLevel,
@@ -57,9 +59,8 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			};
 			console.log(JSON.stringify(j), j);
 			this._socket.send(JSON.stringify(j));
-			domStyle.set(this.pump, {
-				'class' : "pump" + this.pumpLevel + 'pumpsize ' + this.pumpClass
-			});
+			domClass.remove(this.pump);
+			domClass.add(this.pump,'pump' + this.pumpLevel + ' pumpsize ' + this.pumpClass);
 		}
 	});
 });

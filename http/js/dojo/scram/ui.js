@@ -73,7 +73,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpLevelMax' : 2,
 				'pumpId' : 'cs',
 				'parent' : this.ui,
-				pumpClass :'cspump pumpsize pump0',
+				pumpClass :'cspump pumpsize',
 				pumpUpClass : 'cspumpup upbutton',
 				pumpDownClass : 'cspumpdown downbutton',
 			});
