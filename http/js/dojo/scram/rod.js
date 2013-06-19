@@ -1,6 +1,6 @@
 define(["dojo/_base/lang", "dojo/on","dojo/_base/declare", "dijit/_WidgetBase","dijit/_Contained","dojo/dom-construct","dojo/dom-style","dojo/fx"],
  function(lang, on, Declare, _WidgetBase, _Contained, domConstruct,domStyle,fx) {
-	return Declare("scram.socket", [_WidgetBase, _Contained], {
+	return Declare("scram.rod", [_WidgetBase, _Contained], {
 		///
 		/// This is the class for the rods
 		///
@@ -31,7 +31,7 @@ define(["dojo/_base/lang", "dojo/on","dojo/_base/declare", "dijit/_WidgetBase","
 			
 			//create the rod down button div
 			this.rodUp = new domConstruct.create("div", {
-				id : 'rodUpButtonDiv z1'
+				'class' : 'rodup upbutton z1'
 			}, this.parent);
 			
 			this.handleRodDown = on(this.rodDown, "click", lang.hitch(this, this.rodMove, -1));

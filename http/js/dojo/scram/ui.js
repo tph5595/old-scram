@@ -1,4 +1,4 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", "dojo/dom-style", "scram/sockets", "scram/rod"], function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets, Rods) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", "dojo/dom-style", "scram/sockets", "scram/rod", "scram/pump"], function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets, Rods, Pump) {
 	return Declare("scram.ui", [_WidgetBase, _Container], {
 		///
 		/// This is the class for the main UI
@@ -7,6 +7,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 		ui : null, //ref to the node we create
 		args : null, //property bag
 		_sockets : null,
+
 		constructor : function(props, srcNodeRef) {
 			this.props = props;
 			this.srcNodeRef = srcNodeRef
@@ -20,7 +21,6 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'class' : "ui z0"
 			}, this.srcNodeRef);
 
-
 			this.inherited(arguments);
 		},
 		postCreate : function() {
@@ -30,8 +30,19 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 			//child widgets in the containierNode have not been rendered
 			this.rods = new Rods({
 				"socket" : this._sockets.rodSocket,
-				"parent": this.ui
+				"parent" : this.ui
 			});
+			this.rcsPump = new Pump({
+				'socket' : this._sockets.pumpSocket,
+				'pumpLevelMax' : 4,
+				'pumpId' : 'rcs',
+				'parent' : this.ui,
+				pumpClass :'rcspump',
+				pumpUpClass : 'rcspumpup',
+				pumpDownClass : 'rcspumpdown',
+
+			});
+
 			this.addChild(this.rods);
 			this.inherited(arguments);
 		},
