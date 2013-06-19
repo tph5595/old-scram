@@ -37,7 +37,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				'pumpLevelMax' : 4,
 				'pumpId' : 'rcs',
 				'parent' : this.ui,
-				pumpClass :'rcspump',
+				pumpClass :'rcspump pumpsize pump0',
 				pumpUpClass : 'rcspumpup',
 				pumpDownClass : 'rcspumpdown',
 

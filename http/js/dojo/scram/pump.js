@@ -58,7 +58,7 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			console.log(JSON.stringify(j), j);
 			this._socket.send(JSON.stringify(j));
 			domStyle.set(this.pump, {
-				'class' : "pump" + this.pumpLevel + ' ' + this.pumpClass
+				'class' : "pump" + this.pumpLevel + 'pumpsize ' + this.pumpClass
 			});
 		}
 	});
