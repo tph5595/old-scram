@@ -13,29 +13,33 @@
 	z-index: 1;
 }
 .rods {
+	width:66px;
+	height:53px;
 	left: 94px;
 	top: 182px;
-	background-image: url(images/elements/rods.png);
+	background-image: url(../images/elements/rods.png);
+	background-size: 66px 53px;
+	background-repeat: no-repeat;
 }
 .downbutton {
 	height: 20px;
 	width: 40px;
-	background-image: url(images/elements/downBtn.png);
+	background-image: url(../images/elements/downBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
 }
-.rodDownButton {
-	position: fixed;
+.roddown {
+	position: relative;
 	top: 263px;
 	left: 20px;
 }
 #rodUpButtonDiv {
-	position: fixed;
+	position: relative;
 	top: 243px;
 	left: 20px;
 	height: 20px;
 	width: 40px;
-	background-image: url(images/elements/upBtn.png);
+	background-image: url(../images/elements/upBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
 }
