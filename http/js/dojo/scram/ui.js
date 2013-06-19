@@ -1,4 +1,6 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", "dojo/dom-style", "scram/sockets", "scram/rod", "scram/pump"], function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets, Rods, Pump) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", 
+"dojo/dom-style", "scram/sockets", "scram/rod", "scram/pump","scram/poll"], 
+function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets, Rods, Pump, Poll) {
 	return Declare("scram.ui", [_WidgetBase, _Container], {
 		///
 		/// This is the class for the main UI
@@ -77,7 +79,11 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				pumpUpClass : 'cspumpup upbutton',
 				pumpDownClass : 'cspumpdown downbutton',
 			});
-
+			this.poll = new Poll({
+				parent: this.ui,
+				socket: this._sockets.pollSocket
+			});
+			
 			this.addChild(this.rods);
 			this.inherited(arguments);
 		},
