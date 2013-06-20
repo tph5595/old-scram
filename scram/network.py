@@ -6,7 +6,7 @@ from twisted.internet.protocol import ServerFactory
 from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
-#from game.terrain import CHUNK_GRANULARITY
+# from game.terrain import CHUNK_GRANULARITY
 from game.network import (Handshake, PollPlant, SetRod, SetPump)
 
 class ScramServer(AMP):
@@ -36,32 +36,36 @@ class ScramServer(AMP):
                 "identifier": self.player.id}
     Handshake.responder(handshake)
     
-    def rod(self,level):
-        print "Setting Rod Level to: %s"%str(level)
+    def rod(self, level):
+        print "Setting Rod Level to: %s" % str(level)
         self.world.plant.setRod(level)
         return {"response":True}
     SetRod.responder(rod)
     
-    def pump(self,pumpid,level):
-        print "Setting Rod Level to: %s"%str(level)
-        self.world.plant.setPump(pumpid,level)
+    def pump(self, pumpid, level):
+        print "Setting Rod Level to: %s" % str(level)
+        self.world.plant.setPump(pumpid, level)
         return {"response":True}
     SetPump.responder(pump)
     
     def pollPlant(self):
-        self.update +=1       
+        self.update += 1       
         poll = self.world.plant.poll()  
-        self.callRemote(PollPlant,updateid=str(self.update),
+        self.callRemote(PollPlant, updateid=str(self.update),
                         mwh=str(poll['mwh']),
-                        simtime = str(poll['simtime']),
-                reactortemp = str(poll['reactortemp']),
-                rcshotlegtemp = str(poll['rcshotlegtemp']),
-                rcscoldlegtemp = str(poll['rcscoldlegtemp']),
-                afshotlegtemp = str(poll['afshotlegtemp']),
-                afscoldlegtemp = str(poll['afscoldlegtemp']),
-                genmw = str(poll['genmw']),
-                cshotlegtemp = str(poll['cshotlegtemp']),
-                cscoldlegtemp = str(poll['cscoldlegtemp'])
+                        simtime=str(poll['simtime']),
+                reactortemp=str(poll['reactortemp']),
+                rcshotlegtemp=str(poll['rcshotlegtemp']),
+                rcscoldlegtemp=str(poll['rcscoldlegtemp']),
+                afshotlegtemp=str(poll['afshotlegtemp']),
+                afscoldlegtemp=str(poll['afscoldlegtemp']),
+                genmw=str(poll['genmw']),
+                cshotlegtemp=str(poll['cshotlegtemp']),
+                cscoldlegtemp=str(poll['cscoldlegtemp']),
+                rcspressure=str(poll['rcspressure']),
+                boilingtemp=str(poll['boilingtemp']),
+                workers=str(poll['workers']),
+                risk=str(poll['risk']),
                         )
         return{}
         
@@ -69,7 +73,7 @@ class ScramServer(AMP):
         """
         Send information about connected players.
         """
-        #TODO: implement me!!
+        # TODO: implement me!!
         print "Sending existing state"
         self.world.addObserver(self.pollPlant)
         pass
@@ -108,7 +112,7 @@ class ScramServer(AMP):
         """
         Remove this connection's L{Player} from the L{World}.
         """
-        print "Player %s Connection Lost: %s"%(self.player.id,reason)
+        print "Player %s Connection Lost: %s" % (self.player.id, reason)
         self.world.removePlayer(self.player)
         self.world.removeObserver(self.pollPlant)
 
