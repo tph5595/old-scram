@@ -4,6 +4,7 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 		/// This is the class for the pumps
 		///
 		socket : null,
+		poll:null,
 		parent : null,
 		pump : null,
 		pumpUp : null,
@@ -17,6 +18,7 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 
 		constructor : function(args) {
 			this.socket = args.socket;
+			this.poll = args.poll;
 			this.parent = args.parent;
 			this.pumpClass = args.pumpClass;
 			this.pumpUpClass = args.pumpUpClass;
@@ -24,6 +26,7 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.pumpLevel = 0;
 			this.pumpLevelMax = args.pumpLevelMax;
 			this.socket.on("message", lang.hitch(this, this.pumpMsg));
+			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {
 			this.pumpDown = new domConstruct.create("div", {
@@ -66,6 +69,11 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.pumpMove();
 		},
 		pumpMsg : function(event) {
+			var obj = JSON.parse(event.data);
+			this.pumpLevel = obj[this.pumpId];
+			this.pumpMove();
+		},
+		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			this.pumpLevel = obj[this.pumpId];
 			this.pumpMove();

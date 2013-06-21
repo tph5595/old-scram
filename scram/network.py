@@ -65,6 +65,11 @@ class ScramServer(AMP):
                 boilingtemp=str(poll['boilingtemp']),
                 workers=str(poll['workers']),
                 risk=str(poll['risk']),
+                rcs=poll['rcs'],
+                hpiTank=poll['hpiTank'],
+                auxTank=poll['auxTank'],
+                feedwater=poll['feedwater'],
+                cs=poll['cs']
                         )
         return{}
         

@@ -53,6 +53,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			});
 			this.rcsPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
+				'poll':this._sockets.pollSocket,
 				'pumpLevelMax' : 4,
 				'pumpId' : 'rcs',
 				'parent' : this.main,
@@ -62,6 +63,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			});
 			this.hpiTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
+				'poll':this._sockets.pollSocket,
 				'pumpLevelMax' : 4,
 				'pumpId' : 'hpiTank',
 				'parent' : this.main,
@@ -71,6 +73,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			});
 			this.auxTankPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
+				'poll':this._sockets.pollSocket,
 				'pumpLevelMax' : 3,
 				'pumpId' : 'auxTank',
 				'parent' : this.main,
@@ -80,6 +83,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			});
 			this.feedwaterPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
+				'poll':this._sockets.pollSocket,
 				'pumpLevelMax' : 2,
 				'pumpId' : 'feedwater',
 				'parent' : this.main,
@@ -89,6 +93,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			});
 			this.csPump = new Pump({
 				'socket' : this._sockets.pumpSocket,
+				'poll':this._sockets.pollSocket,
 				'pumpLevelMax' : 2,
 				'pumpId' : 'cs',
 				'parent' : this.main,
