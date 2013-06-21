@@ -193,6 +193,12 @@ class Plant(object):
             self.conPumps = level
         if pumpid == 'cs':
             self.towerPumps = level
+        return {'rcs':self.reactorPumps,
+                'hpiTank':self.hpiPump,
+                'auxTank':self.afsPumps,
+                'feedwater':self.conPumps,
+                'cs':self.towerPumps
+                }
         
         
     def display(self):
@@ -211,8 +217,7 @@ class Plant(object):
         print "CS Cold Leg Temp: %s"%(str(self.csColdLegTemp))  
                 
     def update(self):
-        self.elapsedTime += 1 
-      
+        self.elapsedTime += 1       
         #make some energy; which is heat and
         self._energyProduction()
         #xfer the heat from the reactor to the RCS water high side

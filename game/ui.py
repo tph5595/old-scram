@@ -24,6 +24,7 @@ from http.servers.websocket2 import PollServerProtocol, \
 
 from autobahn.websocket import WebSocketServerFactory, \
                                listenWS
+import json
 
 class ConnectionNotificationWrapper(ProtocolWrapper):
     """
@@ -121,7 +122,13 @@ class UI(object):
         pass
     
     def _handlePump(self,conn,msg):
-        self.protocol.pump(msg)
+        deferred = self.protocol.pump(msg)
+        def cb(resp): 
+            print "Pump UI Resp: %s sending to %s connections"%(resp, str(len(self.frontEndListeners['pump'].connections)))          
+            if len(self.frontEndListeners['pump'].connections) > 0:
+                for con in self.frontEndListeners['pump'].connections:
+                    con.sendMessage(json.dumps(resp))
+        deferred.addCallback(cb)
     
     def _handleRod(self, conn, msg):
         self.protocol.rod(msg)

@@ -1,11 +1,9 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", 
-"dojo/dom-construct", "dojo/dom-class", "dojo/fx"], 
-function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx) {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", "dojo/dom-construct", "dojo/dom-class", "dojo/fx"], function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx) {
 	return Declare("scram.pumps", [_WidgetBase, _Contained], {
 		///
 		/// This is the class for the pumps
 		///
-		_socket : null,
+		socket : null,
 		parent : null,
 		pump : null,
 		pumpUp : null,
@@ -18,13 +16,14 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx)
 		pumpDownClass : null,
 
 		constructor : function(args) {
-			this._socket = args.socket;
+			this.socket = args.socket;
 			this.parent = args.parent;
 			this.pumpClass = args.pumpClass;
 			this.pumpUpClass = args.pumpUpClass;
 			this.pumpDownClass = args.pumpDownClass;
 			this.pumpLevel = 0;
 			this.pumpLevelMax = args.pumpLevelMax;
+			this.socket.on("message", lang.hitch(this, this.pumpMsg));
 		},
 		postCreate : function() {
 			this.pumpDown = new domConstruct.create("div", {
@@ -41,26 +40,35 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx)
 				'class' : this.pumpClass
 			}, this.parent);
 
-			this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpMove, -1));
-			this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpMove, 1));
+			this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpUpdate, -1));
+			this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpUpdate, 1));
 			this.inherited(arguments);
 		},
-		pumpMove : function(x) {
-			this.pumpLevel = this.pumpLevel + x
+		pumpMove : function() {
+			
 			if (this.pumpLevel < 0) {
 				this.pumpLevel = 0
 			}
 			if (this.pumpLevel > this.pumpLevelMax) {
 				this.pumpLevel = this.pumpLevelMax;
 			}
+			domClass.remove(this.pump);
+			domClass.add(this.pump, 'pump' + this.pumpLevel + ' pumpsize ' + this.pumpClass);
+		},
+		pumpUpdate : function(x) {
+			this.pumpLevel = this.pumpLevel + x
 			j = {
 				"level" : this.pumpLevel,
-				"pumpid": this.pumpId
+				"pumpid" : this.pumpId
 			};
 			console.log(JSON.stringify(j), j);
-			this._socket.send(JSON.stringify(j));
-			domClass.remove(this.pump);
-			domClass.add(this.pump,'pump' + this.pumpLevel + ' pumpsize ' + this.pumpClass);
+			this.socket.send(JSON.stringify(j));
+			this.pumpMove();
+		},
+		pumpMsg : function(event) {
+			var obj = JSON.parse(event.data);
+			this.pumpLevel = obj[this.pumpId];
+			this.pumpMove();
 		}
 	});
 });

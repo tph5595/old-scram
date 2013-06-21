@@ -31,9 +31,26 @@ class SetPump(Command):
     """
     This will increase or decrease pump flow
     """
-    arguments = [('pumpid',Integer()),
+    arguments = [('pumpid',String()),
                  ('level', Integer())]
-    response = [('response',Boolean())]
+    """
+            if pumpid == 'rcs':
+            self.reactorPumps = level
+        if pumpid == 'hpiTank':
+            self.hpiPump = level
+        if pumpid == 'auxTank':
+            self.afsPumps = level
+        if pumpid == 'feedwater':
+            self.conPumps = level
+        if pumpid == 'cs':
+            self.towerPumps = level
+    """
+    response = [('rcs',Integer()),
+                ('hpiTank',Integer()),
+                ('auxTank',Integer()),
+                ('feedwater',Integer()),
+                ('cs',Integer()),
+                ]
     
 class SetRod(Command):
     """
@@ -137,9 +154,10 @@ class NetworkController(AMP):
     def pump(self,msg):
         print "Pump Msg: %s"%msg
         j = json.loads(msg)
-        d = self.callRemote(SetPump, pumpid=j['pumpid'],level=j['level'])
+        d = self.callRemote(SetPump, pumpid=str(j['pumpid']),level=j['level'])
         def cb(box):
-            pass
+            print "Pump Protocol Response: %s"%box
+            return box
         d.addCallback(cb)
         return d
     
