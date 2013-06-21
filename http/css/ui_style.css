@@ -2,6 +2,13 @@
 	background-color: black;
 	height: 690px;
 }
+.bgblack {
+	width: 1500px;
+	height: 100%;
+	margin-left: auto;
+	margin-right: auto;	
+	margin-top: 75px;
+}
 .bgorange {
 	background-image: url(../images/mainSample.png);
 	height: 300px;
@@ -16,9 +23,15 @@
 	background-repeat: no-repeat;
 	background-size: 1000px 615px;
 	background-position: center;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 75px;
+	float: left;
+}
+.twitterfeed {
+	width: 300px;
+	height: 500px;
+	background-color: yellow;
+	float: left;
+	margin-top: 100px;
+	margin-right: 100px;
 }
 .statsbarbackground {
 	background-image: url(../images/statsBar.png);
@@ -86,8 +99,8 @@
 	width: 100px;
 	height: 30px;
 	position: relative;
-	top: -800px;
-	left: 705px
+	top: -875px;
+	left: 855px
 }
 
 /*rods*/
@@ -101,6 +114,7 @@
 	background-size: 66px 53px;
 	background-repeat: no-repeat;
 }
+
 
 .roddown {
 	position: relative;
@@ -259,38 +273,38 @@
 
 .reactortemp {
 	position: relative;
-	top: -450px;
-	left: 73px;
+	top: -520px;
+	left: 218px;
 }
 .rcscoldlegtemp {
 	position: relative;
-	top: -425px;
-	left: 73px;
+	top: -485px;
+	left: 218px;
 }
 .rcshotlegtemp {
 	position: relative;
-	top: -690px;
-	left: 250px;
+	top: -760px;
+	left: 365px;
 }
 .feedwatercoldlegtemp {
 	position: relative;
-	top: -520px;
-	left: 492px;
+	top: -595px;
+	left: 638px;
 }
 .feedwaterhotlegtemp {
 	position: relative;
-	top: -810px;
-	left: 500px;
+	top: -880px;
+	left: 640px;
 }
 .circulatingsystemcoldlegtemp {
 	position: relative;
-	top: -380px;
-	left: 830px;
+	top: -450px;
+	left: 970px;
 }
 .circulatingsystemhotlegtemp {
 	position: relative;
-	top: -630px;
-	left: 710px;
+	top: -700px;
+	left: 835px;
 }
 
 /*valve*/

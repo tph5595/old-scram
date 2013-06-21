@@ -30,6 +30,10 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			//the widget has been rendered by now
 			//no sizing has happened
 			//child widgets in the containierNode have not been rendered
+			/*this.twitterfeed = new domConstruct.create('div', {
+				id: 'twitterfeed',
+				'class': 'twitterfeed z0'
+			}, ui);*/
 			this.bgBlack = new domConstruct.create('div', {
 				id: 'bgBlack',
 				'class': 'bgblack z1'
@@ -38,6 +42,10 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				id: 'bgOrange',
 				'class': 'bgorange z1'
 			}, ui);
+			this.twitterFeed = new domConstruct.create('div', {
+				id: 'twitterFeed',
+				'class': 'twitterfeed z1'
+			}, bgBlack);
 			this.main = new domConstruct.create("div", {
 				id: 'main',
 				'class' : "scrambackground z1"
