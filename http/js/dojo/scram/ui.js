@@ -75,6 +75,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 				'pumpLevelMax' : 4,
 				'pumpId' : 'hpiTank',
 				'parent' : this.main,
+				'tip':"HPI Tank Pump",
 				pumpClass :'hpitankpump pumpsize pump0 z2',
 				pumpUpClass : 'hpitankpumpup upbutton z2',
 				pumpDownClass : 'hpitankpumpdown downbutton z2',

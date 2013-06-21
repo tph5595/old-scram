@@ -16,6 +16,7 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx,
 		pumpClass : null,
 		pumpUpClass : null,
 		pumpDownClass : null,
+		tip:null,
 
 		constructor : function(args) {
 			this.socket = args.socket;
@@ -26,6 +27,7 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx,
 			this.pumpDownClass = args.pumpDownClass;
 			this.pumpLevel = 0;
 			this.pumpLevelMax = args.pumpLevelMax;
+			this.tip = args.tip;
 			this.socket.on("message", lang.hitch(this, this.pumpMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
@@ -41,13 +43,9 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx,
 
 			//create the gauge bottom left up button div
 			this.pump = new domConstruct.create("div", {
-				'class' : this.pumpClass
+				'class' : this.pumpClass,
+				'title':this.tip
 			}, this.parent);
-			
-			this.pumpTooltip = new Tooltip({
-				'connectId': this.pump,
-				'label': "test"
-			});
 
 			this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpUpdate, -1));
 			this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpUpdate, 1));
