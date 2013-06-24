@@ -309,8 +309,17 @@
 
 /*valve*/
 .valveOpen {
-	background-image: url(../images/elements/Water.png);
-	background-size: 5px 5px;
+	background-color: yellow;
+	#background-image: url(../images/elements/Water.png);
+	#background-size: 5px 5px;
+	width: 15px;
+	height: 15px;
+	position: relative;
+	top: 600px;
+	left: 800px;
+}
+.valveOff {
+	background-color: yellow;
 	width: 15px;
 	height: 15px;
 	position: relative;
@@ -330,7 +339,7 @@
 		background-repeat: no-repeat;
 		height: 100%;
 		width: 100%;
-		background-size: 100% 100%;
+		background-size: 550px 900px;
 		background-position: center;
 }
 .hidden{
