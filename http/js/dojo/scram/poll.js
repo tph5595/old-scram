@@ -90,7 +90,7 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			}, this.parent);
 		},
 		
-		pollMsg : function() {
+		pollMsg : function(event) {
 
 			try {
 				var obj = JSON.parse(event.data);
