@@ -69,7 +69,8 @@ class ScramServer(AMP):
                 hpiTank=poll['hpiTank'],
                 auxTank=poll['auxTank'],
                 feedwater=poll['feedwater'],
-                cs=poll['cs']
+                cs=poll['cs'],
+                rods=poll['rods']
                         )
         return{}
         

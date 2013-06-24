@@ -184,7 +184,8 @@ class Plant(object):
                 'hpiTank':self.hpiPump,
                 'auxTank':self.afsPumps,
                 'feedwater':self.conPumps,
-                'cs':self.towerPumps
+                'cs':self.towerPumps,
+                'rods':self.rodLevel
                 }
         
     def setRod(self,level):

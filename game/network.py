@@ -116,7 +116,8 @@ class PollPlant(Command):
                 ('hpiTank',Integer()),
                 ('auxTank',Integer()),
                 ('feedwater',Integer()),
-                ('cs',Integer())]
+                ('cs',Integer()),
+                ('rods',Integer())]
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -197,7 +198,8 @@ class NetworkController(AMP):
                 hpiTank,
                 auxTank,
                 feedwater,
-                cs):
+                cs,
+                rods):
         
         j = {'mwh':mwh,
                 'simtime':simtime,
@@ -217,7 +219,8 @@ class NetworkController(AMP):
                 'hpiTank':hpiTank,
                 'auxTank':auxTank,
                 'feedwater':feedwater,
-                'cs':cs
+                'cs':cs,
+                'rods':rods
                 }
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
