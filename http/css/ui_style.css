@@ -23,7 +23,8 @@
 	background-repeat: no-repeat;
 	background-size: 1000px 615px;
 	background-position: center;
-	float: left;
+	margin-left: auto;
+	margin-right: auto;
 }
 .twitterfeed {
 	width: 300px;
@@ -37,6 +38,7 @@
 	background-image: url(../images/statsBar.png);
 	width: 1000px;
 	height: 108px;
+	position: relative;
 	background-repeat: no-repeat;
 	background-size: 1000px 108px;
 	margin-left: auto;
@@ -109,7 +111,7 @@
 	height: 53px;
 	position: relative;
 	left: 86px;
-	top: 174px;
+	top: -105px; /*rods at pos9: -105px, rods at pos0; -53px*/
 	background-image: url(../images/elements/rods.png);
 	background-size: 66px 53px;
 	background-repeat: no-repeat;
@@ -118,12 +120,12 @@
 
 .roddown {
 	position: relative;
-	top: 205px;
+	top: 2px;
 	left: 10px;
 }
 .rodup {
 	position: relative;
-	top: 165px;
+	top: -3px;
 	left: 10px;
 }
 
@@ -155,77 +157,77 @@
 }
 .hpitankpump {
 	position: relative;
-	top: 276px;
+	top: 38px;
 	left: 228px;
 }
 .hpitankpumpdown {
 	position: relative;
-	top: 380px;
+	top: 140px;
 	left: 185px;
 }
 .hpitankpumpup {
 	position: relative;
-	top: 340px;
+	top: 135px;
 	left: 185px;
 }
 .auxtankpump {
 	position: relative;
-	top: 198px;
-	left: 615px;
+	top: -40px;
+	left: 618px;
 }
 .auxtankpumpdown {
 	position: relative;
-	top: 310px;
+	top: 60px;
 	left: 670px;
 }
 .auxtankpumpup {
 	position: relative;
-	top: 270px;
+	top: 55px;
 	left: 670px;
 }
 .rcspump {
 	position: relative;
-	top: 255px;
+	top: 15px;
 	left: 310px;
 }
 .rcspumpdown {
 	position: relative;
-	top: 355px;
+	top: 105px;
 	left: 265px;
 }
 .rcspumpup {
 	position: relative;
-	top: 315px;
+	top: 100px;
 	left: 265px;
 }
 .feedwaterpump {
 	position: relative;
-	top: 16px;
-	left: 622px;
+	top: -223px;
+	left: 625px;
 }
 .feedwaterpumpdown {
 	position: relative;
-	top: 30px;
+	top: -230px;
 	left: 580px;
 }
 .feedwaterpumpup {
 	position: relative;
-	top: -10px;
+	top: -235px;
 	left: 580px;
 }
 .cspump {
 	position: relative;
-	top: -65px;
-	left: 703px;
+	top: -303px;
+	left: 705px;
 }
 .cspumpdown {
 	position: relative;
-	top: -50px;
+	top: -310px;
 	left: 745px;
 }
 .cspumpup {
 	position: relative;
-	top: -90px;
+	top: -315px;
 	left: 745px;
 }
 

@@ -13,7 +13,7 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 			node : "rod",
 			type : "title"
 		},
-		rodTop : [226, 220, 216, 212, 204, 198, 192, 186, 180, 172],
+		rodTop : [-53, -58, -63, -69, -75, -80, -86, -92, -99, -105],
 
 		constructor : function(args) {
 			this._socket = args.socket;
