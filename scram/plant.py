@@ -74,9 +74,10 @@ class Plant(object):
         self.afsTankLevel = 10 #TODO: need a max for this.
         
         #generator
-        self.generatorMW = 500
+        self.generatorMW = 0
         self.generatorMWH = 0 #accumulator for Net MWH  
-        self.genTcRate = 0.2                     
+        self.genTcRate = 0.2 
+        self.generatorRunningMW = 0                    
         
         #Condenser (heat exchanger)
         self.csHotLegTemp = 0
@@ -163,6 +164,24 @@ class Plant(object):
         result = possibility
         return result
     
+    def _calcRisk(self):
+        if self.elapsedTime > 60 and self.elapsedTime%60 == 0:
+            print "here"
+            self.risk += 1
+            
+        if self.generatorMWH > 1000 and self.generatorMWH%1000 == 0:
+            self.risk += 1
+            
+    def cryptXOR(self,s, key="\x1027"):
+        #TODO: save me for later.
+        output = ""
+        for character in s:
+            for letter in key:
+                character = chr(ord(character) ^ ord(letter))
+            output += character
+        return output
+ 
+ 
     def poll(self):
         #self.display()
         #return self.generatorMWH
@@ -239,6 +258,7 @@ class Plant(object):
         self._xferSteamToCondenser()
         #then on to the tower
         self._xferToTower()
+        self._calcRisk()
         #self.display()
 
         
