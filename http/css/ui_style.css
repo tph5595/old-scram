@@ -71,24 +71,24 @@
 	background-repeat: no-repeat;
 }
 .statsbarelements {
-	background-color: green;
+	/*background-color: green;*/
 	width: 100px;
 	height: 20px;
 	line-height: 20px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 20px;
-	color: yellow;
+	color: #FF9966;
 }
 .temperatureelements {/*not including stats bar temperatures*/
-	background-color: purple;
+	/*background-color: purple;*/
 	width: 100px;
 	height: 30px;
 	line-height: 30px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 30px;
-	color: yellow;
+	color: #99FF33;
 }
 .degreeelement {
 	background-image: url(images/degree.png);
@@ -97,12 +97,13 @@
 
 /*power*/
 .generalpoweroutput {
-	background-color: red;
+	/*background-color: red;*/
 	width: 100px;
 	height: 30px;
 	position: relative;
-	top: -875px;
-	left: 855px
+	top: -45px;
+	left: 705px;
+	color: black;
 }
 
 /*rods*/
@@ -259,7 +260,7 @@
 	left: 490px;
 }
 .risk {/*different properties than the rest of the stats bar*/
-	background-color: green;
+	/*background-color: green;*/
 	width: 50px;
 	height: 40px;
 	position: relative;
@@ -269,44 +270,45 @@
 	vertical-align: middle;
 	text-align: center;
 	font-size: 40px;
+	color: #FF9966;
 }
 
 /*temperature*/
 
 .reactortemp {
 	position: relative;
-	top: -520px;
-	left: 218px;
+	top: 300px;
+	left: 70px;
 }
 .rcscoldlegtemp {
 	position: relative;
-	top: -485px;
-	left: 218px;
+	top: 330px;
+	left: 70px;
 }
 .rcshotlegtemp {
 	position: relative;
-	top: -760px;
-	left: 365px;
+	top: 70px;
+	left: 220px;
 }
 .feedwatercoldlegtemp {
 	position: relative;
-	top: -595px;
-	left: 638px;
+	top: 235px;
+	left: 490px;
 }
 .feedwaterhotlegtemp {
 	position: relative;
-	top: -880px;
-	left: 640px;
+	top: -50px;
+	left: 490px;
 }
 .circulatingsystemcoldlegtemp {
 	position: relative;
-	top: -450px;
-	left: 970px;
+	top: 365px;
+	left: 820px;
 }
 .circulatingsystemhotlegtemp {
 	position: relative;
-	top: -700px;
-	left: 835px;
+	top: 140px;
+	left: 705px;
 }
 
 /*valve*/
