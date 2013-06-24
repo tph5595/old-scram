@@ -10,6 +10,10 @@ from autobahn.websocket import WebSocketServerProtocol
     listenWS(factory)
 """
 class EchoServerProtocol(WebSocketServerProtocol):
+    
+    def onConnect(self, connectionRequest):
+        #this is where cookies should be available.
+        return None
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code

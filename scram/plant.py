@@ -4,7 +4,8 @@ import random
 """
 This is the nuke plant class
 
-Simulation time step is 60/second!! 1 step = 1 min
+Simulation time step is 1/second!! 1 step = 1 min
+
 
 Math Nerd Stuff:
 
@@ -128,14 +129,16 @@ class Plant(object):
         self.afsHotLegTemp = self.afsColdLegTemp+(self.rcsHotLegTemp - self.rcsColdLegTemp)
     
     def _xferSteamToGen(self):
-        #TODO: need some calc based on temp to drive gen efficiency
         if self.afsHotLegTemp > 212:
-            self.generatorMW = 200
+            self.generatorMW = self.afsHotLegTemp * 1.08
         else:
             self.generatorMW = 0
 
-        #TODO: need to add the "hour" calc in here   
-        self.generatorMWH = self.generatorMWH + self.generatorMW
+        if self.elapsedTime%60 == 0:
+            self.generatorMWH = self.generatorMWH + (self.generatorRunningMW/60)
+            self.generatorRunningMW = 0
+        else:
+            self.generatorRunningMW += self.generatorMW
 
         #drop the temp in the steam after turbine
         rate = self._exchangeRate(self.genTcRate, self.maxPumps)
