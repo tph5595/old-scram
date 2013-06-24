@@ -1,6 +1,6 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", 
-"dojo/dom-style", "dojo/fx/Toggler","dojo/fx","scram/sockets", "scram/rod", "scram/pump","scram/poll"], 
-function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Toggler, coreFx, Sockets, Rods, Pump, Poll) {
+"dojo/dom-style", "dojo/fx/Toggler","dojo/fx","scram/sockets", "scram/rod", "scram/pump","scram/poll", "scram/valve"], 
+function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Toggler, coreFx, Sockets, Rods, Pump, Poll, Valve) {
 	return Declare("scram.ui", [_WidgetBase, _Container], {
 		///
 		/// This is the class for the main UI
@@ -118,6 +118,13 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Toggler
 				pumpClass :'cspump pumpsize pump0 z2',
 				pumpUpClass : 'cspumpup upbutton z2',
 				pumpDownClass : 'cspumpdown downbutton z2',
+			});
+			this.hpiTankValve = new Valve({
+				'socket' : this._sockets.valveSocket,
+				'valveId' : 'hpiTank',
+				'parent' : this.main,
+				'tip': 'HPI Tank Valve',
+				valveClass : 'valveclosed z1',
 			});
 			this.poll = new Poll({
 				parent: this.poll,

@@ -308,7 +308,7 @@
 }
 
 /*valve*/
-.valveOpen {
+.valveopen {
 	background-color: yellow;
 	#background-image: url(../images/elements/Water.png);
 	#background-size: 5px 5px;
@@ -318,7 +318,7 @@
 	top: 600px;
 	left: 800px;
 }
-.valveOff {
+.valveclosed {
 	background-color: yellow;
 	width: 15px;
 	height: 15px;
@@ -339,7 +339,7 @@
 		background-repeat: no-repeat;
 		height: 100%;
 		width: 100%;
-		background-size: 550px 900px;
+		background-size: 900px 550px;
 		background-position: center;
 }
 .hidden{
