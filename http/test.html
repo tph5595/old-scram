@@ -4,24 +4,33 @@
 		<title>SCRAM CTF Tester</title>
 		<script>
 			dojoConfig = {
-			"isDebug": true,
-			"debugAtAllCosts": true,
-			"parseOnLoad": true,
-			"baseUrl": "./js/dojo/dojo"
+				"isDebug" : true,
+				"debugAtAllCosts" : true,
+				"parseOnLoad" : true,
+				"baseUrl" : "./js/dojo/dojo"
 			}
 		</script>
 		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
-		<link rel="stylesheet" type="text/css" href="/css/ui_style.css"/> 
-		<link rel="stylesheet" type="text/css" href="/css/font_stylesheet.css"/> 
+		<link rel="stylesheet" type="text/css" href="/css/ui_style.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/font_stylesheet.css"/>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/_base/lang","dojo/on","scram/sockets","scram/ui", "dojo/domReady!"], 
-			function(lang,on,Sockets, UI) {
-				this.ui = new UI({},"body");
-				this.ui.startup();
+			require(["dojo/_base/lang", "dojo/on", "scram/ui", "scram/splash", "dojo/domReady!"], function(lang, on, UI, Splash) {
+				//this.splash = new Splash({}, "splash");
+				//this.splash.on("test",function() {
+				//	console.log("test")
+				//});
+				this.ui = new UI({}, "ui");
+				//this.ui.hide();
+				//this.splash.show();
+				//this.splash.on("hide",lang.hitch(function() {
+				//	this.ui.show();
+				//}));
+
 			});
 
 		</script>
 	</head>
-	<body id="body" class="ui z0">		
+	<body id="body" >
+		<div id="ui" ></div>
 	</body>
 </html>

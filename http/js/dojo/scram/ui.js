@@ -1,6 +1,6 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-construct", 
-"dojo/dom-style", "scram/sockets", "scram/rod", "scram/pump","scram/poll"], 
-function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets, Rods, Pump, Poll) {
+"dojo/dom-style", "dojo/fx/Toggler","dojo/fx","scram/sockets", "scram/rod", "scram/pump","scram/poll"], 
+function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Toggler, coreFx, Sockets, Rods, Pump, Poll) {
 	return Declare("scram.ui", [_WidgetBase, _Container], {
 		///
 		/// This is the class for the main UI
@@ -9,6 +9,7 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 		ui : null, //ref to the node we create
 		args : null, //property bag
 		_sockets : null,
+		uiToggler:null,
 
 		constructor : function(props, srcNodeRef) {
 			this.props = props;
@@ -19,10 +20,13 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 		buildRendering : function() {
 			//add to the dom here
 			this.ui = new domConstruct.create("div", {
-				id : "ui",
 				'class' : "ui z0"
 			}, this.srcNodeRef);
-
+			this.uiToggler = new Toggler({
+					node: this.srcNodeRef,
+					showFunc:coreFx.wipeIn,
+					hideFunc:coreFx.wipeOut
+				});
 			this.inherited(arguments);
 		},
 		postCreate : function() {
@@ -127,6 +131,12 @@ function(lang, Declare, _WidgetBase, _Container, domConstruct, domStyle, Sockets
 			//This is often used for layout widgets like BorderContainer.
 			//If the widget does JS sizing, then startup() should call resize(), which does the sizing.
 			this.inherited(arguments);
+		},
+		show:function(){
+			this.uiToggler.show();
+		},
+		hide:function(){
+			this.uiToggler.hide();
 		}
 	});
 
