@@ -1,7 +1,4 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", 
-"dijit/_Contained", "dijit/_TemplatedMixin", 
-"scram/sockets",  "scram/plant", "scram/status","dojo/text!scram/templates/ui.html"], function(lang, Declare, _WidgetBase, 
-	_Container, _Contained, _TemplatedMixin, Sockets, Plant, Status, template) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "scram/sockets", "scram/plant", "scram/status", "scram/splash", "dojo/text!scram/templates/ui.html"], function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Sockets, Plant, Status, Splash, template) {
 	return Declare("scram.ui", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
 		///
 		/// This is the class for the main UI
@@ -45,10 +42,24 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 			 'class' : "statsbarbackground z1"
 			 }, this.bgOrange);
 
-
 			 */
-			this.status = new Status({socket:this._sockets.pollSocket},this.statusDAP);
-			this.plant = new Plant({sockets:this._sockets},this.plantDAP);
+			this.splash = new Splash();
+			this.splash.on("hidden", lang.hitch(this, function() {
+			this.status = new Status({
+				socket : this._sockets.pollSocket
+			}, this.statusDAP);
+
+			this.plant = new Plant({
+				sockets : this._sockets
+			}, this.plantDAP);
+			}));
+			this.addChild(this.splash);
+			//this.splash.show();
+
+
+			
+			dojo.style(this.statusDAP, "opacity", "0");
+			dojo.style(this.plantDAP, "opacity", "0");
 			this.inherited(arguments);
 		},
 		startup : function() {

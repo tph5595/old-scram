@@ -22,7 +22,6 @@ function(lang,Declare, _WidgetBase, _Container,_Contained,_TemplatedMixin, templ
 				this.reactorTemp.innerHTML = Math.round(obj.reactortemp);
 				this.rcsColdLegTemp.innerHTML = Math.round(obj.rcscoldlegtemp);
 				this.rcsHotLegTemp.innerHTML = Math.round(obj.rcshotlegtemp);
-
 				this.generalPowerOutput.innerHTML = Math.round(obj.genmw);
 				this.csColdLegTemp.innerHTML = Math.round(obj.cscoldlegtemp);
 				this.csHotLegTemp.innerHTML = Math.round(obj.cshotlegtemp);

@@ -1,4 +1,5 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/text!scram/templates/status.html"], function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, template) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
+"dijit/_TemplatedMixin", "dojo/text!scram/templates/status.html"], function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, template) {
 	return Declare("scram.status", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
 
 		_socket : null,

@@ -1,43 +1,55 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dojo/Evented", "dojo/dom-construct", "dojo/dom-style", "dojo/fx/Toggler", "dojo/fx", "dojo/on"], function(lang, Declare, _WidgetBase, _Container, Evented, domConstruct, domStyle, Toggler, coreFx, on) {
-	return Declare("scram.splash", [Evented, _WidgetBase, _Container], {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
+"dijit/_TemplatedMixin", "dojo/Evented", "dojo/fx/Toggler", "dojo/fx", "dojo/on",
+"dojo/text!scram/templates/splash.html"], function(lang, Declare, _WidgetBase, _Container, 
+	_Contained, _TemplatedMixin, Evented, Toggler, coreFx, on, template) {
+	return Declare("scram.splash", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the splash page
 		///
-		srcNodeRef : null, //the node to place the widget
-		splash : null, //ref to the node we create
+		templateString : template,
 		splashToggler : null,
 		args : null, //property bag
 
-		constructor : function(args, srcNodeRef) {
-			this.srcNodeRef = srcNodeRef
+		constructor : function(args) {
+			this.args = args;
 		},
 		buildRendering : function() {
-			//add to the dom here
-			this.splash = new domConstruct.create("div", {
-				'class' : "splash z3"
-			}, this.srcNodeRef);
-			this.splashToggler = new Toggler({
-				node : this.srcNodeRef,
-				showFunc : coreFx.wipeIn,
-				hideFunc : coreFx.wipeOut
-			});
-
 			this.inherited(arguments);
 		},
 		postCreate : function() {
-			on(this.splash, "click", lang.hitch(this, this.hide));
-			this.emit("test",{});
+			this.audio = new Audio("/js/dojo/scram/templates/atari-st-beat-11.wav");
+			this.audio.loop = true;
+			this.audio.play();
+			dojo.style(this.splashDAP, "opacity", "0");
+			var fadeArgs = {
+				node : this.splashDAP,
+				duration : 5000,
+			};
+			dojo.fadeIn(fadeArgs).play();
 			this.inherited(arguments);
 		},
 		startup : function() {
 			this.inherited(arguments);
 		},
+		click : function() {
+			this.hide();
+		},
 		show : function() {
+			this.emit("test", {
+				blargh : "test"
+			});
 			this.splashToggler.show();
 		},
 		hide : function() {
-			this.splashToggler.hide();
-			this.emit("hide",{});
+			var fadeArgs = {
+				node : this.splashDAP,
+				duration : 200,
+			};
+			dojo.fadeOut(fadeArgs).play();
+			dojo.style(this.splashDAP, "height", "0px");
+			this.emit("hidden",{});
+			this.audio.pause();
+
 		}
 	});
 
