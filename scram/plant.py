@@ -145,15 +145,16 @@ class Plant(object):
         thermalCon = .58
         heatCapacity = 4.19 #Joules/grams Kelvin
         waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000] #gallons of water being pumped through the pressure chamber based on pumps on
-        reactorHeat = (self.rcsColdLegTemp - self.reactorTemp) / thermalCon
+        reactorHeat = (self.reactorTemp - self.rcsColdLegTemp ) / thermalCon
         
+        #doesn't decrease properly
+        #if (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps]) > ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier):
         
-        if (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps]) > ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier):
-            self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
-        else:
+        if (self.reactorTemp - self.rcsHotLegTemp) > (self.reactorTemp - self.rcsColdLegTemp):
             self.rcsHotLegTemp = self.rcsHotLegTemp + ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
+        else:
+            self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
         
-    
         
     def _xferEnergyToAfs(self):
         rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
