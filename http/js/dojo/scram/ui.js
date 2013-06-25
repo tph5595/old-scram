@@ -1,4 +1,6 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "scram/sockets", "scram/plant", "scram/status", "scram/splash", "dojo/text!scram/templates/ui.html"], function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Sockets, Plant, Status, Splash, template) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
+"dijit/_TemplatedMixin", "scram/sockets", "scram/plant", "scram/status", "scram/splash", "dojo/text!scram/templates/ui.html"], 
+function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Sockets, Plant, Status, Splash, template) {
 	return Declare("scram.ui", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
 		///
 		/// This is the class for the main UI
