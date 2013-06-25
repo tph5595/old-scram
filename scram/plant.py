@@ -52,14 +52,14 @@ class Plant(object):
         self.rodLevel = 9 #Rods Step 1-10 10=max
         self.rodConst = 200 #generic energy produced by the rods at level 1
         self.energyOutputRate = 1 #between 0-1
-        self.reactorPumps = 1 #Reactor pump step 1-4 4=max
+        self.reactorPumps = 4 #Reactor pump step 1-4 4=max
         
         #WAGing the TC rate based on http://www.nist.gov/data/PDFfiles/jpcrd493.pdf
         self.rcsTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
-        self.reactorTemp = 500 #5000 is max; 200 is scrammed
-        self.reactorResidualTemp = 0 #this is what is left over after tc
-        self.rcsHotLegTemp = 0
-        self.rcsColdLegTemp = 0
+        self.reactorTemp = 750#5000 is max; 200 is scrammed
+        self.reactorResidualTemp = 600 #this is what is left over after tc
+        self.rcsHotLegTemp = 550
+        self.rcsColdLegTemp = 400
         self.rcsPressure = 2200 #2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
         self.boilingTemp = 655
          
@@ -102,20 +102,37 @@ class Plant(object):
         self.pressuizerValve = False
         #RCS Pressure normal is 2200-2300 max is 3000
         self.rcsPressure = 2200
-                  
+        
+        #initial value for temperature multipliers based upon pumps open
+        self.hotMultiplier = [.1, .073, .053, .033, .01, .008, .007, .0058, .004]
+        self.coldMultiplier = .27
+        
+        
+        
+        
+    #Relationship between reactor temp and cold leg
     def _energyProduction(self):
         #this is energy production of the reactor
         #TODO: not sure if we need to deal w/ prev core temp as a factor
         #self.reactorTemp = (self.rodConst*self.rodLevel)*self.energyOutputRate
-        self.reactorTemp = self.energy[self.rodLevel]
         
+        #temp increase from rod energy and number of pumps open
+        self.reactorTemp = self.reactorTemp + (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps])
+        #temp decrease from coldLegTemp.
+        self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
+        
+
     def _exchangeRate(self,tcRate,numPumps):
         rate = (numPumps/self.maxPumps)*tcRate
         #rate= numPumps*tcRate
         #print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
         return rate
     
+    
+    
+    #Relationship between reactor temp and hot leg
     def _xferEnergyToRcsLoop(self):
+        """
         rate = self._exchangeRate(self.rcsTcRate, self.reactorPumps)
         
         #newTemp = self.rcsColdLegTemp + self.reactorTemp + self.reactorResidualTemp
@@ -123,11 +140,28 @@ class Plant(object):
         
         self.rcsHotLegTemp = (newTemp)*(rate)
         self.reactorResidualTemp = self.reactorTemp - (self.reactorTemp*rate)
+        """
+        #made up numbers
+        thermalCon = .58
+        heatCapacity = 4.19 #Joules/grams Kelvin
+        waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000] #gallons of water being pumped through the pressure chamber based on pumps on
+        reactorHeat = (self.rcsColdLegTemp - self.reactorTemp) / thermalCon
+        
+        
+        if (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps]) > ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier):
+            self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
+        else:
+            self.rcsHotLegTemp = self.rcsHotLegTemp + ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
+        
+    
         
     def _xferEnergyToAfs(self):
         rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
-        self.rcsColdLegTemp =  self.rcsHotLegTemp*rate 
+        self.rcsColdLegTemp =  self.rcsHotLegTemp*rate
         self.afsHotLegTemp = self.afsColdLegTemp+(self.rcsHotLegTemp - self.rcsColdLegTemp)
+    
+    
+    
     
     def _xferSteamToGen(self):
         if self.afsHotLegTemp > 212:
