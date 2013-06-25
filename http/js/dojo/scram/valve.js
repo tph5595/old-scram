@@ -30,23 +30,16 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.inherited(arguments);
 		},
 		valveSwitch:function(){
-			valveBoo = !valveBoo
-			this.valveUpdate(valveBoo);
+			this.valveState = !this.valveState
+			this.valveUpdate(this.valveState);
 		},
 		valveMove : function() {
 			domClass.remove(this.valve);
 			domClass.add(this.valve, this.valveState + " " + this.valveClass);
 		},
-		valveUpdate : function(newState) {
-			switch (newState){
-				case true:
-					newState = 'on';
-				case false:
-					newState = 'false';
-			};
-			this.valveState = newState
+		valveUpdate : function(newValveState) {
 			j = {
-				"state" : this.valveState,
+				"state" : newValveState,
 				"valveid" : this.valveId
 			};
 			console.log(JSON.stringify(j), j);
