@@ -1,27 +1,31 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Contained", "dojo/dom-construct", "dojo/dom-class", "dojo/fx", "dijit/Tooltip"], 
-function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx, Tooltip) {
-	return Declare("scram.pumps", [_WidgetBase, _Contained], {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container","dijit/_Contained", "dijit/_TemplatedMixin",
+"dojo/dom-construct", "dojo/dom-class","dojo/text!scram/templates/pump.html"], 
+function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, domConstruct, domClass,template) {
+	return Declare("scram.pump", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
 		///
-		/// This is the class for the pumps
+		/// This is the class for the pump
 		///
+		templateString:template,
 		socket : null,
 		poll:null,
-		parent : null,
-		pump : null,
-		pumpUp : null,
-		pumpDown : null,
+		//pump : null,
+		//pumpUp : null,
+		//pumpDown : null,
 		pumpLevel : null,
 		pumpLevelMax : null,
 		pumpId : null,
 		pumpClass : null,
+		_setPumpClassAttr: {node:"pump",type:"class"},
 		pumpUpClass : null,
+		_setPumpUpClassAttr: {node:"pumpUp",type:"class"},
 		pumpDownClass : null,
+		_setPumpDownClassAttr: {node:"pumpDown",type:"class"},
 		tip:null,
+		_setPumpTipAttr: {node:"pump",type:"title"},
 
 		constructor : function(args) {
 			this.socket = args.socket;
 			this.poll = args.poll;
-			this.parent = args.parent;
 			this.pumpClass = args.pumpClass;
 			this.pumpUpClass = args.pumpUpClass;
 			this.pumpDownClass = args.pumpDownClass;
@@ -32,6 +36,7 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx,
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {
+			/*
 			this.pumpDown = new domConstruct.create("div", {
 				'class' : this.pumpDownClass
 			}, this.parent);
@@ -46,10 +51,16 @@ function(lang, on, Declare, _WidgetBase, _Contained, domConstruct, domClass, fx,
 				'class' : this.pumpClass,
 				'title':this.tip
 			}, this.parent);
-
-			this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpUpdate, -1));
-			this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpUpdate, 1));
+			*/
+			//this.handlePumpDown = on(this.pumpDown, "click", lang.hitch(this, this.pumpUpdate, -1));
+			//this.handlePumpUp = on(this.pumpUp, "click", lang.hitch(this, this.pumpUpdate, 1));
 			this.inherited(arguments);
+		},
+		increment:function(){
+			this.pumpUpdate(1);
+		},
+				decrement:function(){
+			this.pumpUpdate(-1);
 		},
 		pumpMove : function() {
 			

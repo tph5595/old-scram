@@ -6,7 +6,7 @@
 			dojoConfig = {
 				"isDebug" : true,
 				"debugAtAllCosts" : true,
-				"parseOnLoad" : true,
+				"parseOnLoad" : false,
 				"baseUrl" : "./js/dojo/dojo"
 			}
 		</script>
@@ -14,23 +14,13 @@
 		<link rel="stylesheet" type="text/css" href="/css/ui_style.css"/>
 		<link rel="stylesheet" type="text/css" href="/css/font_stylesheet.css"/>
 		<script type="text/javascript" charset="utf-8">
-			require(["dojo/_base/lang", "dojo/on", "scram/ui", "scram/splash", "dojo/domReady!"], function(lang, on, UI, Splash) {
-				//this.splash = new Splash({}, "splash");
-				//this.splash.on("test",function() {
-				//	console.log("test")
-				//});
-				this.ui = new UI({}, "ui");
-				//this.ui.hide();
-				//this.splash.show();
-				//this.splash.on("hide",lang.hitch(function() {
-				//	this.ui.show();
-				//}));
-
+			require(["dojo/_base/lang","scram/ui", "dojo/domReady!"], function(lang, UI) {
+				this.ui = new UI({}, "main");
 			});
 
 		</script>
 	</head>
-	<body id="body" >
-		<div id="ui" ></div>
+	<body id="body">
+		<div id='main'></div>
 	</body>
 </html>
