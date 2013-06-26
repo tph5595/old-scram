@@ -141,7 +141,7 @@ class Plant(object):
         self.rcsHotLegTemp = (newTemp)*(rate)
         self.reactorResidualTemp = self.reactorTemp - (self.reactorTemp*rate)
         """
-        #made up numbers
+        #made up numberse 
         thermalCon = .58
         heatCapacity = 4.19 #Joules/grams Kelvin
         waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000] #gallons of water being pumped through the pressure chamber based on pumps on
