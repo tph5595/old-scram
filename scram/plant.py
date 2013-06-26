@@ -239,11 +239,19 @@ class Plant(object):
                 'auxTank':self.afsPumps,
                 'feedwater':self.conPumps,
                 'cs':self.towerPumps,
-                'rods':self.rodLevel
+                'rods':self.rodLevel,
+                'hpivalve':self.hpiValve,
+                'afsvalve':self.afsValve
                 }
         
     def setRod(self,level):
         self.rodLevel = level
+        
+    def setValve(self,valveid,state):
+        if valveid == 'afs':
+            self.afsValve = state
+        if valveid == 'hpi':
+            self.hpiValve = state
         
     def setPump(self,pumpid,level):
         if pumpid == 'rcs':
