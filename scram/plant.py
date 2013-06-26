@@ -62,6 +62,11 @@ class Plant(object):
         self.rcsColdLegTemp = 400
         self.rcsPressure = 2200 #2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
         self.boilingTemp = 655
+        
+        #Temperatures from previous run
+        self.oldRcsHotLegTemp = 0
+        self.oldRcsColdLegTemp = 0
+        self.oldReactorTemp = 0
          
         #steam generator
         self.sgTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
@@ -112,16 +117,12 @@ class Plant(object):
         
     #Relationship between reactor temp and cold leg
     def _energyProduction(self):
-        #this is energy production of the reactor
-        #TODO: not sure if we need to deal w/ prev core temp as a factor
-        #self.reactorTemp = (self.rodConst*self.rodLevel)*self.energyOutputRate
-        
         #temp increase from rod energy and number of pumps open
         self.reactorTemp = self.reactorTemp + (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps])
         #temp decrease from coldLegTemp.
         self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
         
-
+    #TODO:delete this method later
     def _exchangeRate(self,tcRate,numPumps):
         rate = (numPumps/self.maxPumps)*tcRate
         #rate= numPumps*tcRate
@@ -129,40 +130,46 @@ class Plant(object):
         return rate
     
     
-    
     #Relationship between reactor temp and hot leg
     def _xferEnergyToRcsLoop(self):
-        """
-        rate = self._exchangeRate(self.rcsTcRate, self.reactorPumps)
-        
-        #newTemp = self.rcsColdLegTemp + self.reactorTemp + self.reactorResidualTemp
-        newTemp = self.reactorTemp + self.reactorResidualTemp - (self.rcsColdLegTemp/2)
-        
-        self.rcsHotLegTemp = (newTemp)*(rate)
-        self.reactorResidualTemp = self.reactorTemp - (self.reactorTemp*rate)
-        """
         #made up numbers
         thermalCon = .58
         heatCapacity = 4.19 #Joules/grams Kelvin
         waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000] #gallons of water being pumped through the pressure chamber based on pumps on
+        #heat produced
         reactorHeat = (self.reactorTemp - self.rcsColdLegTemp ) / thermalCon
         
-        #doesn't decrease properly
-        #if (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps]) > ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier):
-        
-        if (self.reactorTemp - self.rcsHotLegTemp) > (self.reactorTemp - self.rcsColdLegTemp):
-            self.rcsHotLegTemp = self.rcsHotLegTemp + ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
+        #if statement determines if hot leg is increasing or decreasing in temp
+        if (self.reactorTemp > self.oldReactorTemp):
+            self.rcsHotLegTemp = self.rcsHotLegTemp + ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 200)
         else:
-            self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 10)
+            self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (waterMass[self.reactorPumps] * heatCapacity)) * 200)
+            
+        """
+        proof of calculations
+       initial cold leg = 562
+        initial reactor temp = 655
+       initial hot leg = 604
         
+        reactortemp Hotter = 655 + (2700 * .01) = 682
+        reactortemp Colder = 682 - ((682 - 562) * .27)
+        FinalReactorTemp = 649.6
         
+        reactor temp got colder. Use 2nd part of if condition
+        reactorHeat = (649.6 - 559) / .58 = 156.21
+        rcsHotTemp = 655 - ((156.21 / (4000 * 4.19))*10) = .009   too small. gonna multiply my shit by 200 so I can see more an increase / decrease in temperatures.
+        """
+    
     def _xferEnergyToAfs(self):
         rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
         self.rcsColdLegTemp =  self.rcsHotLegTemp*rate
         self.afsHotLegTemp = self.afsColdLegTemp+(self.rcsHotLegTemp - self.rcsColdLegTemp)
     
-    
-    
+    #Going to call this first after each new game tick.  It will store the previous temps for later calculations.
+    def _previousTemp(self):
+        self.oldRcsHotLegTemp = self.rcsHotLegTemp
+        self.oldRcsColdLegTemp = self.rcsColdLegTemp
+        self.oldReactorTemp = self.reactorTemp
     
     def _xferSteamToGen(self):
         if self.afsHotLegTemp > 212:
@@ -280,7 +287,10 @@ class Plant(object):
         print "CS Cold Leg Temp: %s"%(str(self.csColdLegTemp))  
                 
     def update(self):
+        #increment game tick one second
         self.elapsedTime += 1       
+        #get temps from last game tick
+        self._previousTemp()
         #make some energy; which is heat and
         self._energyProduction()
         #xfer the heat from the reactor to the RCS water high side
