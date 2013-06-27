@@ -68,7 +68,11 @@ class Plant(object):
         self.oldRcsHotLegTemp = 0
         self.oldRcsColdLegTemp = 0
         self.oldReactorTemp = 0
-         
+        self.oldAfsColdLegTemp = 0
+        self.oldAfsHotLegTemp = 0
+        self.oldCsHotLegTemp = 0
+        self.oldCsColdLegTemp = 0
+        
         #steam generator
         self.sgTcRate = 0.8 #thermal conductivity rate of water in RCS Loop; between 0-1
         
@@ -76,8 +80,10 @@ class Plant(object):
         self.afsHotLegTemp = 0
         self.afsColdLegTemp = 0
         self.afsValve = False
-        self.afsPumps = 3 #0-3 3 max
+        self.afsPumps = 2 #0-2 2 max
         self.afsTankLevel = 10 #TODO: need a max for this.
+        #This is a temp not displayed on screen between power generator and condenser in the afs loop.
+        self.afsHiddenTemp = 0
         
         #generator
         self.generatorMW = 0
@@ -188,8 +194,15 @@ class Plant(object):
         self.oldRcsHotLegTemp = self.rcsHotLegTemp
         self.oldRcsColdLegTemp = self.rcsColdLegTemp
         self.oldReactorTemp = self.reactorTemp
+        self.oldAfsColdLegTemp = self.afsColdLegTemp
+        self.oldAfsHotLegTemp = self.afsHotLegTemp
+        self.oldCsHotLegTemp = self.csHotLegTemp
+        self.oldCsColdLegTemp = self.csColdLegTemp
     
     def _xferSteamToGen(self):
+        
+        #TODO: figure out a new way to calculate MWH. 
+        """
         if self.afsHotLegTemp > 212:
             self.generatorMW = self.afsHotLegTemp * 1.08
         else:
@@ -200,12 +213,89 @@ class Plant(object):
             self.generatorRunningMW = 0
         else:
             self.generatorRunningMW += self.generatorMW
-
+        """
+        #Old Calculation for drom in temp after steam generator.
+        """
         #drop the temp in the steam after turbine
         rate = self._exchangeRate(self.genTcRate, self.maxPumps)
         self.afsHotLegTemp = self.afsHotLegTemp*rate
+        """
+        if (self.afsHotLegTemp > 212): #Later 212 will turn into the temperature at which steam occurs.
+            self.generatorMW = 1 #some equation
+        else:
+            print ""
+        #Temp loss from turbine based on flat percents since there is only 1 input (afsHotLegTemp). That percent will be based on a curve of mw output.
+        #TODO: Should this also be based on flow rate of water? could add an extra if pump = 2 then do rates below else make temp decrease a lower percent.
+        if (self.afsPumps = 2):
+            if (self.generatorMW > 900):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .1)
+            elif (self.generatorMW > 800):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .09)
+            elif (self.generatorMW > 700):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .08)
+            elif (self.generatorMW > 600):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
+            elif (self.generatorMW > 500):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .06)
+            elif (self.generatorMW > 400):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .05)
+            elif (self.generatorMW > 300):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .04)
+            elif (self.generatorMW > 200):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .03)
+            elif (self.generatorMW > 100):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
+            elif (self.generatorMW > 1):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .01)
+            else: 
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
+        elif (self.afsPumps = 1):
+            if (self.generatorMW > 900):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .075)
+            elif (self.generatorMW > 800):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .065)
+            elif (self.generatorMW > 700):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .055)
+            elif (self.generatorMW > 600):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .045)
+            elif (self.generatorMW > 500):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .035)
+            elif (self.generatorMW > 400):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .025)
+            elif (self.generatorMW > 300):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
+            elif (self.generatorMW > 200):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .005)
+            elif (self.generatorMW > 100):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .001)
+            elif (self.generatorMW > 1):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
+            else: 
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0004)
+        else:
+            if (self.generatorMW > 900):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
+            elif (self.generatorMW > 800):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .018)
+            elif (self.generatorMW > 700):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
+            elif (self.generatorMW > 600):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .012)
+            elif (self.generatorMW > 500):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0009)
+            elif (self.generatorMW > 400):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
+            elif (self.generatorMW > 300):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0005)
+            elif (self.generatorMW > 200):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0003)
+            elif (self.generatorMW > 100):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0002)
+            elif (self.generatorMW > 1):
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
+            else: 
+                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .00007)
 
-        
     def _xferSteamToCondenser(self):  
         rate = self._exchangeRate(self.conTcRate, self.conPumps)   
         self.afsColdLegTemp = self.afsHotLegTemp*rate
