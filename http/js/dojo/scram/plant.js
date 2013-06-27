@@ -1,7 +1,7 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
-"dijit/_TemplatedMixin", "scram/rod", "scram/pumps", "scram/temp",  "scram/valves", 
+"dijit/_TemplatedMixin", "scram/rod", "scram/pumps", "scram/temp",  "scram/valves", "scram/waters",
 "dojo/text!scram/templates/plant.html"], function(lang, Declare, _WidgetBase, _Container, 
-	_Contained, _TemplatedMixin, Rods, Pumps, Temp, Valves, template) {
+	_Contained, _TemplatedMixin, Rods, Pumps, Temp, Valves, Waters, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
 		///
 		/// This is the class for the plant
@@ -30,10 +30,14 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				"socket" : this.sockets.valveSocket,
 				poll : this.sockets.pollSocket
 			});
+			this.waters = new Waters({
+				poll: this.sockets.pollSocket
+			});
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
 			this.addChild(this.valves);
+			this.addChild(this.waters);
 			this.inherited(arguments);
 		}
 	});

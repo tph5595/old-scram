@@ -6,7 +6,7 @@
 	width: 1500px;
 	height: 100%;
 	margin-left: auto;
-	margin-right: auto;	
+	margin-right: auto;
 	margin-top: 75px;
 }
 .bgorange {
@@ -117,7 +117,6 @@
 	background-size: 66px 53px;
 	background-repeat: no-repeat;
 }
-
 
 .roddown {
 	position: relative;
@@ -317,44 +316,48 @@
 	width: 6px;
 	height: 40px;
 }
-.valvefalse { /*closed valve*/
+.valvefalse {/*closed valve*/
 	background-color: yellow;
 	width: 6px;
 	height: 40px;
 }
-.hpitankvalve{
+.hpitankvalve {
 	position: relative;
 	top: 0px;
 	left: 0px;
 }
-.auxtankvalve{
+.auxtankvalve {
 	position: relative;
 	top: -305px;
 	left: 500px;
 }
-.pressurizertankvalve{
+.pressurizertankvalve {
 	position: relative;
 	top: -490px;
 	left: 381px;
 }
 
-
-/*water levels*/
-.water {
-	background-color: yellow;
-	background-size: 100px 25px;
-	height: 25px;
-	width: 25px;
+/*moving water*/
+.dot {
+	background-image: url(../images/dot.png);
+	background-size: 5px 5px;
+	height: 5px;
+	width: 5px;
+}
+.rcsdot {
+	position: relative;
+	left: 187px;
+	top: -636px;
 }
 
-.splash{
-		background-image: url(../images/splash/Altamira.png);
-		background-repeat: no-repeat;
-		height: 100%;
-		width: 100%;
-		background-size: 900px 550px;
-		background-position: center;
+.splash {
+	background-image: url(../images/splash/Altamira.png);
+	background-repeat: no-repeat;
+	height: 100%;
+	width: 100%;
+	background-size: 900px 550px;
+	background-position: center;
 }
-.hidden{
-	display: none;	
+.hidden {
+	display: none;
 }
