@@ -16,11 +16,25 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,fx,Wa
 			//rcs hot leg
 			this.rcs = new Water({
 				'poll':this.poll,
-				waterClass :'rcsdot dot z2',
+				rcsWaterClass :'rcsdot dot z2',
 			},this.rcsDAP);
-			
+			this.afs = new Water({
+				'poll':this.poll,
+				afsWaterClass :'afsdot dot z2',
+			},this.afsDAP);
+			this.cs = new Water({
+				'poll':this.poll,
+				csWaterClass :'csdot dot z2',
+			},this.csDAP);
+			this.hpi = new Water({
+				'poll':this.poll,
+				hpiWaterClass :'hpidot dot z2',
+			},this.hpiDAP);
+			this.aux = new Water({
+				'poll':this.poll,
+				auxWaterClass :'auxdot dot z2',
+			},this.auxDAP);
 			//next one
-		
 			this.inherited(arguments);
 		},
 

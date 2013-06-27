@@ -349,6 +349,26 @@
 	left: 187px;
 	top: -636px;
 }
+.afsdot {
+	position: relative;
+	left: 605px;
+	top: -393px;
+}
+.csdot {
+	position: relative;
+	left: 688px;
+	top: -440px;
+}
+.hpidot {
+	position: relative;
+	left: 314px;
+	top: -300px;
+}
+.auxdot {
+	position: relative;
+	left: 700px;
+	top: -300px;
+}
 
 .splash {
 	background-image: url(../images/splash/Altamira.png);
