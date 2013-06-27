@@ -38,6 +38,8 @@ class Plant(object):
         
         # workers
         # TODO: need to figure out a replenish rate
+        # workers to repair one thing
+        #5 every 20 minutes or so.  
         self.workers = 80 
         
         # Risk Level
@@ -49,7 +51,7 @@ class Plant(object):
         
         # reactor
         self.energy = [0, 36, 144, 324, 576, 900, 1296, 1600, 2116, 2700]
-        self.rodLevel = 9  # Rods Step 1-10 10=max
+        self.rodLevel = 9  # Rods Step 0-9 9=max
         self.reactorPumps = 4  # Reactor pump step 1-4 4=max
         
         # WAGing the TC rate based on http://www.nist.gov/data/PDFfiles/jpcrd493.pdf
@@ -58,7 +60,7 @@ class Plant(object):
         self.reactorResidualTemp = 600  # this is what is left over after tc
         self.rcsHotLegTemp = 603
         self.rcsColdLegTemp = 561
-        self.rcsPressure = 2297  # 2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
+        self.rcsPressure = 2294  # 2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
         self.boilingTemp = 657
         
         # Temperatures from previous run
@@ -161,20 +163,13 @@ class Plant(object):
         
         reactor temp got colder. Use 2nd part of if condition
         reactorHeat = (649.6 - 559) / .58 = 156.21
-        rcsHotTemp = 655 - ((156.21 / (4000 * 4.19))*10) = .009   too small. gonna multiply my shit by 200 so I can see more an increase / decrease in temperatures.
+        rcsHotTemp = 655 - ((156.21 / (4000 * 4.19))*10) = .009   too small. gonna multiply numbers by 200 so I can see more an increase / decrease in temperatures per tick.
         """
     # relationship between rcscoldLeg, rcsHotLeg, and afsHotLeg, and afsColdLeg
     def _xferEnergyToAfs(self):
-        """  
-        Original Calculations...
-        rate = self._exchangeRate(self.sgTcRate, self.afsPumps)
-        self.rcsColdLegTemp =  self.rcsHotLegTemp*rate
-        self.afsHotLegTemp = self.afsColdLegTemp+(self.rcsHotLegTemp - self.rcsColdLegTemp)
-        """ 
-        # tempVariables for calculations
+        
         afsHeatExchange = ((self.rcsHotLegTemp - self.afsColdLegTemp) / self.thermalCon)
         tempChange = ((afsHeatExchange / (self.waterMass[self.afsPumps] * self.heatCapacity)) * 200)
-        # TODO: this will only let coldLegTemp fall.  Should be put into the if statement below to change when it is falling or increasing.
         
         if (self.rcsHotLegTemp > self.oldRcsHotLegTemp): 
             self.afsHotLegTemp = (self.afsHotLegTemp + tempChange)
@@ -184,11 +179,11 @@ class Plant(object):
             self.rcsColdLegTemp = self.rcsColdLegTemp - tempChange  
             
         
-        # disregard these comments.  Trying to think of a better way to calculate when temps are increasing or decreasing.
+        # TODO:  Trying to think of a better way to calculate when temps are increasing or decreasing.
         # if old rcsHotleg - old afsColdLeg > rcsHotLeg - afsColdLeg   ----this wont work
         
     
-    # Going to call this first after each new game tick.  It will store the previous temps for later calculations.
+    # Going to call this first after each new game tick.  It will store the previous temps for calculations.
     def _previousTemp(self):
         self.oldRcsHotLegTemp = self.rcsHotLegTemp
         self.oldRcsColdLegTemp = self.rcsColdLegTemp
@@ -217,8 +212,8 @@ class Plant(object):
             self.generatorRunningMW += self.generatorMW
             
             
-        # Temp loss from turbine based on flat percents since there is only 1 input (afsHotLegTemp). That percent will be based on a curve of mw output.
         # TODO: Could be made into a lookup table
+        #TODO: think about logic. Not sure this is exactly how I want it.
         
         if (self.afsPumps == 2): #pumps at 2
             #decreasing temp
@@ -370,6 +365,17 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0001)
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .00007)
+        """proof of calc
+        afsHidden = 500
+        MWPower = 650
+        pump = 2
+        
+        self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
+        
+         = 500 - (500 * .07) = 465
+        
+        
+        """
 
     def _xferSteamToCondenser(self):  
         """
@@ -386,11 +392,56 @@ class Plant(object):
         else:
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
+            
+            """
+            proof of calc
+            afsHidden = 500
+            csColdLeg = 65
+            thermalCon = .58
+            pumps = 2
+            heat cap = 4.19
+            
+            conHeatEx = (500 - 65) / .58 = 750
+            tempChange = ((750 / (2000 * 4.19)) * 200) = 17.9
+            
+            newCsHotLegTemp = 65 + 17.9 = 82.9
+            afsColdLegTemp = 463 + 17.9 = 480.9
+            """
         
-        
+        #relationship between cs hot leg, tower cooling, and cs cold leg
     def _xferToTower(self):
-        rate = self._exchangeRate(self.towerTcRate, self.towerPumps)  
-        self.csColdLegTemp = self.csHotLegTemp * rate
+        """rate = self._exchangeRate(self.towerTcRate, self.towerPumps)  
+        self.csColdLegTemp = self.csHotLegTemp * rate"""
+        
+        if (self.towerPumps == 2): #pumps at 2
+            #decreasing temp
+            if(self.csHotLegTemp < self.oldCsHotLegTemp):
+                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .4)
+            #temp increasing
+            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
+                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .4) #TODO: Think about how much increase / decrease there should be from tower.
+        elif (self.towerPumps == 1): #pumps at 1
+            #decreasing temp
+            if(self.csHotLegTemp < self.oldCsHotLegTemp):
+                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .3)
+            #temp increasing
+            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
+                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .3) #Think about how much increase / decrease there should be from tower.  
+        else: #pumps at 0
+            #decreasing temp
+            if(self.csHotLegTemp < self.oldCsHotLegTemp):
+                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .1)
+            #temp increasing
+            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
+                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .1) #Think about how much increase / decrease there should be from tower.  
+        """proof of calc
+        towerPump =2
+        csColdLeg = 65
+        csHotLeg = 94
+        
+        assume hot leg is getting cooler.
+        csCold = 94 - (94 * .4) = 56.4
+        """
           
     def _getEarthQuake(self):
         possibility = not(random.getrandbits(1))
@@ -400,14 +451,48 @@ class Plant(object):
         result = possibility
         return result
     
-    def _calcRisk(self):
+    def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours
         if self.elapsedTime > 60 and self.elapsedTime % 60 == 0:
             print "here"
             self.risk += 1
             
         if self.generatorMWH > 1000 and self.generatorMWH % 1000 == 0:
             self.risk += 1
+    #call every 20 minutes.      
+    def _restoreWorkers(self):
+            self.workers += 5
             
+    def _meltDown(self):
+        self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
+        self._reset()
+        
+    #If there is a meltdown reset all the things!
+    def _reset(self):
+        self.rodLevel = 9
+        self.reactorTemp = 653
+        self.rcsColdLegTemp = 561
+        self.rcsHotLegTemp = 603
+        self.reactorPumps = 4
+        self.afsColdLegTemp = 463
+        self.afsHotLegTemp = 593
+        self.afsPumps = 2
+        self.afsHiddenTemp = 500
+        self.generatorMW = 999
+        self.csColdLegTemp = 65
+        self.csHotLegTemp = 94
+        self.risk = 0
+        self.conPumps = 0
+        self.hpiPump = 0
+        self.towerPumps = 2
+        self.workers = 80
+        self.boilingTemp = 657
+        self.rcsPressure = 2294
+        self.elapsedTime = 0
+        #TODO:Reset valves to off
+        #TODO:Reset water levels.
+        #TODO: Reset Positions of moving dots?
+
+        
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
         output = ""
@@ -487,6 +572,8 @@ class Plant(object):
         print "AFS Cold Leg Temp: %s" % (str(self.afsColdLegTemp))
         print "CS Hot Leg Temp: %s" % (str(self.csHotLegTemp))
         print "CS Cold Leg Temp: %s" % (str(self.csColdLegTemp))  
+        
+        
                 
     def update(self):
         # increment game tick one second
@@ -505,5 +592,16 @@ class Plant(object):
         self._xferSteamToCondenser()
         # then on to the tower
         self._xferToTower()
+        #update risk for earthquakes
         self._calcRisk()
+        #Restore workers every 20 minutes. (1200 game ticks (sec))
+        if (self.elapsedTime > 1200) and (self.elapsedTime % 1200 == 0):
+            self._restoreWorkers()
+        #Meltdown or Scram. Decrease points. Reset everything.
+        if ((self.reactorTemp > 5000) or (self.reactorTemp < 200)):
+            self._meltDown()
         # self.display()
+            
+            
+            
+            
