@@ -69,6 +69,7 @@ class Plant(object):
         self.oldAfsHotLegTemp = 0
         self.oldCsHotLegTemp = 0
         self.oldCsColdLegTemp = 0
+        self.afsHiddenTemp = 0
         
         # steam generator
         self.sgTcRate = 0.8  # thermal conductivity rate of water in RCS Loop; between 0-1
@@ -100,7 +101,7 @@ class Plant(object):
         
         # HPI 
         self.hpiValve = False        
-        self.hpiPump = 0  # HPI Pump step 0-3 3 max        
+        self.hpiPump = 3  # HPI Pump step 0-3 3 max        
         self.hpiWater = 100  # HPI water level        
         self.hpirate = 5  # HPI rate rate gallons per second
         
@@ -196,7 +197,9 @@ class Plant(object):
         self.oldAfsHotLegTemp = self.afsHotLegTemp
         self.oldCsHotLegTemp = self.csHotLegTemp
         self.oldCsColdLegTemp = self.csColdLegTemp
+        self.oldAfsHiddenTemp = self.afsHiddenTemp
     
+    #calculates MWH and afsHiddenTemp
     def _xferSteamToGen(self):
         
         # TODO: figure out a new way to calculate MWH. 
@@ -215,83 +218,176 @@ class Plant(object):
             
             
         # Temp loss from turbine based on flat percents since there is only 1 input (afsHotLegTemp). That percent will be based on a curve of mw output.
-        # TODO: Should this also be based on flow rate of water? could add an extra if pump = 2 then do rates below else make temp decrease a lower percent.
-        if (self.afsPumps == 2):
-            if (self.generatorMW > 900):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .1)
-            elif (self.generatorMW > 800):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .09)
-            elif (self.generatorMW > 700):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .08)
-            elif (self.generatorMW > 600):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
-            elif (self.generatorMW > 500):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .06)
-            elif (self.generatorMW > 400):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .05)
-            elif (self.generatorMW > 300):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .04)
-            elif (self.generatorMW > 200):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .03)
-            elif (self.generatorMW > 100):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
-            elif (self.generatorMW > 1):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .01)
-            else: 
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
+        # TODO: Could be made into a lookup table
+        
+        if (self.afsPumps == 2): #pumps at 2
+            #decreasing temp
+            if(self.afsHotLegTemp < self.oldAfsHotLegTemp):
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .1)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .09)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .08)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .06)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .05)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .04)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .03)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .01)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
+            #temp increasing
+            else:
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .1)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .09)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .08)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .07)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .06)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .05)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .04)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .03)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .02)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .01)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0001)
+        
+        #pumps at 1
         elif (self.afsPumps == 1):
-            if (self.generatorMW > 900):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .075)
-            elif (self.generatorMW > 800):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .065)
-            elif (self.generatorMW > 700):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .055)
-            elif (self.generatorMW > 600):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .045)
-            elif (self.generatorMW > 500):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .035)
-            elif (self.generatorMW > 400):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .025)
-            elif (self.generatorMW > 300):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
-            elif (self.generatorMW > 200):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .005)
-            elif (self.generatorMW > 100):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .001)
-            elif (self.generatorMW > 1):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
-            else: 
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0004)
+            #temp decreasing
+            if(self.afsHotLegTemp < self.oldAfsHotLegTemp):
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .075)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .065)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .055)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .045)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .035)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .025)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .005)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .001)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0004)
+            #temp increasing
+            else:
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .075)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .065)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .055)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .045)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .035)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .025)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .015)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .005)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .001)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0007)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0004)
+        #pump at 0
         else:
-            if (self.generatorMW > 900):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
-            elif (self.generatorMW > 800):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .018)
-            elif (self.generatorMW > 700):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
-            elif (self.generatorMW > 600):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .012)
-            elif (self.generatorMW > 500):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0009)
-            elif (self.generatorMW > 400):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
-            elif (self.generatorMW > 300):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0005)
-            elif (self.generatorMW > 200):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0003)
-            elif (self.generatorMW > 100):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0002)
-            elif (self.generatorMW > 1):
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
-            else: 
-                self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .00007)
+            #temp decreasing
+            if(self.afsHotLegTemp < self.oldAfsHotLegTemp):
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .02)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .018)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .015)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .012)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0009)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0007)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0005)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0003)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0002)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .00007)
+            #temp increase
+            else:
+                if (self.generatorMW > 900):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .02)
+                elif (self.generatorMW > 800):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .018)
+                elif (self.generatorMW > 700):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .015)
+                elif (self.generatorMW > 600):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .012)
+                elif (self.generatorMW > 500):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0009)
+                elif (self.generatorMW > 400):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0007)
+                elif (self.generatorMW > 300):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0005)
+                elif (self.generatorMW > 200):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0003)
+                elif (self.generatorMW > 100):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0002)
+                elif (self.generatorMW > 1):
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0001)
+                else: 
+                    self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .00007)
 
     def _xferSteamToCondenser(self):  
+        """
         rate = self._exchangeRate(self.conTcRate, self.conPumps)   
         self.afsColdLegTemp = self.afsHotLegTemp * rate
         self.csHotLegTemp = self.csColdLegTemp + (self.afsHotLegTemp - self.afsColdLegTemp)
-
-    
+        """
+        condenserHeatExchange = ((self.afsHiddenTemp - self.csColdLegTemp) / self.thermalCon)
+        tempChange = ((condenserHeatExchange / (self.waterMass[self.towerPumps] * self.heatCapacity)) * 200)
+        
+        if (self.afsHiddenTemp > self.oldAfsHiddenTemp): 
+            self.csHotLegTemp = (self.csColdLegTemp + tempChange)
+            self.afsColdLegTemp = self.afsColdLegTemp + tempChange
+        else:
+            self.csHotLegTemp = (self.csColdLegTemp - tempChange)
+            self.afsColdLegTemp = self.afsColdLegTemp - tempChange
+        
+        
     def _xferToTower(self):
         rate = self._exchangeRate(self.towerTcRate, self.towerPumps)  
         self.csColdLegTemp = self.csHotLegTemp * rate
