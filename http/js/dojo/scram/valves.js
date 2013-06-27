@@ -28,7 +28,6 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'valveId' : 'pressurizerValve',
 				'tip': 'Pressurizer Tank Valve',
 				valveClass : 'pressurizertankvalve valvetrue z2',
-				console.log('clicked pressurizer valve'),
 			}, this.pressurizerValveDAP);
 			this.auxTankValve = new Valve({
 				'socket' : this.socket,
