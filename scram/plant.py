@@ -80,7 +80,7 @@ class Plant(object):
         self.afsHotLegTemp = 0
         self.afsColdLegTemp = 0
         self.afsValve = False
-        self.afsPumps = 2 #0-2 2 max
+        self.afsPumps = 2 #0-2 2 max 
         self.afsTankLevel = 10 #TODO: need a max for this.
         #This is a temp not displayed on screen between power generator and condenser in the afs loop.
         self.afsHiddenTemp = 0
@@ -103,7 +103,7 @@ class Plant(object):
         
         #HPI 
         self.hpiValve = False        
-        self.hpiPump = 0 #HPI Pump step 0-4 4 max        
+        self.hpiPump = 0 #HPI Pump step 0-3 3 max        
         self.hpiWater = 100 #HPI water level        
         self.hpirate = 5 #HPI rate rate gallons per second
         
@@ -202,7 +202,7 @@ class Plant(object):
     def _xferSteamToGen(self):
         
         #TODO: figure out a new way to calculate MWH. 
-        """
+        
         if self.afsHotLegTemp > 212:
             self.generatorMW = self.afsHotLegTemp * 1.08
         else:
@@ -215,18 +215,21 @@ class Plant(object):
             self.generatorRunningMW += self.generatorMW
         """
         #Old Calculation for drom in temp after steam generator.
-        """
+        
         #drop the temp in the steam after turbine
         rate = self._exchangeRate(self.genTcRate, self.maxPumps)
         self.afsHotLegTemp = self.afsHotLegTemp*rate
+        """
+        
         """
         if (self.afsHotLegTemp > 212): #Later 212 will turn into the temperature at which steam occurs.
             self.generatorMW = 1 #some equation
         else:
             print ""
+        """
         #Temp loss from turbine based on flat percents since there is only 1 input (afsHotLegTemp). That percent will be based on a curve of mw output.
         #TODO: Should this also be based on flow rate of water? could add an extra if pump = 2 then do rates below else make temp decrease a lower percent.
-        if (self.afsPumps = 2):
+        if (self.afsPumps == 2):
             if (self.generatorMW > 900):
                 self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .1)
             elif (self.generatorMW > 800):
@@ -249,7 +252,7 @@ class Plant(object):
                 self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .01)
             else: 
                 self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
-        elif (self.afsPumps = 1):
+        elif (self.afsPumps == 1):
             if (self.generatorMW > 900):
                 self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .075)
             elif (self.generatorMW > 800):
