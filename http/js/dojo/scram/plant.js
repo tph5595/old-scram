@@ -26,13 +26,14 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				socket : this.sockets.pumpSocket,
 				poll : this.sockets.pollSocket
 			});
-			this.valve = new Valves({
+			this.valves = new Valves({
 				"socket" : this.sockets.valveSocket,
 				poll : this.sockets.pollSocket
 			});
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
+			this.addChild(this.valves);
 			this.inherited(arguments);
 		}
 	});

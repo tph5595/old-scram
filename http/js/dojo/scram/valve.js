@@ -9,7 +9,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		socket : null,
 		poll:null,
 		valveState : null,
-		valveBoo : null,
 		valveId : null,
 		valveClass : null,
 		_setValveClassAttr: {node:"valve",type:"class"},
@@ -20,8 +19,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.socket = args.socket;
 			this.poll = args.poll;
 			this.valveClass = args.valveClass;
-			this.valveState = 'off';
-			this.valveBoo = false; //false = closed true = open
+			this.valveState = false; //false = closed true = open
 			this.tip = args.tip;
 			this.socket.on("message", lang.hitch(this, this.valveMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
