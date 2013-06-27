@@ -19,22 +19,22 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'valveId' : 'hpiTank',
-				'tip': 'HPI Tank Valve',
-				valveClass : 'hpitankvalve valvetrue z2',
+				'title': 'HPI Tank Valve',
+				valveClass : 'hpitankvalve valvefalse z2',
 			}, this.hpiTankValveDap);
 			this.pressurizerValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'valveId' : 'pressurizerValve',
-				'tip': 'Pressurizer Tank Valve',
-				valveClass : 'pressurizertankvalve valvetrue z2',
+				'title': 'Pressurizer Tank Valve',
+				valveClass : 'pressurizertankvalve valvefalse z2',
 			}, this.pressurizerValveDAP);
 			this.auxTankValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'valveId' : 'auxTankValve',
-				'tip': 'Auxiliary Tank Valve',
-				valveClass : 'auxtankvalve valvetrue z2',
+				'title': 'Auxiliary Tank Valve',
+				valveClass : 'auxtankvalve valvefalse z2',
 			}, this.auxTankValveDAP);
 			
 			this.inherited(arguments);

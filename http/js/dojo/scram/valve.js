@@ -30,10 +30,11 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveSwitch:function(){
 			this.valveState = !this.valveState
 			this.valveUpdate(this.valveState);
+			//FIXME: valve state not persistent
 		},
 		valveMove : function() {
 			domClass.remove(this.valve);
-			domClass.add(this.valve, this.valveState + " " + this.valveClass);
+			domClass.add(this.valve, 'valve'+this.valveState + " " + this.valveClass);
 		},
 		valveUpdate : function(newValveState) {
 			j = {
