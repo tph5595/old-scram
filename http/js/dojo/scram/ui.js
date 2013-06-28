@@ -12,39 +12,11 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, So
 		constructor : function(args) {
 			this.args = args;
 			this._sockets = new Sockets();
-
 		},
 		buildRendering : function() {
 			this.inherited(arguments);
 		},
 		postCreate : function() {
-
-			/*this.twitterfeed = new domConstruct.create('div', {
-			 id: 'twitterfeed',
-			 'class': 'twitterfeed z0'
-			 }, ui);
-			 this.bgBlack = new domConstruct.create('div', {
-			 id : 'bgBlack',
-			 'class' : 'bgblack z1'
-			 }, this.ui);
-			 this.bgOrange = new domConstruct.create('div', {
-			 id : 'bgOrange',
-			 'class' : 'bgorange z1'
-			 }, this.ui);
-			 this.twitterFeed = new domConstruct.create('div', {
-			 id : 'twitterFeed',
-			 'class' : 'twitterfeed z1'
-			 }, this.bgBlack);
-			 this.main = new domConstruct.create("div", {
-			 id : 'main',
-			 'class' : "scrambackground z1"
-			 }, this.bgBlack);
-			 this.poll = new domConstruct.create("div", {
-			 id : 'poll',
-			 'class' : "statsbarbackground z1"
-			 }, this.bgOrange);
-
-			 */
 			this.splash = new Splash();
 			this.splash.on("hidden", lang.hitch(this, function() {
 			this.status = new Status({
@@ -56,10 +28,7 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, So
 			}, this.plantDAP);
 			}));
 			this.addChild(this.splash);
-			//this.splash.show();
 
-
-			
 			dojo.style(this.statusDAP, "opacity", "0");
 			dojo.style(this.plantDAP, "opacity", "0");
 			this.inherited(arguments);
