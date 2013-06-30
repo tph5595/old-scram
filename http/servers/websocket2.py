@@ -32,11 +32,11 @@ class PollServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "Poll Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "Poll Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
@@ -49,11 +49,11 @@ class ValveServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "Valve Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "Valve Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
@@ -66,11 +66,11 @@ class PumpServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "Pump Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "Pump Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
@@ -83,11 +83,11 @@ class RodServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "Rod Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "Rod Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
@@ -100,11 +100,11 @@ class UserServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "User Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "User Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
@@ -117,11 +117,11 @@ class EarthquakeServerProtocol(WebSocketServerProtocol):
        
     def connectionMade(self):
         WebSocketServerProtocol.connectionMade(self)#always before your code
-        print "Connection Made"
+        print "Earthquake Connection Made"
         self.factory.connections.append(self)
         
     def connectionLost(self,reason):
-        print "Connection Lost"
+        print "Earthquake Connection Lost"
         self.factory.connections.remove(self)
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         

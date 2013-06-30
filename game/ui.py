@@ -61,6 +61,7 @@ class UI(object):
         self.reactor = reactor
         self.q = Queue() #not sure I need this
         self.frontEndListeners={}
+        self._initFlags()
 
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
@@ -138,8 +139,27 @@ class UI(object):
     def _handleEarthquake(self):
         pass
     
+    def _initFlags(self):
+        self.flags = {}
+        self.flags['poll'] = None
+        
+    def _handlePoll(self,conn,msg):     
+        
+        if(conn.http_request_path == "/stash"):
+            #get the old flag            
+            prevFlag = self.flags['poll'] if self.flags['poll']!=None else 'none'
+            z = json.loads(msg)            
+            #stash the new flag
+            self.flags['poll']  = z['flag']
+            #return a response object
+            j = {"oldflag":prevFlag}
+            conn.sendMessage(json.dumps(j))
+            #forcibly drop the connection
+            conn.dropConnection()   
+            print "Poll Sent Flag Response: %s"%j
+        
     def setUpListeners(self):
-        self._setUpListener("poll", 8081, PollServerProtocol)
+        self._setUpListener("poll", 8081, PollServerProtocol, self._handlePoll)
         self._setUpListener("valve", 8082, ValveServerProtocol,self._handleValve)
         self._setUpListener("pump", 8083, PumpServerProtocol,self._handlePump)
         self._setUpListener("rod", 8084, RodServerProtocol,self._handleRod)
