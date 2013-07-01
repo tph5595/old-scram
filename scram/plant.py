@@ -177,7 +177,7 @@ class Plant(object):
         # TODO: figure out a new way to calculate MWH. 
         
         #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
-        if (self.afsHotLegTemp > 150): #Later 150 will turn into the temperature at which steam occurs or something.
+        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 350): #Later 150 will turn into the temperature at which steam occurs or something.
             self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
         else:
             self.generatorMW = 0 #it should probably decrease by a rate instead of instantly becoming 0.
@@ -415,13 +415,20 @@ class Plant(object):
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
         magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
+        destroy = random.randrange(1, 9, 1)
         if magicNumber == 69:
             print"EarthQuake!"
             self.earthquake = True
         else:
             print"Safe!"
             self.earthquake = False
-
+            
+        #There are 9 places that can be damaged
+        if (destroy == 1) and (self.earthquake == True):
+            print "destroy ____"
+            
+    def getEarthquake(self):
+        self._getEarthQuake()
     
     def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
@@ -576,7 +583,7 @@ class Plant(object):
         if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
             self._restoreWorkers()
         #Meltdown or Scram. Decrease points. Reset everything.
-        if ((self.reactorTemp > 5000) or (self.reactorTemp < 350)):
+        if (self.reactorTemp > 5000):
             self._meltDown()
         # self.display()
             
