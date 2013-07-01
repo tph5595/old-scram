@@ -40,52 +40,52 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		rcsWaterMove : function() {
 			this.rcsWater1 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -636,
+				top: -675,
 				left: 426
 			});
 			this.rcsWater2 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -387,
+				top: -426,
 				left: 426
 			});
 			this.rcsWater3 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -387,
+				top: -426,
 				left: 439
 			});
 			this.rcsWater4 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -636,
+				top: -675,
 				left: 439
 			});
 			this.rcsWater5 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -636,
+				top: -675,
 				left: 426
 			});
 			this.rcsWater6 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -387,
+				top: -426,
 				left: 426
 			});
 			this.rcsWater7 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -387,
+				top: -426,
 				left: 346
 			});
 			this.rcsWater8 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -425,
+				top: -464,
 				left: 290
 			});
 			this.rcsWater9 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -425,
+				top: -464,
 				left: 178
 			});
 			this.rcsWater10 = fx.slideTo({
 				node: this.rcsDAP,
-				top: -636,
+				top: -675,
 				left: 177
 			});
 			this.chain = fx.chain([this.rcsWater1,this.rcsWater2,this.rcsWater3,this.rcsWater4,this.rcsWater5,this.rcsWater6,this.rcsWater7,this.rcsWater8,this.rcsWater9,this.rcsWater10]);
