@@ -21,7 +21,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'valveId' : 'hpiTank',
 				'title': 'HPI Tank Valve',
 				valveClass : 'hpitankvalve valvefalse z2',
-			}, this.hpiTankValveDap);
+			}, this.hpiTankValveDAP);
 			this.pressurizerValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
