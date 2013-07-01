@@ -36,9 +36,6 @@ class Plant(object):
         # Timings
         self.elapsedTime = 0  # add to this every cycle
         
-        # workers
-        # TODO: need to figure out a replenish rate
-        # workers to repair one thing
         #5 every 20 minutes or so.  
         self.workers = 80 
         
@@ -46,18 +43,12 @@ class Plant(object):
         self.risk = 0  # Increments based on Net MWH; determines earth quakes
         self.earthquakes = 0  # add to this when EQ happens
         
-        # TODO: delete later
-        self.maxPumps = 4
-        
         # reactor
         self.energy = [0, 36, 144, 324, 576, 900, 1296, 1600, 2116, 2700]
         self.rodLevel = 9  # Rods Step 0-9 9=max
         self.reactorPumps = 4  # Reactor pump step 1-4 4=max
         
-        # WAGing the TC rate based on http://www.nist.gov/data/PDFfiles/jpcrd493.pdf
-        self.rcsTcRate = 0.8  # thermal conductivity rate of water in RCS Loop; between 0-1
         self.reactorTemp = 653  # 5000 is max; 200 is scrammed
-        self.reactorResidualTemp = 600  # this is what is left over after tc
         self.rcsHotLegTemp = 603
         self.rcsColdLegTemp = 561
         self.rcsPressure = 2294  # 2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
@@ -71,16 +62,13 @@ class Plant(object):
         self.oldAfsHotLegTemp = 0
         self.oldCsHotLegTemp = 0
         self.oldCsColdLegTemp = 0
-        self.afsHiddenTemp = 0
-        
-        # steam generator
-        self.sgTcRate = 0.8  # thermal conductivity rate of water in RCS Loop; between 0-1
+        self.oldAfsHiddenTemp = 0
         
         # Aux Feed Water System
         self.afsHotLegTemp = 593
         self.afsColdLegTemp = 463
         self.afsValve = False
-        self.afsPumps = 2  # 0-2 2 max 
+        self.afsPumps = 0  # 0-2 2 max 
         self.afsTankLevel = 10  # TODO: need a max for this.
         # This is a temp not displayed on screen between power generator and condenser in the afs loop.
         self.afsHiddenTemp = 500
@@ -88,24 +76,20 @@ class Plant(object):
         # generator
         self.generatorMW = 999
         self.generatorMWH = 0  # accumulator for Net MWH  
-        self.genTcRate = 0.2 
         self.generatorRunningMW = 0                    
         
         # Condenser (heat exchanger)
         self.csHotLegTemp = 94
         self.csColdLegTemp = 65
-        self.conTcRate = 0.3  # heat xfer rate between 0 and 1
         self.conPumps = 2  # 0-2 2=max
         
         # tower
-        self.towerTcRate = 0.8
         self.towerPumps = 2
         
         # HPI 
         self.hpiValve = False        
-        self.hpiPump = 3  # HPI Pump step 0-3 3 max        
+        self.hpiPump = 0  # HPI Pump step 0-3 3 max        
         self.hpiWater = 100  # HPI water level        
-        self.hpirate = 5  # HPI rate rate gallons per second
         
         # pressurizer
         self.pressurizerWaterLevel = 50
@@ -131,13 +115,6 @@ class Plant(object):
         self.reactorTemp = self.reactorTemp + (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps])
         # temp decrease from coldLegTemp.
         self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
-        
-    # TODO:delete this method later
-    def _exchangeRate(self, tcRate, numPumps):
-        rate = (numPumps / self.maxPumps) * tcRate
-        # rate= numPumps*tcRate
-        # print "Rate: %s %s %s" % (str(tcRate),str(numPumps), str(rate))
-        return rate
     
     
     # Relationship between reactor temp and hot leg
@@ -148,8 +125,10 @@ class Plant(object):
         # if statement determines if hot leg is increasing or decreasing in temp
         if (self.reactorTemp > self.oldReactorTemp):
             self.rcsHotLegTemp = self.rcsHotLegTemp + ((reactorHeat / (self.waterMass[self.reactorPumps] * self.heatCapacity)) * 200)
-        else:
+        elif (self.reactorTemp < self.oldReactorTemp):
             self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (self.waterMass[self.reactorPumps] * self.heatCapacity)) * 200)
+        else:
+            self.rcsHotLegTemp = self.rcsHotLegTemp
             
         """
         proof of calculations
@@ -167,20 +146,18 @@ class Plant(object):
         """
     # relationship between rcscoldLeg, rcsHotLeg, and afsHotLeg, and afsColdLeg
     def _xferEnergyToAfs(self):
-        
         afsHeatExchange = ((self.rcsHotLegTemp - self.afsColdLegTemp) / self.thermalCon)
-        tempChange = ((afsHeatExchange / (self.waterMass[self.afsPumps] * self.heatCapacity)) * 200)
+        tempChange = ((afsHeatExchange / (self.waterMass[self.conPumps] * self.heatCapacity)) * 200)
         
         if (self.rcsHotLegTemp > self.oldRcsHotLegTemp): 
             self.afsHotLegTemp = (self.afsHotLegTemp + tempChange)
             self.rcsColdLegTemp = self.rcsColdLegTemp + tempChange
-        else:
+        elif (self.rcsHotLegTemp < self.oldRcsHotLegTemp):
             self.afsHotLegTemp = (self.afsHotLegTemp - tempChange)
             self.rcsColdLegTemp = self.rcsColdLegTemp - tempChange  
-            
-        
-        # TODO:  Trying to think of a better way to calculate when temps are increasing or decreasing.
-        # if old rcsHotleg - old afsColdLeg > rcsHotLeg - afsColdLeg   ----this wont work
+        else:
+            self.afsHotLegTemp = self.afsHotLegTemp
+            self.rcsColdLegTemp = self.rcsColdLegTemp 
         
     
     # Going to call this first after each new game tick.  It will store the previous temps for calculations.
@@ -200,7 +177,7 @@ class Plant(object):
         # TODO: figure out a new way to calculate MWH. 
         
         #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
-        if (self.afsHotLegTemp > 212): #Later 212 will turn into the temperature at which steam occurs or something.
+        if (self.afsHotLegTemp > 150): #Later 150 will turn into the temperature at which steam occurs or something.
             self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
         else:
             self.generatorMW = 0 #it should probably decrease by a rate instead of instantly becoming 0.
@@ -212,10 +189,10 @@ class Plant(object):
             self.generatorRunningMW += self.generatorMW
             
             
-        # TODO: Could be made into a lookup table
+        #TODO: Could be made into a lookup table
         #TODO: think about logic. Not sure this is exactly how I want it.
         
-        if (self.afsPumps == 2): #pumps at 2
+        if (self.conPumps == 2): #pumps at 2
             #decreasing temp
             if(self.afsHotLegTemp < self.oldAfsHotLegTemp):
                 if (self.generatorMW > 900):
@@ -241,7 +218,7 @@ class Plant(object):
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0001)
             #temp increasing
-            else:
+            if(self.afsHotLegTemp > self.oldAfsHotLegTemp):
                 if (self.generatorMW > 900):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .1)
                 elif (self.generatorMW > 800):
@@ -264,9 +241,11 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .01)
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0001)
-        
+            #Temp staying same
+            else:
+                self.afsHiddenTemp = self.afsHiddenTemp
         #pumps at 1
-        elif (self.afsPumps == 1):
+        elif (self.conPumps == 1):
             #temp decreasing
             if(self.afsHotLegTemp < self.oldAfsHotLegTemp):
                 if (self.generatorMW > 900):
@@ -292,7 +271,7 @@ class Plant(object):
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .0004)
             #temp increasing
-            else:
+            elif(self.afsHotLegTemp > self.oldAfsHotLegTemp):
                 if (self.generatorMW > 900):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .075)
                 elif (self.generatorMW > 800):
@@ -315,6 +294,9 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0007)
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0004)
+            #Temp staying same
+            else:
+                self.afsHiddenTemp = self.afsHiddenTemp
         #pump at 0
         else:
             #temp decreasing
@@ -342,7 +324,7 @@ class Plant(object):
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .00007)
             #temp increase
-            else:
+            elif(self.afsHotLegTemp > self.oldAfsHotLegTemp):
                 if (self.generatorMW > 900):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .02)
                 elif (self.generatorMW > 800):
@@ -365,7 +347,12 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .0001)
                 else: 
                     self.afsHiddenTemp = self.afsHiddenTemp + (self.afsHiddenTemp * .00007)
-        """proof of calc
+            #Temp staying same
+            else:
+                self.afsHiddenTemp = self.afsHiddenTemp
+                
+        """
+        proof of calc
         afsHidden = 500
         MWPower = 650
         pump = 2
@@ -373,25 +360,21 @@ class Plant(object):
         self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
         
          = 500 - (500 * .07) = 465
-        
-        
         """
 
     def _xferSteamToCondenser(self):  
-        """
-        rate = self._exchangeRate(self.conTcRate, self.conPumps)   
-        self.afsColdLegTemp = self.afsHotLegTemp * rate
-        self.csHotLegTemp = self.csColdLegTemp + (self.afsHotLegTemp - self.afsColdLegTemp)
-        """
         condenserHeatExchange = ((self.afsHiddenTemp - self.csColdLegTemp) / self.thermalCon)
         tempChange = ((condenserHeatExchange / (self.waterMass[self.towerPumps] * self.heatCapacity)) * 200)
         
         if (self.afsHiddenTemp > self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp + tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp + tempChange
-        else:
+        elif(self.afsHiddenTemp > self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
+        else:
+            self.csHotLegTemp = self.csHotLegTemp
+            self.afsColdLegTemp = self.afsColdLegTemp
             
             """
             proof of calc
@@ -410,30 +393,12 @@ class Plant(object):
         
         #relationship between cs hot leg, tower cooling, and cs cold leg
     def _xferToTower(self):
-        """rate = self._exchangeRate(self.towerTcRate, self.towerPumps)  
-        self.csColdLegTemp = self.csHotLegTemp * rate"""
-        
         if (self.towerPumps == 2): #pumps at 2
-            #decreasing temp
-            if(self.csHotLegTemp < self.oldCsHotLegTemp):
-                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .4)
-            #temp increasing
-            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
-                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .4) #TODO: Think about how much increase / decrease there should be from tower.
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .3)
         elif (self.towerPumps == 1): #pumps at 1
-            #decreasing temp
-            if(self.csHotLegTemp < self.oldCsHotLegTemp):
-                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .3)
-            #temp increasing
-            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
-                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .3) #Think about how much increase / decrease there should be from tower.  
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .2)
         else: #pumps at 0
-            #decreasing temp
-            if(self.csHotLegTemp < self.oldCsHotLegTemp):
-                self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .1)
-            #temp increasing
-            else:# it doesn't really make sense for them to increase at uniform rates.  The csColdLegTemp should still get colder than the hot leg no matter what?
-                self.csColdLegTemp = self.csHotLegTemp + (self.csHotLegTemp * .1) #Think about how much increase / decrease there should be from tower.  
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .1)
         """proof of calc
         towerPump =2
         csColdLeg = 65
@@ -475,13 +440,13 @@ class Plant(object):
         self.reactorPumps = 4
         self.afsColdLegTemp = 463
         self.afsHotLegTemp = 593
-        self.afsPumps = 2
+        self.afsPumps = 0
         self.afsHiddenTemp = 500
         self.generatorMW = 999
         self.csColdLegTemp = 65
         self.csHotLegTemp = 94
         self.risk = 0
-        self.conPumps = 0
+        self.conPumps = 2
         self.hpiPump = 0
         self.towerPumps = 2
         self.workers = 80
@@ -598,7 +563,7 @@ class Plant(object):
         if (self.elapsedTime > 1200) and (self.elapsedTime % 1200 == 0):
             self._restoreWorkers()
         #Meltdown or Scram. Decrease points. Reset everything.
-        if ((self.reactorTemp > 5000) or (self.reactorTemp < 200)):
+        if ((self.reactorTemp > 5000) or (self.reactorTemp < 350)):
             self._meltDown()
         # self.display()
             
