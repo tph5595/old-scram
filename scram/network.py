@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
 # from game.terrain import CHUNK_GRANULARITY
-from game.network import (Handshake, PollPlant, SetRod, SetPump)
+from game.network import (Handshake, PollPlant, SetRod, SetPump, Earthquake)
 
 class ScramServer(AMP):
     """
@@ -51,8 +51,8 @@ class ScramServer(AMP):
         self.update += 1       
         poll = self.world.plant.poll()  
         self.callRemote(PollPlant, updateid=str(self.update),
-                        mwh=str(poll['mwh']),
-                        simtime=str(poll['simtime']),
+                mwh=str(poll['mwh']),
+                simtime=str(poll['simtime']),
                 reactortemp=str(poll['reactortemp']),
                 rcshotlegtemp=str(poll['rcshotlegtemp']),
                 rcscoldlegtemp=str(poll['rcscoldlegtemp']),
@@ -74,13 +74,17 @@ class ScramServer(AMP):
                         )
         return{}
         
+    def getEarthquake(self):
+        eq = self.world.plant.getEarthquake()  
+        self.callRemote(Earthquake, quake=str(eq))
+        return{}
+         
     def sendExistingState(self):
         """
-        Send information about connected players.
+        Add observers (push) to the world.
         """
-        # TODO: implement me!!
-        print "Sending existing state"
         self.world.addObserver(self.pollPlant)
+        self.world.addObserver(self.getEarthquake)
         pass
 
 

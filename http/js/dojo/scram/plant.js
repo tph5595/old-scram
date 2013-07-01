@@ -1,7 +1,4 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
-"dijit/_TemplatedMixin", "scram/rod", "scram/pumps", "scram/temp",  "scram/valves", "scram/waters", "scram/tanks",
-"dojo/text!scram/templates/plant.html"], function(lang, Declare, _WidgetBase, _Container, 
-	_Contained, _TemplatedMixin, Rods, Pumps, Temp, Valves, Waters, Tanks, template) {
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "dojo/text!scram/templates/plant.html"], function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
 		///
 		/// This is the class for the plant
@@ -12,9 +9,16 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 
 		constructor : function(args) {
 			this.sockets = args.sockets;
-			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg){console.log("Poll Data",msg);}));
+			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
+				console.log("Poll Data", msg);
+			}));
 		},
 		postCreate : function() {
+
+			this.earthquake = new Earthquake({
+				socket : this.sockets.earthquakeSocket
+			});
+
 			this.temp = new Temp({
 				socket : this.sockets.pollSocket
 			});
@@ -32,20 +36,20 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				poll : this.sockets.pollSocket
 			});
 			this.waters = new Waters({
-				poll: this.sockets.pollSocket
-			});
-			/*
-			this.tanks = new Tanks({
-				"socket" : this.sockets.tankSocket,
 				poll : this.sockets.pollSocket
 			});
-			*/
+			/*
+			 this.tanks = new Tanks({
+			 "socket" : this.sockets.tankSocket,
+			 poll : this.sockets.pollSocket
+			 });
+			 */
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
 			this.addChild(this.valves);
 			this.addChild(this.waters);
-		//	this.addChild(this.tanks);
+			//	this.addChild(this.tanks);
 			this.inherited(arguments);
 		}
 	});

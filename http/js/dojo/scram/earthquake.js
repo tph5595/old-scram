@@ -1,39 +1,15 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
-	return Declare("scram.socket", null, {
+	return Declare("scram.earthquake", null, {
 		///
 		/// This is the class for earthquakes
 		///
-		
-		//Used to store info about the damage caused (to report back to server)
-		_damage : null,
-		
-		
-		constructor : function(args) {
-			
+		constructor: function(args){
+			this.socket = args.socket;
+			this.socket.on("message",lang.hitch(this,this.onMsg));
 		},
-	
-		
-		beginEarthquake : function(event){
-			
-			//Start the earthquake
-			
-		},
-		
-		
-		endEarthquake : function(event){
-			
-			//End the earthquake
-			//Assess or cause damage here
-			
-		},
-		
-		
-		reportDamage : function(event){
-			
-			//Send information back to the
-			//server about what happened
-			
+		onMsg: function(event){
+			var obj = JSON.parse(event.data);
+			console.log("Earthquake",obj.quake);
 		}
-		
 	});
 });

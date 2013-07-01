@@ -66,12 +66,12 @@ class ReportEnergy(Command):
     arguments = [('produced',Integer())]
     response = [('response',Boolean())]
     
-class EarthQuake(Command):
+class Earthquake(Command):
     """
     This is the earth quake!!!
     """
-    arguments = [('length',Integer())]
-    response = [('response',Boolean())]
+    arguments = [('quake',Boolean())]
+    #response = [('response',Boolean())]
     
 class AddUser(Command):
     """
@@ -178,6 +178,16 @@ class NetworkController(AMP):
         d.addCallback(cbHs)
         return d
     
+    def earthquake(self,quake):
+        j = {'quake':quake}
+        try:
+            if len(self.factory.frontEndListeners['earthquake'].connections) > 0:
+                for conn in self.factory.frontEndListeners['earthquake'].connections:
+                    conn.sendMessage(json.dumps(j))
+        except KeyError:
+            pass   
+        return j 
+    Earthquake.responder(earthquake)     
     
     def pollPlant(self,updateid,
                  mwh,
