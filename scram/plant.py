@@ -415,20 +415,25 @@ class Plant(object):
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
         magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
-        destroy = random.randrange(1, 9, 1)
+        
         if magicNumber == 69:
-            print"EarthQuake!"
+            print"EarthQuake!" #prolly won't need these prints.
             self.earthquake = True
+            self._earthquakeDamage()
         else:
-            print"Safe!"
+            print"Safe!" #prolly won't need these prints.
             self.earthquake = False
             
-        #There are 9 places that can be damaged
+    def _earthquakeDamage(self):
+        #There are 9 places that can be damaged.  This chooses which 1 to destroy
+        destroy = random.randrange(1, 9, 1)
+        
+        #Rod Destruction
         if (destroy == 1) and (self.earthquake == True):
-            print "destroy ____"
+            print 
             
     def getEarthquake(self):
-        self._getEarthQuake()
+        return self.earthquake
     
     def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
