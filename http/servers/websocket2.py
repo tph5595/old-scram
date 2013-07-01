@@ -41,7 +41,6 @@ class PollServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg)
             
@@ -58,7 +57,6 @@ class ValveServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg)  
 
@@ -75,7 +73,6 @@ class PumpServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg)           
 
@@ -92,7 +89,6 @@ class RodServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg) 
             
@@ -109,7 +105,6 @@ class UserServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg)  
             
@@ -126,6 +121,5 @@ class EarthquakeServerProtocol(WebSocketServerProtocol):
         WebSocketServerProtocol.connectionLost(self, reason)#always after your code
         
     def onMessage(self, msg, binary):
-        print"onMessage"
         for f in self.factory.observers:
             f(self,msg)            

@@ -118,11 +118,15 @@ class UI(object):
         factory.connections = [] #all connections that are active; for the protocol to send data
         self.frontEndListeners[serviceName] = factory
         listenWS(self.frontEndListeners[serviceName]) 
-        
-    def _handleValve(self):
-        pass
+    
+    def _handlePoll(self,conn,msg):     
+        if(self._handleStash("poll", conn, msg, True)):return
+            
+    def _handleValve(self,conn,msg):
+        if(self._handleStash("valve", conn, msg)):return
     
     def _handlePump(self,conn,msg):
+        if(self._handleStash("pump", conn, msg)):return
         deferred = self.protocol.pump(msg)
         def cb(resp): 
             print "Pump UI Resp: %s sending to %s connections"%(resp, str(len(self.frontEndListeners['pump'].connections)))          
@@ -132,31 +136,41 @@ class UI(object):
         deferred.addCallback(cb)
     
     def _handleRod(self, conn, msg):
+        if(self._handleStash("rod", conn, msg)):return
         self.protocol.rod(msg)
         
-    def _handleUser(self):
-        pass
-    def _handleEarthquake(self):
-        pass
+    def _handleUser(self,conn,msg):
+        if(self._handleStash("user", conn, msg)):return
+        
+    def _handleEarthquake(self,conn,msg):
+        if(self._handleStash("earthquake", conn, msg)):return
     
     def _initFlags(self):
         self.flags = {}
         self.flags['poll'] = None
+        self.flags['valve'] = None
+        self.flags['pump'] = None
+        self.flags['rod'] = None
+        self.flags['user'] = None
+        self.flags['earthquake'] = None
         
-    def _handlePoll(self,conn,msg):     
-        
+    def _handleStash(self,service,conn,msg,termConn=False): 
         if(conn.http_request_path == "/stash"):
             #get the old flag            
-            prevFlag = self.flags['poll'] if self.flags['poll']!=None else 'none'
+            prevFlag = self.flags[service] if self.flags[service]!=None else 'none'
             z = json.loads(msg)            
             #stash the new flag
-            self.flags['poll']  = z['flag']
+            self.flags[service]  = z['flag']
             #return a response object
             j = {"oldflag":prevFlag}
             conn.sendMessage(json.dumps(j))
-            #forcibly drop the connection
-            conn.dropConnection()   
-            print "Poll Sent Flag Response: %s"%j
+            
+            if(termConn):
+                #forcibly drop the connection
+                conn.dropConnection()   
+                
+            print "%s Sent Flag Response: %s"%(service,j)
+            return True   
         
     def setUpListeners(self):
         self._setUpListener("poll", 8081, PollServerProtocol, self._handlePoll)
