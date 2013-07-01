@@ -40,8 +40,7 @@ class Plant(object):
         self.workers = 80 
         
         # Risk Level
-        self.risk = 0  # Increments based on Net MWH; determines earth quakes
-        self.earthquakes = 0  # add to this when EQ happens
+        self.risk = 0  # Increments based on Net MWH and time; determines earth quakes
         
         # reactor
         self.energy = [0, 36, 144, 324, 576, 900, 1296, 1600, 2116, 2700]
@@ -96,8 +95,7 @@ class Plant(object):
         self.pressurizerSteamLevel = 50
         self.pressurizerQuenchTankLevel = 10
         self.pressuizerValve = False
-        # RCS Pressure normal is 2200-2300 max is 3000
-        self.rcsPressure = 2200
+      
         
         # initial value for temperature multipliers based upon pumps open
         self.hotMultiplier = [.1, .073, .053, .033, .01, .008, .007, .0058, .004]
@@ -107,6 +105,8 @@ class Plant(object):
         self.thermalCon = .58
         self.heatCapacity = 4.19  # Joules/grams Kelvin
         self.waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]  # gallons of water being pumped through the pressure chamber based on pumps on
+        
+        self.earthquake = False
         
         
     # Relationship between reactor temp and cold leg
@@ -407,17 +407,20 @@ class Plant(object):
         assume hot leg is getting cooler.
         csCold = 94 - (94 * .4) = 56.4
         """
-          
+    #TODO:Make sure earthquake logic works
+    #TODO:Pass earthquake result to server
     def _getEarthQuake(self):
-        possibility = not(random.getrandbits(1))
-        # TODO: need to modify this possiblity based on the risk level
-        #        right now this is a coin flip
-        #        Also do not want to do this every cycle of the clock
-        result = possibility
-        return result
+        magicNumber = random.randrange(0, (500000 - (self.risk * 250)), 1)
+        if magicNumber == 69:
+            print"EarthQuake!"
+            self.earthquake = True
+        else:
+            print"Safe!"
+            self.earthquake = False
+
     
-    def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours
-        if self.elapsedTime > 60 and self.elapsedTime % 60 == 0:
+    def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
+        if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
             print "here"
             self.risk += 1
             
@@ -453,9 +456,12 @@ class Plant(object):
         self.boilingTemp = 657
         self.rcsPressure = 2294
         self.elapsedTime = 0
+        self.rcsPressure = 2294
+        self.boilingTemp = 657
         #TODO:Reset valves to off
         #TODO:Reset water levels.
         #TODO: Reset Positions of moving dots?
+    
 
         
     def cryptXOR(self, s, key="\x1027"):
@@ -559,8 +565,11 @@ class Plant(object):
         self._xferToTower()
         #update risk for earthquakes
         self._calcRisk()
+        #Check for eathquake
+        if (self.risk >= 1):
+            self._getEarthQuake()
         #Restore workers every 20 minutes. (1200 game ticks (sec))
-        if (self.elapsedTime > 1200) and (self.elapsedTime % 1200 == 0):
+        if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
             self._restoreWorkers()
         #Meltdown or Scram. Decrease points. Reset everything.
         if ((self.reactorTemp > 5000) or (self.reactorTemp < 350)):
