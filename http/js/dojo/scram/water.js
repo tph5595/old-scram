@@ -96,57 +96,57 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			//afs
 			this.afsWater1 = fx.slideTo({
 				node: this.afsDAP,
-				top: -393,
+				top: -432,
 				left: 469
 			});
 			this.afsWater2 = fx.slideTo({
 				node: this.afsDAP,
-				top: -640,
+				top: -679,
 				left: 469
 			});
 			this.afsWater3 = fx.slideTo({
 				node: this.afsDAP,
-				top: -640,
+				top: -679,
 				left: 458
 			});
 			this.afsWater4 = fx.slideTo({
 				node: this.afsDAP,
-				top: -393,
+				top: -432,
 				left: 458
 			});
 			this.afsWater5 = fx.slideTo({
 				node: this.afsDAP,
-				top: -393,
+				top: -432,
 				left: 469
 			});
 			this.afsWater6 = fx.slideTo({
 				node: this.afsDAP,
-				top: -640,
+				top: -679,
 				left: 469
 			});
 			this.afsWater7 = fx.slideTo({
 				node: this.afsDAP,
-				top: -640,
+				top: -679,
 				left: 657
 			});
 			this.afsWater8 = fx.slideTo({
 				node: this.afsDAP,
-				top: -471,
+				top: -510,
 				left: 657
 			});
 			this.afsWater9 = fx.slideTo({
 				node: this.afsDAP,
-				top: -471,
+				top: -510,
 				left: 645
 			});
 			this.afsWater10 = fx.slideTo({
 				node: this.afsDAP,
-				top: -515,
+				top: -554,
 				left: 645
 			});
 			this.afsWater11 = fx.slideTo({
 				node: this.afsDAP,
-				top: -515,
+				top: -554,
 				left: 657
 			});
 			this.afsWater12 = fx.slideTo({
@@ -156,7 +156,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			});
 			this.afsWater13 = fx.slideTo({
 				node: this.afsDAP,
-				top: -393,
+				top: -432,
 				left: 605
 			});
 			fx.chain([this.afsWater1,this.afsWater2,this.afsWater3,this.afsWater4,this.afsWater5,this.afsWater6,this.afsWater7,this.afsWater8,this.afsWater9,this.afsWater10,this.afsWater11,this.afsWater12,this.afsWater13]).play();
@@ -165,47 +165,47 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			//cs
 			this.csWater1 = fx.slideTo({
 				node: this.csDAP,
-				top: -521,
+				top: -560,
 				left: 688
 			});
 			this.csWater2 = fx.slideTo({
 				node: this.csDAP,
-				top: -521,
+				top: -560,
 				left: 676
 			});
 			this.csWater3 = fx.slideTo({
 				node: this.csDAP,
-				top: -476,
+				top: -515,
 				left: 676
 			});
 			this.csWater4 = fx.slideTo({
 				node: this.csDAP,
-				top: -476,
+				top: -515,
 				left: 688
 			});
 			this.csWater5 = fx.slideTo({
 				node: this.csDAP,
-				top: -521,
+				top: -560,
 				left: 688
 			});
 			this.csWater6 = fx.slideTo({
 				node: this.csDAP,
-				top: -521,
+				top: -560,
 				left: 875
 			});
 			this.csWater7 = fx.slideTo({
 				node: this.csDAP,
-				top: -397,
+				top: -436,
 				left: 875
 			});
 			this.csWater8 = fx.slideTo({
 				node: this.csDAP,
-				top: -397,
+				top: -436,
 				left: 668
 			});
 			this.csWater9 = fx.slideTo({
 				node: this.csDAP,
-				top: -440,
+				top: -476,
 				left: 688
 			});
 			fx.chain([this.csWater1,this.csWater2,this.csWater3,this.csWater4,this.csWater5,this.csWater6,this.csWater7,this.csWater8,this.csWater9]).play();
@@ -214,23 +214,23 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			//hpi
 			this.hpiWater1 = fx.slideTo({
 				node: this.hpiDAP,
-				top: -300,
+				top: -339,
 				left: 265
 			});
 			this.hpiWater2 = fx.slideTo({
 				node: this.hpiDAP,
-				top: -345,
+				top: -384,
 				left: 213
 			});
 			this.hpiWater3 = fx.slideTo({
 				node: this.hpiDAP,
-				top: -435,
+				top: -484,
 				left: 213
 			});
 			this.hpiWater4 = fx.slideTo({
 				node: this.hpiDAP,
 				left: 314,
-				top: -305
+				top: -344
 			});
 			fx.chain([this.hpiWater1,this.hpiWater2,this.hpiWater3,this.hpiWater4]).play();
 		},
@@ -239,17 +239,17 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.auxWater1 = fx.slideTo({
 				node: this.auxDAP,
 				left: 501,
-				top: -300
+				top: -339
 			});
 			this.auxWater2 = fx.slideTo({
 				node: this.auxDAP,
 				left: 501,
-				top: -393
+				top: -442
 			});
 			this.auxWater3 = fx.slideTo({
 				node: this.auxDAP,
 				left: 700,
-				top: -300
+				top: -339
 			});
 			fx.chain([this.auxWater1,this.auxWater2,this.auxWater3]).play();
 		}
