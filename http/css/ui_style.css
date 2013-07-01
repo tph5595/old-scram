@@ -323,17 +323,17 @@
 }
 .hpitankvalve {
 	position: relative;
-	top: 0px;
-	left: 0px;
+	top: -304px;
+	left: 213px;
 }
 .auxtankvalve {
 	position: relative;
-	top: -305px;
-	left: 500px;
+	top: -345px;
+	left: 501px;
 }
 .pressurizertankvalve {
 	position: relative;
-	top: -490px;
+	top: -530px;
 	left: 381px;
 }
 
