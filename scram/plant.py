@@ -366,12 +366,15 @@ class Plant(object):
         condenserHeatExchange = ((self.afsHiddenTemp - self.csColdLegTemp) / self.thermalCon)
         tempChange = ((condenserHeatExchange / (self.waterMass[self.towerPumps] * self.heatCapacity)) * 200)
         
+        #temp increasing
         if (self.afsHiddenTemp > self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp + tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp + tempChange
+        #temp decreasing
         elif(self.afsHiddenTemp > self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
+        #temp staying same
         else:
             self.csHotLegTemp = self.csHotLegTemp
             self.afsColdLegTemp = self.afsColdLegTemp
@@ -409,8 +412,9 @@ class Plant(object):
         """
     #TODO:Make sure earthquake logic works
     #TODO:Pass earthquake result to server
+    #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
-        magicNumber = random.randrange(0, (500000 - (self.risk * 250)), 1)
+        magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
         if magicNumber == 69:
             print"EarthQuake!"
             self.earthquake = True
