@@ -411,11 +411,9 @@ class Plant(object):
         csCold = 94 - (94 * .4) = 56.4
         """
     #TODO:Make sure earthquake logic works
-    #TODO:Pass earthquake result to server
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
         magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
-        
         if magicNumber == 69:
             print"EarthQuake!" #prolly won't need these prints.
             self.earthquake = True
@@ -424,13 +422,48 @@ class Plant(object):
             print"Safe!" #prolly won't need these prints.
             self.earthquake = False
             
+    #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
+    #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
         #There are 9 places that can be damaged.  This chooses which 1 to destroy
         destroy = random.randrange(1, 9, 1)
         
         #Rod Destruction
-        if (destroy == 1) and (self.earthquake == True):
-            print 
+        if (destroy == 1):
+            self.rodlevel = 9
+            #disable rod movement?
+        #Reactor Pump Destruction
+        elif (destroy == 2):
+            self.reactorPumps = 0
+            #disable reactorPump arrows
+        #HPI valve Destruction
+        elif (destroy == 3):
+            self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
+            #disable hpiValve from opening or shutting
+        #HPI pump Destruction
+        elif (destroy == 4):
+            self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
+            #disable hpiPump arrows
+        #Pressurizer valve Destruction
+        elif (destroy == 5):
+            self.pressuizerValve = False
+            #disable pressurizerValve
+        #Con Pump Destruction (The one on the secondary (afs) loop)
+        elif (destroy == 6):
+            self.conPumps = 0
+            #disable conPumps
+        #afs valve Destruction (the tank under afs loop)
+        elif (destroy == 7):
+            self.afsValve = False
+            #disable afsValve
+        #afs Pump Destruction (the tank under afs loop)
+        elif (destroy == 8):
+            self.afsPumps = 0
+            #disable afsPump
+        #tower pump destruction
+        elif (destroy == 9):
+            self.towerPumps = 0
+            #disable towerPump
             
     def getEarthquake(self):
         return self.earthquake
