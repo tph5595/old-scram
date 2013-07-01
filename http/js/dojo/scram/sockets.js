@@ -7,6 +7,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		valveSocket : null,
 		pumpSocket : null,
 		rodSocket : null,
+		tankSocket : null,
 		userSocket : null,
 		earthquakeSocket : null,
 		constructor : function(args) {
@@ -33,7 +34,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 			this.rodSocket.on("open", lang.hitch(this, this.onRodOpen));
 			this.rodSocket.on("close", lang.hitch(this, this.onRodClose));
 			this.rodSocket.on("error", lang.hitch(this, this.onRodErr));
-
+			
 			this.userSocket = new Socket("ws://127.0.0.1:8085");
 			this.userSocket.on("message", lang.hitch(this, this.onUserMsg));
 			this.userSocket.on("open", lang.hitch(this, this.onUserOpen));
@@ -45,6 +46,12 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 			this.earthquakeSocket.on("open", lang.hitch(this, this.onEarthquakeOpen));
 			this.earthquakeSocket.on("close", lang.hitch(this, this.onEarthquakeClose));
 			this.earthquakeSocket.on("error", lang.hitch(this, this.onEarthquakeErr));
+			
+			this.tankSocket = new Socket("ws://127.0.0.1:8087");
+			this.tankSocket.on("message", lang.hitch(this, this.onTankMsg));
+			this.tankSocket.on("open", lang.hitch(this, this.onTankOpen));
+			this.tankSocket.on("close", lang.hitch(this, this.onTankClose));
+			this.tankSocket.on("error", lang.hitch(this, this.onTankErr));
 		},
 		onPollMsg : function(event) {
 		}, //stub
@@ -93,6 +100,14 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		onEarthquakeClose : function(event) {
 		}, //stub
 		onEarthquakeErr : function(event) {
+		}, //stub
+		onTankMsg : function(event) {
+		}, //stub
+		onTankOpen : function(event) {
+		}, //stub
+		onTankClose : function(event) {
+		}, //stub
+		onTankErr : function(event) {
 		} //stub
 	});
 });

@@ -370,6 +370,88 @@
 	top: -300px;
 }
 
+/*Tanks*/
+.tanklevel0{
+	background-image: url(../images/elements/Water.png);
+	height: 60px;
+}
+.tanklevel1{
+	background-image: url(../images/elements/Water.png);
+	height: 50px;
+}
+.tanklevel2{
+	background-image: url(../images/elements/Water.png);
+	height: 40px;
+}
+.tanklevel3{
+	background-image: url(../images/elements/Water.png);
+	height: 30px;
+}
+.tanklevel4{
+	background-image: url(../images/elements/Water.png);
+	height: 20px;
+}
+.tanklevel5{
+	background-image: url(../images/elements/Water.png);
+	height: 10px;
+}
+.tanklevel6{
+	background-image: url(../images/elements/Water.png);
+	height: 0px;
+}
+}
+.pressurizertanklevel0{
+	background-image: url(../images/elements/Water.png);
+	height: 0px;
+}
+.pressurizertanklevel1{
+	background-image: url(../images/elements/Water.png);
+	height: 10px;
+}
+.pressurizertanklevel2{
+	background-image: url(../images/elements/Water.png);
+	height: 20px;
+}
+.pressurizertanklevel3{
+	background-image: url(../images/elements/Water.png);
+	height: 30px;
+}
+.pressurizertanklevel4{
+	background-image: url(../images/elements/Water.png);
+	height: 40px;
+}
+.pressurizertanklevel5{
+	background-image: url(../images/elements/Water.png);
+	height: 50px;
+}
+.pressurizertanklevel6{
+	background-image: url(../images/elements/Water.png);
+	height: 60px;
+}
+
+.pressurizertank{
+	position: relative;
+	left: 318px;
+	top: -575px;
+	width: 82px;
+}
+.hpitank{
+	position: relative;
+	left: 318px;
+	top: -365px;
+	width: 89px;
+}
+.auxtank{
+	position: relative;
+	left: 705px;
+	top: -425px;
+	width: 89px;
+}
+
+
+
+/*splash screen*/
+
 .splash {
 	background-image: url(../images/splash/Altamira.png);
 	background-repeat: no-repeat;
