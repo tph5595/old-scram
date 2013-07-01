@@ -46,12 +46,13 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 			this.earthquakeSocket.on("open", lang.hitch(this, this.onEarthquakeOpen));
 			this.earthquakeSocket.on("close", lang.hitch(this, this.onEarthquakeClose));
 			this.earthquakeSocket.on("error", lang.hitch(this, this.onEarthquakeErr));
-			
+			/*
 			this.tankSocket = new Socket("ws://127.0.0.1:8087");
 			this.tankSocket.on("message", lang.hitch(this, this.onTankMsg));
 			this.tankSocket.on("open", lang.hitch(this, this.onTankOpen));
 			this.tankSocket.on("close", lang.hitch(this, this.onTankClose));
 			this.tankSocket.on("error", lang.hitch(this, this.onTankErr));
+			*/
 		},
 		onPollMsg : function(event) {
 		}, //stub
@@ -100,7 +101,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		onEarthquakeClose : function(event) {
 		}, //stub
 		onEarthquakeErr : function(event) {
-		}, //stub
+		}/*, //stub
 		onTankMsg : function(event) {
 		}, //stub
 		onTankOpen : function(event) {
@@ -109,6 +110,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		}, //stub
 		onTankErr : function(event) {
 		} //stub
+		*/
 	});
 });
 
