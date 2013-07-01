@@ -9,8 +9,8 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		socket : null,
 		poll:null,
 		tankLevel : null,
-		pumpLevel : null,
-		valveState: null,
+		//pumpLevel : null,
+	//	valveState: null,
 		tankLevelMax : null,
 		tankId : null,
 		tankClass : null,
@@ -68,12 +68,10 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		},
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
-			this.valveState = obj.valveState();
-			this.pumpLevel = obj.pumpLevel();
+			//this.valveState = obj.valveState();
+		//	this.pumpLevel = obj.pumpLevel();
 			this.tankLevel = obj[this.tankId];
-			if (this.pumpLevel != 0 && this.valveState == 'open'){
-				this.tankMove();
-			}
+			this.tankMove()
 			
 		}
 	});
