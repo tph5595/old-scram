@@ -70,7 +70,9 @@ class ScramServer(AMP):
                 auxTank=poll['auxTank'],
                 feedwater=poll['feedwater'],
                 cs=poll['cs'],
-                rods=poll['rods']
+                rods=poll['rods'],
+                hpivalve=poll['hpivalve'],
+                afsvalve = poll['afsvalve']
                         )
         return{}
         

@@ -10,7 +10,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 		constructor : function(args) {
 			this.sockets = args.sockets;
 			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
-				console.log("Poll Data", msg);
+				console.log("Poll Data", msg.data);
 			}));
 		},
 		postCreate : function() {
