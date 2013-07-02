@@ -338,6 +338,8 @@ class Plant(object):
             else:
                 self.afsHiddenTemp = self.afsHiddenTemp
                 
+        print "AFS Hidden Temp",self.afsHiddenTemp
+                
         """
         proof of calc
         afsHidden = 500
