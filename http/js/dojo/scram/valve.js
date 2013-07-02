@@ -21,7 +21,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.valveClass = args.valveClass;
 			this.valveState = false; //false = closed true = open
 			this.tip = args.tip;
-			this.socket.on("message", lang.hitch(this, this.valveMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {
@@ -30,7 +29,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveSwitch:function(){
 			this.valveState = !this.valveState
 			this.valveUpdate(this.valveState);
-			//FIXME: valve state not persistent
+			//TODO: add valve status to the poll data
 		},
 		valveMove : function() {
 			domClass.remove(this.valve);
@@ -45,15 +44,10 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.socket.send(JSON.stringify(j));
 			this.valveMove();
 		},
-		valveMsg : function(event) {
-			var obj = JSON.parse(event.data);
-			this.valveState = obj[this.valveId];
-			this.valveMove();
-		},
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			this.valveState = obj[this.valveId];
-			this.valveMove();
+			//this.valveMove();
 		}
 	});
 });

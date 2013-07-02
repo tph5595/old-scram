@@ -313,12 +313,14 @@
 /*valve*/
 .valvetrue {/* open valve*/
 	background-image: url(../images/elements/Water.png);
-	width: 6px;
+	background-size: 5px 40px;
+	background-repeat: no-repeat;
+	width: 40px;
 	height: 40px;
 }
 .valvefalse {/*closed valve*/
-	background-color: yellow;
-	width: 6px;
+	background-repeat: no-repeat;
+	width: 40px;
 	height: 40px;
 }
 .hpitankvalve {
@@ -334,7 +336,7 @@
 .pressurizertankvalve {
 	position: relative;
 	top: -530px;
-	left: 381px;
+	left: 382px;
 }
 
 /*moving water*/
