@@ -18,7 +18,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 			this.hpiTankValveDAP = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
-				'valveId' : 'hpiTank',
+				'valveId' : 'hpivalve',
 				'title': 'HPI Tank Valve',
 				valveClass : 'hpitankvalve valvefalse z2',
 			}, this.hpiTankValveDAP);
@@ -32,7 +32,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 			this.auxTankValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
-				'valveId' : 'auxTankValve',
+				'valveId' : 'afsvalve',
 				'title': 'Auxiliary Tank Valve',
 				valveClass : 'auxtankvalve valvefalse z2',
 			}, this.auxTankValveDAP);

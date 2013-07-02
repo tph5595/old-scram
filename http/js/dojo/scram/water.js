@@ -99,7 +99,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				duration: 200
 			});
 			this.chain = fx.chain([this.rcsWater1,this.rcsWater2,this.rcsWater3,this.rcsWater4,this.rcsWater5,this.rcsWater6,this.rcsWater7,this.rcsWater8,this.rcsWater9,this.rcsWater10]);
-			console.log(this.chain);
 			this.chain.play();
 		},
 		afsWaterMove : function(){
@@ -286,40 +285,49 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			});
 			this.auxWater3 = fx.slideTo({
 				node: this.auxDAP,
+				left: 650,
+				top: -400,
+				duration: 200
+				
+			});
+			this.auxWater4 = fx.slideTo({
+				node: this.auxDAP,
 				left: 700,
 				top: -340,
 				duration: 200
 				
 			});
-			fx.chain([this.auxWater1,this.auxWater2,this.auxWater3]).play();
+			fx.chain([this.auxWater1,this.auxWater2,this.auxWater3, this.auxWater4]).play();
 		},
 		
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			
 			//rcs
-			this.rcsPumpState = obj['rcs']
+			this.rcsPumpState = obj['rcs'];
 			if (this.rcsPumpState != 0){
 				this.rcsWaterMove();
 			}
 			//afs
-			this.afsPumpState = obj['feedwater']
+			this.afsPumpState = obj['feedwater'];
 			if (this.afsPumpState != 0){
 				this.afsWaterMove();
 			}
 			//cs
-			this.csPumpState = obj['cs']
+			this.csPumpState = obj['cs'];
 			if (this.csPumpState != 0){
 				this.csWaterMove();
 			}
 			//aux
-			this.auxPumpState = obj['auxTank']
-			if (this.auxPumpState != 0){
+			this.auxPumpState = obj['auxTank'];
+			this.auxValveState = obj['afsvalve'];//yes this says afs. Naming confusion made earlier
+			if (this.auxPumpState != 0 && this.auxValveState == true){
 				this.auxWaterMove();
 			}
 			//hpi
-			this.hpiPumpState = obj['hpiTank']
-			if (this.hpiPumpState != 0){
+			this.hpiPumpState = obj['hpiTank'];
+			this.hpiValveState = obj['hpivalve'];
+			if (this.hpiPumpState != 0 && this.hpiValveState == true){
 				this.hpiWaterMove();
 			}
 			
