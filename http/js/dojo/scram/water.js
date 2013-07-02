@@ -296,8 +296,32 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
-			this.waterState = obj['simtime'];//FIXME: THIS NEEDS TO BE CHANGED TO RUN OFF OF RCS PUMP. CURRENTLY HERE TO PROVE FUNCTIONALITY
-			this.hpiWaterMove();
+			
+			//rcs
+			this.rcsPumpState = obj['rcs']
+			if (this.rcsPumpState != 0){
+				this.rcsWaterMove();
+			}
+			//afs
+			this.afsPumpState = obj['feedwater']
+			if (this.afsPumpState != 0){
+				this.afsWaterMove();
+			}
+			//cs
+			this.csPumpState = obj['cs']
+			if (this.csPumpState != 0){
+				this.csWaterMove();
+			}
+			//aux
+			this.auxPumpState = obj['auxTank']
+			if (this.auxPumpState != 0){
+				this.auxWaterMove();
+			}
+			//hpi
+			this.hpiPumpState = obj['hpiTank']
+			if (this.hpiPumpState != 0){
+				this.hpiWaterMove();
+			}
 			
 		}
 		
