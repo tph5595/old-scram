@@ -5,30 +5,6 @@ import random
 This is the nuke plant class
 
 Simulation time step is 1/second!! 1 step = 1 min
-
-
-Math Nerd Stuff:
-
-1 torr = 0.0193367747 pounds per square inch
-F =(K - 273.15)* 1.8000 + 32.00
-1 pound per square inch (psi) equals to 6,894.75729 pascals.
-FORMULA: MPa x 145.0377 = psi
-FORMULA: psi / 145.0377 = MPa
-
-
-Boiling point of water from http://en.wikipedia.org/wiki/Clausius-Clapeyron_equation
-    ln(Po/P) = DH/R (1/T - 1/To) 
-    
-    where 
-    
-    P = 630 torr
-    Po = 760 torr (normal atm pressure)
-    DH = 40.66 kJ/mol (heat of vaporization of water)
-    R = 8.314 J/mol-K (ideal gas constant)
-    To = 373 K (normal boiling point of water)
-    T = unknown = boiling point of water at 630 torr.
-
-
 """
 
 class Plant(object):
@@ -50,7 +26,7 @@ class Plant(object):
         self.reactorTemp = 653  # 5000 is max; 200 is scrammed
         self.rcsHotLegTemp = 603
         self.rcsColdLegTemp = 561
-        self.rcsPressure = 2294  # 2200 - 2300 is normal; above 2400 dangerous; 3000 explosion 
+        self.rcsPressure = 2294  # 2200 - 2300 is normal; above 2400 dangerous; 3000 makes leak in rcs
         self.boilingTemp = 657
         
         # Temperatures from previous run
@@ -107,6 +83,7 @@ class Plant(object):
         self.waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]  # gallons of water being pumped through the pressure chamber based on pumps on
         
         self.earthquake = False
+        self.steamVoiding = False
         
         
     # Relationship between reactor temp and cold leg
@@ -410,6 +387,73 @@ class Plant(object):
         assume hot leg is getting cooler.
         csCold = 94 - (94 * .4) = 56.4
         """
+        
+     #TODO: Will this work?  It won't be super accurate since they are always based on eachother.  boiling temp will always be based on previous ticks pressure.
+    def _boilAndPressure(self):
+        a = 8.14019
+        b = 1810.94
+        c = 244.485
+        pConv = 51.7149241024
+        tConv = (9/5) + 32
+        
+        #to get in mmHg for equation
+        rp = self.rcsPressure * pConv
+        bp = (b / (a - math.log10(rp))) - c
+        
+        #convert to farenheight
+        self.boilingTemp = bp * tConv
+        
+        press = math.pow(10,(a - (b / (c + bp))))
+        
+        self.rcsPressure = press / pConv
+        
+        """
+        ***Antoine equation***
+        P = pressure (mmHg) ~~~Needs Converted to PSI~~~
+        T = boiling temp (Celcius) ~~~Needs Converted to Farenheight~~~
+        
+        approx constants: (these would vary slightly in real life)
+        A = 8.14019
+        B = 1810.94
+        C = 244.485
+        
+        ***unsolved***
+        log10 P = A - (B/(C+T))
+        
+        ***Solved for boiling point***
+        T = (B / (A - log10 P)) - C
+        
+        ***Solved for Pressure***
+        P = 10 ^ (A - (B / (C + T)))
+        
+        ***Conversions***
+        
+        C * 9/5 + 32 = F
+        (F - 32) * 5/9 = C
+        
+        mmHg / 51.7149241024 = PSI
+        PSI * 51.7149241024 = mmHg
+        """
+        
+    #determine if steam voiding exists
+    def _steamVoiding(self):
+        if (self.reactorTemp > self.boilingTemp):
+            self.steamVoiding = True
+            self._steamVoidingAction()
+        else:
+            self.steamVoiding = False
+            
+    #getter for steam voiding
+    def getSteamVoiding(self):
+        return self.steamVoiding
+    
+    #action due to steam voiding
+    def _steamVoidingAction(self):
+        print ""
+        #TODO: What happens when steam voiding occurs? mwH isn't as efficient.
+        #Reactor Temp increases rapidly because the steam acts as an insulator.  It doesn't allow it to cool properly.
+    
+    
     #TODO:Make sure earthquake logic works
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
@@ -614,7 +658,7 @@ class Plant(object):
         #update risk for earthquakes
         self._calcRisk()
         #Check for eathquake
-        if (self.risk >= 1):
+        if (self.risk > 0):
             self._getEarthQuake()
         #Restore workers every 20 minutes. (1200 game ticks (sec))
         if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
