@@ -85,13 +85,19 @@ class Plant(object):
         self.earthquake = False
         self.steamVoiding = False
         
-        
+    #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
     def _energyProduction(self):
         # temp increase from rod energy and number of pumps open
         self.reactorTemp = self.reactorTemp + (self.energy[self.rodLevel] * self.hotMultiplier[self.reactorPumps])
         # temp decrease from coldLegTemp.
         self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
+        
+        """
+        Proof of calculations
+        
+        
+        """
     
     
     # Relationship between reactor temp and hot leg
@@ -120,6 +126,7 @@ class Plant(object):
         reactor temp got colder. Use 2nd part of if condition
         reactorHeat = (649.6 - 559) / .58 = 156.21
         rcsHotTemp = 655 - ((156.21 / (4000 * 4.19))*10) = .009   too small. gonna multiply numbers by 200 so I can see more an increase / decrease in temperatures per tick.
+        
         """
     # relationship between rcscoldLeg, rcsHotLeg, and afsHotLeg, and afsColdLeg
     def _xferEnergyToAfs(self):
@@ -327,7 +334,7 @@ class Plant(object):
             #Temp staying same
             else:
                 self.afsHiddenTemp = self.afsHiddenTemp
-                
+            
         """
         proof of calc
         afsHidden = 500
@@ -348,7 +355,7 @@ class Plant(object):
             self.csHotLegTemp = (self.csColdLegTemp + tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp + tempChange
         #temp decreasing
-        elif(self.afsHiddenTemp > self.oldAfsHiddenTemp): 
+        elif(self.afsHiddenTemp < self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
         #temp staying same
@@ -389,6 +396,7 @@ class Plant(object):
         """
         
      #TODO: Will this work?  It won't be super accurate since they are always based on eachother.  boiling temp will always be based on previous ticks pressure.
+     #TODO: This is dumb... If they are only related to eachother then they will never change.  What else are they based on?  # of pumps on or something.
     def _boilAndPressure(self):
         a = 8.14019
         b = 1810.94
@@ -459,11 +467,11 @@ class Plant(object):
     def _getEarthQuake(self):
         magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
         if magicNumber == 69:
-            #print"EarthQuake!" #prolly won't need these prints.
+            #print"EarthQuake!" #for testing
             self.earthquake = True
             self._earthquakeDamage()
         else:
-            #print"Safe!" #prolly won't need these prints.
+            #print"Safe!" #for testing
             self.earthquake = False
             
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
@@ -550,12 +558,42 @@ class Plant(object):
         self.elapsedTime = 0
         self.rcsPressure = 2294
         self.boilingTemp = 657
-        #TODO:Reset valves to off
+        self.pressuizerValve = False
+        self.hpiValve = False
+        self.afsValve = False
         #TODO:Reset water levels.
         #TODO: Reset Positions of moving dots?
-    
-
         
+    #TODO: Are these min / max temps adequate?
+    #TODO: be sure this is called at the right place otherwise it will mess up calculations.
+    def _tempCap(self):
+        if self.reactorTemp < 100:
+            self.reactorTemp = 100
+            
+        if self.rcsHotLegTemp < 50:
+            self.rcsHotLegTemp = 50
+            
+        if self.rcsColdLegTemp < 25:
+            self.rcsColdLegTemp = 25
+            
+        if self.afsHotLegTemp < 25:
+            self.afsHotLegTemp = 25
+            
+        if self.afsColdLegTemp < 10:
+            self.afsColdLegTemp = 10
+        
+        if self.afsHiddenTemp < 1:
+            self.afsHiddenTemp = 1
+        
+        if self.generatorMW > 999:
+            self.generatorMW = 999
+        
+        if self.csHotLegTemp < 2:
+            self.csHotLegTemp = 2
+        
+        if self.csColdLegTemp < 1:
+            self.csColdLegTemp = 1
+            
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
         output = ""
@@ -640,7 +678,9 @@ class Plant(object):
                 
     def update(self):
         # increment game tick one second
-        self.elapsedTime += 1       
+        self.elapsedTime += 1
+        #Keeps temps from going negative if equations get messed up
+        self._tempCap()
         # get temps from last game tick
         self._previousTemp()
         # make some energy; which is heat and
