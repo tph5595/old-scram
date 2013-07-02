@@ -38,18 +38,18 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 			this.waters = new Waters({
 				poll : this.sockets.pollSocket
 			});
-			/*
+			
 			 this.tanks = new Tanks({
-			 "socket" : this.sockets.tankSocket,
+			 //"socket" : this.sockets.tankSocket,
 			 poll : this.sockets.pollSocket
 			 });
-			 */
+			 
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
 			this.addChild(this.valves);
 			this.addChild(this.waters);
-			//	this.addChild(this.tanks);
+			this.addChild(this.tanks);
 			this.inherited(arguments);
 		}
 	});

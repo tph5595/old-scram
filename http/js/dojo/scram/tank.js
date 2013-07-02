@@ -6,7 +6,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		/// This is the class for the tank
 		///
 		templateString:template,
-		socket : null,
+	//	socket : null,
 		poll:null,
 		tankLevel : null,
 		//pumpLevel : null,
@@ -18,13 +18,13 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		_setTankTipAttr: {node:"tankDAP",type:"title"},
 
 		constructor : function(args) {
-			this.socket = args.socket;
+		//	this.socket = args.socket;
 			this.poll = args.poll;
 			this.tankClass = args.tankClass;
 			this.tankLevel = 0;
 			this.tankLevelMax = args.tankLevelMax;
 			this.tip = args.tip;
-			this.socket.on("message", lang.hitch(this, this.tankMsg));
+		//	this.socket.on("message", lang.hitch(this, this.tankMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {
@@ -58,7 +58,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				"tankid" : this.tankId
 			};
 			console.log(JSON.stringify(j), j);
-			this.socket.send(JSON.stringify(j));
+		//	this.socket.send(JSON.stringify(j));
 			this.tankMove();
 		},
 		tankMsg : function(event) {
@@ -66,6 +66,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.tankLevel = obj[this.tankId];
 			this.tankMove();
 		},
+		/*
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			//this.valveState = obj.valveState();
@@ -74,5 +75,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.tankMove()
 			
 		}
+		*/
 	});
 });

@@ -7,16 +7,16 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 		/// This is the class for the tanks
 		///
 		templateString:template,
-		socket : null,
+		//socket : null,
 		poll:null,
 
 		constructor : function(args) {
-			this.socket = args.socket;
+		//	this.socket = args.socket;
 			this.poll = args.poll;
 		},
 		postCreate : function() {
 			this.pressurizerTank = new Tank({
-				'socket' : this.socket,
+				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
 				'tankId' : 'pressurizerTank',
@@ -25,7 +25,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 			},this.pressurizerTankDAP);
 			
 			this.hpiTank = new Tank({
-				'socket' : this.socket,
+				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
 				'tankId' : 'hpiTank',
@@ -34,7 +34,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 			},this.hpiTankDAP);
 			
 			this.auxTank = new Tank({
-				'socket' : this.socket,
+				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
 				'tankId' : 'auxTank',
