@@ -77,8 +77,8 @@ class ScramServer(AMP):
         return{}
         
     def getEarthquake(self):
-        eq = self.world.plant.getEarthquake()  
-        self.callRemote(Earthquake, quake=str(eq))
+        eq = 1 if self.world.plant.getEarthquake() else 0  
+        self.callRemote(Earthquake, quake=eq)
         return{}
          
     def sendExistingState(self):

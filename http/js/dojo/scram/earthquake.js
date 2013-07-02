@@ -9,7 +9,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		},
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
-			console.log("Earthquake",obj.quake);
+			console.log("Earthquake",obj);
 		}
 	});
 });
