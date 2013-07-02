@@ -125,6 +125,7 @@ class NetworkController(AMP):
     def __init__(self, clock):
         self.modelObjects = {}
         self.clock = clock
+        self.lastPoll = None
 
     def addModelObject(self, identifier, modelObject):
         """
@@ -155,6 +156,9 @@ class NetworkController(AMP):
             return box
         d.addCallback(cb)
         return d
+    
+    def getLastPoll(self):
+        return {} if self.lastPoll==None else self.lastPoll
     
     def valve(self,msg):
         j = json.loads(msg)
@@ -230,6 +234,7 @@ class NetworkController(AMP):
                 'hpivalve':hpivalve,
                 'afsvalve':afsvalve
                 }
+        self.lastPoll = j
         try:
             if len(self.factory.frontEndListeners['poll'].connections) > 0:
                 for conn in self.factory.frontEndListeners['poll'].connections:

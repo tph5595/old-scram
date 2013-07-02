@@ -13,6 +13,7 @@ from twisted.internet.task import LoopingCall
 from Queue import Queue, Empty
 
 from game.network import NetworkController
+import socket
 
 #front end listeners
 from http.servers.websocket2 import PollServerProtocol, \
@@ -24,8 +25,9 @@ from http.servers.websocket2 import PollServerProtocol, \
 
 from autobahn.websocket import WebSocketServerFactory, \
                                listenWS
+from autobahn.websocket import WebSocketClientFactory, connectWS, WebSocketClientProtocol
 import json
-
+        
 class ConnectionNotificationWrapper(ProtocolWrapper):
     """
     A protocol wrapper which fires a Deferred when the connection is made.
@@ -101,6 +103,7 @@ class UI(object):
     def gotHandshake(self, environment):
         environment.start()
         self.reactor.callLater(0,self.setUpListeners)
+        self.reactor.callLater(0,self.connectToScoreboard)
         self.go()
          
     def _setUpListener(self, serviceName, port, protocol, handler=None):
@@ -119,7 +122,7 @@ class UI(object):
         self.frontEndListeners[serviceName] = factory
         listenWS(self.frontEndListeners[serviceName]) 
     
-    def _handlePoll(self,conn,msg):     
+    def _handlePoll(self,conn,msg): 
         if(self._handleStash("poll", conn, msg, True)):return
             
     def _handleValve(self,conn,msg):
@@ -171,7 +174,31 @@ class UI(object):
                 conn.dropConnection()   
                 
             print "%s Sent Flag Response: %s"%(service,j)
-            return True   
+            return True 
+        else:
+            return False  
+        
+    def connectToScoreboard(self):
+        #TODO:Move scoreboard IP to config
+        self.scoreClient = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.scoreClient.connect(('localhost',6007)) 
+        self._scoreClientLoop = LoopingCall(self._sendScore)
+        finishedDeferred = self._scoreClientLoop.start(2,now=True)
+        
+    def _sendScore(self): 
+        try:
+            x = self.protocol.getLastPoll()
+            j = {}
+            j['simtime'] = x['simtime']
+            j['mwh'] = x['mwh']
+            #TODO: move team name into config
+            j['team'] = "Local"
+            resp = {}
+            resp['cmd'] = "poll"
+            resp['data'] = j
+            self.scoreClient.send(json.dumps(resp))
+        except KeyError:
+            pass
         
     def setUpListeners(self):
         self._setUpListener("poll", 8081, PollServerProtocol, self._handlePoll)
