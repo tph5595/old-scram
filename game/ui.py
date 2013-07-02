@@ -124,6 +124,7 @@ class UI(object):
             
     def _handleValve(self,conn,msg):
         if(self._handleStash("valve", conn, msg)):return
+        self.protocol.valve(msg)
     
     def _handlePump(self,conn,msg):
         if(self._handleStash("pump", conn, msg)):return

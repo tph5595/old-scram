@@ -597,9 +597,9 @@ class Plant(object):
         self.rodLevel = level
         
     def setValve(self, valveid, state):
-        if valveid == 'afs':
+        if valveid == 'afsvalve':
             self.afsValve = state
-        if valveid == 'hpi':
+        if valveid == 'hpivalve':
             self.hpiValve = state
         
     def setPump(self, pumpid, level):

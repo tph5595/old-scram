@@ -23,9 +23,8 @@ class SetValve(Command):
     """
     This will either turn a valve on or off
     """
-    arguments = [('valveId',Integer()),
+    arguments = [('valveid',String()),
                  ('state',Boolean())]
-    response = [('response',Boolean())]
     
 class SetPump(Command):
     """
@@ -33,18 +32,6 @@ class SetPump(Command):
     """
     arguments = [('pumpid',String()),
                  ('level', Integer())]
-    """
-            if pumpid == 'rcs':
-            self.reactorPumps = level
-        if pumpid == 'hpiTank':
-            self.hpiPump = level
-        if pumpid == 'auxTank':
-            self.afsPumps = level
-        if pumpid == 'feedwater':
-            self.conPumps = level
-        if pumpid == 'cs':
-            self.towerPumps = level
-    """
     response = [('rcs',Integer()),
                 ('hpiTank',Integer()),
                 ('auxTank',Integer()),
@@ -168,6 +155,11 @@ class NetworkController(AMP):
             return box
         d.addCallback(cb)
         return d
+    
+    def valve(self,msg):
+        j = json.loads(msg)
+        print "valve msg",j
+        self.callRemote(SetValve,valveid=str(j['valveid']),state=j['state'])
     
     def handshake(self):
         d = self.callRemote(Handshake)

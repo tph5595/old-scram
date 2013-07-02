@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
 # from game.terrain import CHUNK_GRANULARITY
-from game.network import (Handshake, PollPlant, SetRod, SetPump, Earthquake)
+from game.network import (Handshake, PollPlant, SetRod, SetPump, Earthquake, SetValve)
 
 class ScramServer(AMP):
     """
@@ -46,6 +46,12 @@ class ScramServer(AMP):
         print "Setting Rod Level to: %s" % str(level)        
         return self.world.plant.setPump(pumpid, level)
     SetPump.responder(pump)
+    
+    def valve(self,valveid,state):
+        print "Setting Valve state to: %s" % str(state) 
+        self.world.plant.setValve(valveid,state)
+        return {}
+    SetValve.responder(valve)
     
     def pollPlant(self):
         self.update += 1       
