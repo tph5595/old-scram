@@ -161,10 +161,13 @@ class Plant(object):
         # TODO: figure out a new way to calculate MWH. 
         
         #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
-        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 350): #Later 150 will turn into the temperature at which steam occurs or something.
+        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 200): #Later 150 will turn into the temperature at which steam occurs or something.
             self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
         else:
             self.generatorMW = 0 #it should probably decrease by a rate instead of instantly becoming 0.
+        
+        if self.generatorMW > 999:
+            self.generatorMW = 999
             
         if self.elapsedTime % 60 == 0:
             self.generatorMWH = self.generatorMWH + (self.generatorRunningMW / 60)
@@ -334,7 +337,7 @@ class Plant(object):
             #Temp staying same
             else:
                 self.afsHiddenTemp = self.afsHiddenTemp
-            
+                
         """
         proof of calc
         afsHidden = 500
@@ -381,12 +384,13 @@ class Plant(object):
         #relationship between cs hot leg, tower cooling, and cs cold leg
     def _xferToTower(self):
         if (self.towerPumps == 2): #pumps at 2
-            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .3)
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .4)
         elif (self.towerPumps == 1): #pumps at 1
-            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .2)
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .3)
         else: #pumps at 0
-            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .1)
-        """proof of calc
+            self.csColdLegTemp = self.csHotLegTemp - (self.csHotLegTemp * .06)
+        """
+        proof of calc
         towerPump =2
         csColdLeg = 65
         csHotLeg = 94
@@ -465,7 +469,7 @@ class Plant(object):
     #TODO:Make sure earthquake logic works
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
-        magicNumber = random.randrange(0, (500000 - (self.risk * 300)), 1)
+        magicNumber = random.randrange(0, (300000 - (self.risk * 300)), 1)
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
@@ -585,9 +589,6 @@ class Plant(object):
         if self.afsHiddenTemp < 1:
             self.afsHiddenTemp = 1
         
-        if self.generatorMW > 999:
-            self.generatorMW = 999
-        
         if self.csHotLegTemp < 2:
             self.csHotLegTemp = 2
         
@@ -679,8 +680,6 @@ class Plant(object):
     def update(self):
         # increment game tick one second
         self.elapsedTime += 1
-        #Keeps temps from going negative if equations get messed up
-        self._tempCap()
         # get temps from last game tick
         self._previousTemp()
         # make some energy; which is heat and
@@ -695,6 +694,8 @@ class Plant(object):
         self._xferSteamToCondenser()
         # then on to the tower
         self._xferToTower()
+        #Keeps temps from going negative if equations get messed up. 
+        self._tempCap()
         #update risk for earthquakes
         self._calcRisk()
         #Check for eathquake
