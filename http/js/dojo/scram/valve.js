@@ -29,7 +29,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveSwitch:function(){
 			this.valveState = !this.valveState
 			this.valveUpdate(this.valveState);
-			//TODO: add valve status to the poll data
 		},
 		valveMove : function() {
 			domClass.remove(this.valve);
@@ -47,7 +46,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			this.valveState = obj[this.valveId];
-			//this.valveMove();
+			this.valveMove();
 		}
 	});
 });
