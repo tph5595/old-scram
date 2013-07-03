@@ -116,8 +116,7 @@ class Plant(object):
             
             """
             Cant figure out how this would work.  There would be issues if reactor temp was really high and cold leg was really small.  Hot leg could end up colder than cold leg.
-            
-            
+            if the percents stay how they are.  Maybe put a cap on the percentage decrease at like 15%?
             
             LOOKUP ARRAY
             
@@ -133,17 +132,16 @@ class Plant(object):
             11 to 20            1            1.4
             11 to 20            0            1.2
             
-            rcsHotLeg = reactorTemp - (reactorTemp * .055)
+            rcsHotLeg = reactorTemp - (reactorTemp * .01)
             
             
-        
             
             FACTORS for Calculation
             
+            difference in temperature
             rcsColdLegTemp
-            reactorTemp
-            reactorPumps
-            hpiPumps
+            reatorTemp
+            water being pumped through
             
                     
             """
@@ -196,7 +194,7 @@ class Plant(object):
         # TODO: figure out a new way to calculate MWH. 
         
         #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
-        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 200): #Later 150 will turn into the temperature at which steam occurs or something.
+        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 200): #Later 200 will turn into the temperature at which steam occurs or something.
             self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
         else:
             self.generatorMW = 0 #it should probably decrease by a rate instead of instantly becoming 0.
@@ -525,6 +523,20 @@ class Plant(object):
     #TODO: Are these min / max temps adequate?
     #TODO: be sure this is called at the right place otherwise it will mess up calculations.
     def _tempCap(self):
+        #keep hotleg hotter than cold leg
+        if self.rcsHotLegTemp < self.rcsColdLegTemp:
+            self.rcsHotLegTemp = self.rcsColdLegTemp + 5
+        #rcsHotLeg cannot be hotter than reactor temp
+        if self.rcsHotLegTemp > self.reactorTemp:
+            self.rcsHotLegTemp = self.reactorTemp - 5
+        #keep cold leg cooler than reactorTemp
+        if self.rcsColdLegTemp > self.reactorTemp:
+            self.rcsColdLegTemp = self.reactorTemp - 10
+        #keep afsCold colder than hidden
+        if self.afsColdLegTemp > self.afsHiddenTemp:
+            self.afsColdLegTemp = self.afsHiddenTemp - 5
+            
+        #capping minimums. hypothetically should never need these.
         if self.reactorTemp < 100:
             self.reactorTemp = 100
             
@@ -548,6 +560,8 @@ class Plant(object):
         
         if self.csColdLegTemp < 1:
             self.csColdLegTemp = 1
+        
+            
             
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
