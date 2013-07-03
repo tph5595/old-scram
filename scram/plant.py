@@ -421,7 +421,8 @@ class Plant(object):
     #TODO:Make sure earthquake logic works
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
-        magicNumber = random.randrange(0, (300000 - (self.risk * 300)), 1)
+        #TODO: Are these numbers okay? Is abs working?
+        magicNumber = random.randrange(0, abs((200000 - (self.risk * 500))), 1)
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
@@ -543,7 +544,7 @@ class Plant(object):
         if self.rcsHotLegTemp < 50:
             self.rcsHotLegTemp = 50
             
-        if self.rcsColdLegTemp < 25:
+        if self.rcsColdLegTemp < 25:yl
             self.rcsColdLegTemp = 25
             
         if self.afsHotLegTemp < 25:
