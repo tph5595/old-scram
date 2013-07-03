@@ -373,50 +373,50 @@
 }
 
 /*Tanks*/
-.tanklevel0{
+.tanklevel0 {
 	background-size: 89px 60px;
 }
-.tanklevel1{
+.tanklevel1 {
 	background-size: 89px 50px;
 }
-.tanklevel2{
+.tanklevel2 {
 	background-size: 89px 40px;
 }
-.tanklevel3{
+.tanklevel3 {
 	background-size: 89px 30px;
 }
-.tanklevel4{
+.tanklevel4 {
 	background-size: 89px 20px;
 }
-.tanklevel5{
+.tanklevel5 {
 	background-size: 89px 10px;
 }
-.tanklevel6{
+.tanklevel6 {
 	background-size: 89px 0px;
 }
-.pressurizertanklevel0{
+.pressurizertanklevel0 {
 	background-size: 82px 0px;
 }
-.pressurizertanklevel1{
+.pressurizertanklevel1 {
 	background-size: 82px 10px;
 }
-.pressurizertanklevel2{
+.pressurizertanklevel2 {
 	background-size: 82px 20px;
 }
-.pressurizertanklevel3{
+.pressurizertanklevel3 {
 	background-size: 82px 30px;
 }
-.pressurizertanklevel4{
+.pressurizertanklevel4 {
 	background-size: 82px 40px;
 }
-.pressurizertanklevel5{
+.pressurizertanklevel5 {
 	background-size: 82px 50px;
 }
-.pressurizertanklevel6{
+.pressurizertanklevel6 {
 	background-size: 82px 60px;
 }
 
-.pressurizertank{
+.pressurizertank {
 	position: relative;
 	left: 318px;
 	top: -635px;
@@ -426,7 +426,7 @@
 	background-position: bottom;
 	background-repeat: no-repeat;
 }
-.hpitank{
+.hpitank {
 	position: relative;
 	left: 318px;
 	top: -405px;
@@ -436,7 +436,7 @@
 	background-position: bottom;
 	background-repeat: no-repeat;
 }
-.auxtank{
+.auxtank {
 	position: relative;
 	left: 705px;
 	top: -525px;
@@ -446,8 +446,6 @@
 	background-position: bottom;
 	background-repeat: no-repeat;
 }
-
-
 
 /*splash screen*/
 
@@ -464,28 +462,20 @@
 }
 
 /*repair*/
-
-.repairbuttonfalse {
-	
+.repairbutton {
+	width: 40px;
+	height: 40px;
+	background-size: 40px 40px;
+	position:relative;
+	top: -440px;
+	left: 702px;
 }
-.repairbuttontrue {
-	
+.repairstatefalse {
+	background-image: url(../images/wrench.png);
+	/*cursor: auto;*/
 }
-.repaircursorfalse {
-	
+.repairstatetrue {
+	background-image: url(../images/wrenchClicked.png);
+	/*cursor: url(../images/wrench_mouse.png), wait;*/
 }
-.repaircursortrue {
-	
-}
-
-
-
-
-
-
-
-
-
-
-
 

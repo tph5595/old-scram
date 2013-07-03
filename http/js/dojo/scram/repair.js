@@ -1,12 +1,12 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", 
-"dijit/_Contained", "dijit/_TemplatedMixin", "dojo/fx", "dojo/text!scram/templates/repair.html"], 
-function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx, template) {
-	return Declare("scram.repair", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/dom-construct", 
+"dojo/dom-class", "dojo/text!scram/templates/repair.html"], 
+function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, domConstruct, domClass, template) {
+	return Declare("scram.repair", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
 		///
 		/// This is the class for the repair
 		///
 		templateString : template,
-		_socket : null,
+		//_socket : null,
 		repairState : null,
 		tip : null,
 		repairClass : null,
@@ -15,24 +15,24 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 		
 		constructor : function(args) {
 			this.tip = args.tip;
+			this.poll = args.poll;
 			this.repairState = args.repairState;
 		//	this.socket.on("message", lang.hitch(this, this.repairMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
-			this.poll = args.poll;
 			this.repairClass = args.repairClass;
 		},
 		postCreate : function() {
 			this.inherited(arguments);
 		},
-		repair:function(){
+		repairFunc:function(){
 			this.repairUpdate();
 		},
 		switchRepairState : function(state) {
-			domClass.remove(this.repair);
-			domClass.add(this.repair, 'repaircursor'+state + ' repairbutton'+state +' '+this.repairClass);
+			domClass.remove(this.repairDAP);
+			domClass.add(this.repairDAP, 'repairbutton '+ ' repairstate'+state +' '+this.repairClass);
 		},
 		repairUpdate : function(x) {
-			this.repairState = !this.repairState
+			this.repairState = !this.repairState;
 			j = {
 				"repairstate" : this.repairState
 			};

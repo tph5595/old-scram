@@ -15,20 +15,12 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Repai
 			this.poll = args.poll;
 		},
 		postCreate : function() {
-			this.pressurizerTank = new Tank({
-				//'socket' : this.socket,
-				'poll':this.poll,
-				'tankLevelMax' : 6,
-				'tankId' : 'pressurizerTank',
-				'title': 'Pressurizer Tank',
-				tankClass :'pressurizertank pressurizertanklevel0 z2',
-			},this.pressurizerTankDAP);
 			this.repair = new Repair({
 				//'socket' : this.socket,
 				'poll':this.poll,
 				'repairState': false,
 				'title': 'Repair Button',
-				repairClass :'repaircursorfalse repairstatefalse z2',
+				repairClass :'repairbutton repairstatefalse z2',
 			},this.repairDAP);
 			
 			
