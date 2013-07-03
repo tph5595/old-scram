@@ -100,7 +100,6 @@ class Plant(object):
         
         """
     
-    
     # Relationship between reactor temp and hot leg
     def _xferEnergyToRcsLoop(self):
         # heat produced
@@ -417,12 +416,10 @@ class Plant(object):
         #TODO: What happens when steam voiding occurs? mwH isn't as efficient.
         #Reactor Temp increases rapidly because the steam acts as an insulator.  It doesn't allow it to cool properly.
     
-    
-    #TODO:Make sure earthquake logic works
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
-        #TODO: Are these numbers okay? Is abs working?
-        magicNumber = random.randrange(0, abs((200000 - (self.risk * 500))), 1)
+        magicNumber = random.randrange(0, 100, .1)
+        magicNumber = 69
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
@@ -430,6 +427,18 @@ class Plant(object):
         else:
             #print"Safe!" #for testing
             self.earthquake = False
+            """
+            #risk < 10
+            .1% chance
+            risk < 20
+            .25% chance
+            risk < 30
+            .38%
+            risk < 40
+            .6%
+            risk
+            
+            """
             
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
