@@ -418,7 +418,8 @@ class Plant(object):
     
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
-        magicNumber = random.randrange(0, 100, 1)
+        self.earthquake = False
+        magicNumber = random.randrange(0, 1000, 1)
         magicNumber = 69
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
@@ -527,6 +528,7 @@ class Plant(object):
         self.pressuizerValve = False
         self.hpiValve = False
         self.afsValve = False
+        self.earthquake = False #This wont be needed after I make an earthquare pause.  It should reset to false immediately afterwards.
         #TODO:Reset water levels.
         #TODO: Reset Positions of moving dots?
         
