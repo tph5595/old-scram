@@ -544,7 +544,7 @@ class Plant(object):
         if self.rcsHotLegTemp < 50:
             self.rcsHotLegTemp = 50
             
-        if self.rcsColdLegTemp < 25:yl
+        if self.rcsColdLegTemp < 25:
             self.rcsColdLegTemp = 25
             
         if self.afsHotLegTemp < 25:
