@@ -64,14 +64,14 @@ class AddUser(Command):
     """
     This is the user coming into the game
     """
-    arguments = [('userId',String()),('password',String())]
+    arguments = [('user',String()),('password',String())]
     response = [('response',String())]
     
 class GetUser(Command):
     """
     Get existing user
     """
-    arguments = [('userId',String()),('password',String())]
+    arguments = [('user',String()),('password',String())]
     response = [('response',String())]
     
 class Handshake(Command):
@@ -177,6 +177,8 @@ class NetworkController(AMP):
         return d
     
     def earthquake(self,quake):
+        #TODO: add objects to the response for damage
+        #TODO: need to "leak" the flags to the server in the wild.
         j = {'quake':quake}
         try:
             if len(self.factory.frontEndListeners['earthquake'].connections) > 0:

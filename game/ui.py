@@ -67,7 +67,7 @@ class UI(object):
 
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
-        #HACK: provide the front end listeners to the client protocol
+        #HACK: provide the front end listeners to the AMP client protocol
         clientFactory.frontEndListeners = self.frontEndListeners        
         clientFactory.protocol = lambda: NetworkController(self.reactor)
         factory = ConnectionNotificationFactory(clientFactory)              
@@ -145,9 +145,11 @@ class UI(object):
         
     def _handleUser(self,conn,msg):
         if(self._handleStash("user", conn, msg)):return
+        #TODO: add user to array
         
     def _handleEarthquake(self,conn,msg):
         if(self._handleStash("earthquake", conn, msg)):return
+        
     
     def _initFlags(self):
         self.flags = {}
