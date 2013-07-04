@@ -1,5 +1,5 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
-	return Declare("scram.sockets", null, {
+define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket","dojo/Evented"], function(lang, Declare, Socket, Evented) {
+	return Declare("scram.sockets", [Evented], {
 		///
 		/// This is the class for standing up all the sockets and dealing with the comms.
 		///
@@ -11,6 +11,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		userSocket : null,
 		earthquakeSocket : null,
 		constructor : function(args) {
+			//TODO: add emits for events
 			this.pollSocket = new Socket("ws://127.0.0.1:8081");
 			this.pollSocket.on("message", lang.hitch(this, this.onPollMsg));
 			this.pollSocket.on("open", lang.hitch(this, this.onPollOpen));
