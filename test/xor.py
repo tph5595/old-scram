@@ -15,7 +15,28 @@ print content
 print output
 
 def makeFunc(s):
-    return function = s
+    #return function = s
+    pass
+
+code_global = compile('''
+sum = 0
+for x in xrange(500000):
+    sum += x
+''', '<string>', 'exec')
+code_local = compile('''
+def f():
+    sum = 0
+    for x in xrange(500000):
+        sum += x
+''', '<string>', 'exec')
+
+def test_global():
+    exec code_global in {}
+
+def test_local():
+    ns = {}
+    exec code_local in ns
+    ns['f']()
 
 function=output[0]
 f("this is  a test")

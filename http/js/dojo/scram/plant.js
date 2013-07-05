@@ -26,6 +26,7 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Ro
 			});
 			this.rods = new Rods({
 				"socket" : this.sockets.rodSocket,
+				"pollSocket":this.sockets.pollSocket,
 				'tip' : 'Reactor Core Rods',
 				'class' : "z2"
 			});

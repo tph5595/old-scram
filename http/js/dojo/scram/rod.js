@@ -7,6 +7,7 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 		///
 		templateString : template,
 		_socket : null,
+		pollSocket:null,
 		rodLevel : null,
 		tip : null,
 		_setRodTipAttr : {
@@ -17,6 +18,8 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 
 		constructor : function(args) {
 			this._socket = args.socket;
+			this.pollSocket = args.pollSocket;
+			this.pollSocket.on("message", lang.hitch(this, this.pollMsg));
 			this.tip = args.tip;
 			this.rodLevel = 9;
 		},
@@ -30,7 +33,7 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 		decrement : function() {
 			this.rodMove(-1);
 		},
-		rodMove : function(x) {
+		rodUpdate:function(x){
 			this.rodLevel = this.rodLevel + x
 			if (this.rodLevel < 0) {
 				this.rodLevel = 0
@@ -43,13 +46,21 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 				"level" : this.rodLevel
 			};
 			console.log(JSON.stringify(j), j);
-			this._socket.send(JSON.stringify(j));
+			this._socket.send(JSON.stringify(j));	
+		},
+		rodMove : function() {
+
 			fx.slideTo({
 				top : this.rodTop[this.rodLevel],
 				left : 86,
 				node : this.rod
 			}).play();
 
+		},
+		pollMsg : function(event) {
+			var obj = JSON.parse(event.data);
+			this.rodLevel = obj['rods'];
+			this.rodMove();
 		}
 	});
 });
