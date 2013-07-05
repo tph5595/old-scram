@@ -1,6 +1,7 @@
 from __future__ import division
 import random
 import math
+import time
 
 """
 This is the nuke plant class
@@ -83,8 +84,9 @@ class Plant(object):
         self.heatCapacity = 4.19  # Joules/grams Kelvin
         self.waterMass = [100, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000]  # gallons of water being pumped through the pressure chamber based on pumps on
         
-        self.earthquake = False
-        self.steamVoiding = False
+        self.earthquake = False #if magic number = 69
+        self.steamVoiding = False #if reactorTemp > BoilingTemp
+        self.pressureExplosion = False #if rcsPRess > 3000
         
     #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
@@ -353,6 +355,9 @@ class Plant(object):
      #TODO: Will this work?  It won't be super accurate since they are always based on eachother.  boiling temp will always be based on previous ticks pressure.
      #TODO: This is dumb... If they are only related to eachother then they will never change.  What else are they based on?  # of pumps on or something.
     def _boilAndPressure(self):
+        #resets explosion to false
+        self.pressureExplosion = False
+        
         a = 8.14019
         b = 1810.94
         c = 244.485
@@ -369,6 +374,12 @@ class Plant(object):
         press = math.pow(10,(a - (b / (c + bp))))
         
         self.rcsPressure = press / pConv
+        
+        #Explosion in pressure tank
+        if (self.rcsPressure >= 3000):
+            self._reset()
+            self.pressureExplosion = True
+            
         
         """
         ***Antoine equation***
@@ -442,7 +453,7 @@ class Plant(object):
             size = 100
         
         magicNumber = random.randrange(0, size, 1)
-        #magicNumber = 69 #to test earthquake
+        magicNumber = 69 #to test earthquake
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
@@ -526,6 +537,7 @@ class Plant(object):
             
         if self.generatorMWH > 1000 and self.generatorMWH % 1000 == 0:
             self.risk += 1
+            
     #call every 20 minutes.      
     def _restoreWorkers(self):
             self.workers += 5
@@ -536,6 +548,9 @@ class Plant(object):
         
     #If there is a meltdown reset all the things!
     def _reset(self):
+        #Pause for 5 seconds while Nick Cage laughs.
+        time.sleep(5)
+        
         self.rodLevel = 9
         self.reactorTemp = 653
         self.rcsColdLegTemp = 561
@@ -563,7 +578,7 @@ class Plant(object):
         self.afsValve = False
         self.earthquake = False #This wont be needed after I make an earthquare pause.  It should reset to false immediately afterwards.
         #TODO:Reset water levels.
-        #TODO: Reset Positions of moving dots?
+        
         
     #TODO: Are these min / max temps adequate?
     #TODO: be sure this is called at the right place otherwise it will mess up calculations.
@@ -597,14 +612,14 @@ class Plant(object):
         if self.afsColdLegTemp < 10:
             self.afsColdLegTemp = 10
         
-        if self.afsHiddenTemp < 1:
-            self.afsHiddenTemp = 1
+        if self.afsHiddenTemp < 10:
+            self.afsHiddenTemp = 10
         
-        if self.csHotLegTemp < 2:
-            self.csHotLegTemp = 2
+        if self.csHotLegTemp < 3:
+            self.csHotLegTemp = 3
         
-        if self.csColdLegTemp < 1:
-            self.csColdLegTemp = 1
+        if self.csColdLegTemp < 2:
+            self.csColdLegTemp = 2
         
             
             
