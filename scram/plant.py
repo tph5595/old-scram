@@ -445,7 +445,7 @@ class Plant(object):
     #gonna make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
         #percent to increase all temps by
-        precent = 1.05
+        percent = 1.05
         #rcsLoop
         self.reactorTemp = self.reactorTemp * percent
         self.rcsColdLegTemp = self.rcsColdLegTemp * percent
