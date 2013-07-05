@@ -2,6 +2,12 @@
 	background-color: black;
 	height: 690px;
 }
+.bodyblack {
+	background-color: black;	
+}
+.bodywhite {
+	background-color: white;	
+}
 .bgblack {
 	width: 1500px;
 	height: 100%;
@@ -479,3 +485,33 @@
 	/*cursor: url(../images/wrench_mouse.png), wait;*/
 }
 
+/*User*/
+.login {
+	background-color: black;
+}
+.user {
+	position: relative;
+	top: 360px;
+}
+.pass {
+	position: relative;
+	top: 419px;
+}
+.loginbutton {
+	position: relative;
+	top: 470px;
+	background-image: url(../images/userPages/loginBtn.png);
+	height:37px;
+	width: 100px;
+	background-size: 100px 37px;
+	border-style:solid;
+	border-width:2px;
+}
+.loginbackground {
+	margin-right: auto;
+	margin-left: auto;
+	background-image : url(../images/userPages/loginBackground.png);
+	background-size: 1120px 900px;
+	width : 1120px; 
+	height : 900px;	
+}

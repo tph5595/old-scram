@@ -1,5 +1,7 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/dom-construct", "dojo/dom-class", "dijit/form/TextBox","dojo/text!scram/templates/user.html"], function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, domConstruct, domClass, TextBox, template) {
-	return Declare("scram.user", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
+"dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", "dojo/dom-class", "dijit/form/TextBox","dojo/text!scram/templates/user.html"], 
+function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, TextBox, template) {
+	return Declare("scram.user", [_WidgetBase, _TemplatedMixin, _Contained, _Container, Evented], {
 		///
 		/// This is the class for the valve
 		///
@@ -10,24 +12,52 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.socket = args.socket;
 		},
 		postCreate : function() {
-			var userName = new TextBox({
+			this.userName = new TextBox({
 				name : "userName",
 				value : "",
-				placeHolder : "User Name"
+				'class' : 'user',
+				placeholder : "User Name"
 			}, this.userDAP);
-						var userPass = new TextBox({
+			this.userPass = new TextBox({
 				name : "userPass",
 				type:"password",
-				value : ""
+				value : "",
+				'class' : 'pass',
+				placeholder : "Password"
 			}, this.passwordDAP);
-			
+			dojo.style(this.loginbodyDAP, "opacity", "0");
+			var loginFadeArgs = {
+				node : this.loginbodyDAP,
+				duration : 5000,
+			};
+			dojo.fadeIn(loginFadeArgs).play();
 			this.inherited(arguments);
 		},
+		hide : function() {
+			var fadeArgs = {
+				node : this.loginbodyDAP,
+				duration : 200,
+			};
+			dojo.fadeOut(fadeArgs).play();
+			dojo.style(this.loginbodyDAP, "height", "0px");
+			this.emit("hidden",{});
+		},
 		onLoginClick : function() {
-			j = {"user":this.userName.get("value"),
-				"password":this.userPass.get("value")}
-				
-			this.socket.send(JSON.stringify(j));
+			this.usertemp = this.userName.get("value");
+			this.passtemp = this.userPass.get("value");
+			j = {"user":this.usertemp,
+				"password":this.passtemp}
+			console.log(j, 'obj');
+			if (this.usertemp == '' && this.passtemp == ''){
+				this.userName.set("value", "");
+				this.userPass.set("value", "");	
+				console.log('incorrect login');
+			}
+			else {
+				this.socket.send(JSON.stringify(j));
+				console.log('correct login');	
+				this.hide();
+			}
 		}
 	});
 }); 
