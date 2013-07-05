@@ -194,11 +194,17 @@ class Plant(object):
         
         # TODO: figure out a new way to calculate MWH. 
         
-        #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
-        if (self.afsHotLegTemp > 150) and (self.reactorTemp > 200): #Later 200 will turn into the temperature at which steam occurs or something.
-            self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
+        if (self.steamVoiding == False):
+            #generatorMW is based on steam volume or some kinda shit. Just gonna hack it to deal with hot leg temp???
+            if (self.afsHotLegTemp > 200) and (self.reactorTemp > 200): #Later 200 on afsLeg will turn into the temperature at which steam occurs or something.
+                self.generatorMW = self.afsHotLegTemp * 1.08 #made up a rate of increase
+            else:
+                self.generatorMW = 0 #it should probably gradually decrease by a rate instead of instantly becoming 0.
         else:
-            self.generatorMW = 0 #it should probably decrease by a rate instead of instantly becoming 0.
+             if (self.afsHotLegTemp > 200) and (self.reactorTemp > 200):
+                self.generatorMW = self.afsHotLegTemp * .7 #less efficient power output due to steam voiding
+             else:
+                self.generatorMW = 0 
         
         if self.generatorMW > 999:
             self.generatorMW = 999
@@ -287,9 +293,6 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .0001)
                 else: 
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .00000007)
-                    
-        #for testing print to log
-        print "AFS Hidden Temp",self.afsHiddenTemp
                 
         """
         proof of calc
@@ -352,11 +355,27 @@ class Plant(object):
         csCold = 94 - (94 * .4) = 56.4
         """
         
-     #TODO: Will this work?  It won't be super accurate since they are always based on eachother.  boiling temp will always be based on previous ticks pressure.
-     #TODO: This is dumb... If they are only related to eachother then they will never change.  What else are they based on?  # of pumps on or something.
+     #TODO: make pressure always Increasing related to the rate of change of reactor temp.
+     #TODO: make pressure always Decreasing based on a fixed percent or number. 
     def _boilAndPressure(self):
         #resets explosion to false
         self.pressureExplosion = False
+        
+        
+        #dun dun dun dadadundun Under Pressure!
+        """
+        Logic test
+        
+        if (reactorTemp > oldReactorTemp)
+            pressure =  pressure * (reactorTemp / oldreactortemp)
+           
+        pressure = pressure - 5%
+        
+        
+        """
+        
+        
+        
         
         a = 8.14019
         b = 1810.94
@@ -387,7 +406,7 @@ class Plant(object):
         T = boiling temp (Celcius) ~~~Needs Converted to Farenheight~~~
         
         approx constants: (these would vary slightly in real life)
-        A = 8.14019
+        A = 8.14019s
         B = 1810.94
         C = 244.485
         
@@ -413,7 +432,7 @@ class Plant(object):
     def _steamVoiding(self):
         if (self.reactorTemp > self.boilingTemp):
             self.steamVoiding = True
-            self._steamVoidingAction()
+            #self._steamVoidingAction() #Called in update now
         else:
             self.steamVoiding = False
             
@@ -422,11 +441,29 @@ class Plant(object):
         return self.steamVoiding
     
     #action due to steam voiding
+    #Reactor Temp increases rapidly because the steam acts as an insulator.  It doesn't allow it to cool properly.
+    #gonna make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
-        print ""
-        #TODO: What happens when steam voiding occurs? mwH isn't as efficient.
-        #Reactor Temp increases rapidly because the steam acts as an insulator.  It doesn't allow it to cool properly.
-    
+        #percent to increase all temps by
+        precent = 1.05
+        #rcsLoop
+        self.reactorTemp = self.reactorTemp * percent
+        self.rcsColdLegTemp = self.rcsColdLegTemp * percent
+        self.rcsHotLegTemp = self.rcsHotLegTemp * percent
+        
+        #afsLoop
+        self.afsColdLegTemp = self.afsColdLegTemp * percent
+        self.afsHiddenTemp = self.afsHiddenTemp * percent
+        self.afsHotLegTemp = self.afsHotLegTemp * percent
+        
+        #csLoop
+        self.csColdLegTemp = self.csColdLegTemp * percent
+        self.csHotLegTemp = self.csHotLegTemp * percent
+        
+        #TODO: What to do with MWH?
+        #MWH calculation will be called after steam voiding is set to true or false and will be changed there.
+        
+        
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
         self.earthquake = False
@@ -461,29 +498,6 @@ class Plant(object):
         else:
             #print"Safe!" #for testing
             self.earthquake = False
-        
-            """
-            #risk < 10
-            .1% chance
-            risk < 20
-            .25% chance
-            risk < 30
-            .35%
-            risk < 40
-            .45%
-            risk < 50
-            .55%
-            risk < 60
-            .65%
-            risk < 70
-            .75
-            risk < 80
-            .85
-            risk < 90
-            .95
-            risk > = 100
-            1%
-            """
             
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
@@ -703,13 +717,13 @@ class Plant(object):
         print "CS Hot Leg Temp: %s" % (str(self.csHotLegTemp))
         print "CS Cold Leg Temp: %s" % (str(self.csColdLegTemp))  
         
-        
-                
     def update(self):
         # increment game tick one second
         self.elapsedTime += 1
         # get temps from last game tick
         self._previousTemp()
+        #Check for steam voiding
+        self._steamVoiding()
         # make some energy; which is heat and
         self._energyProduction()
         # xfer the heat from the reactor to the RCS water high side
@@ -722,7 +736,10 @@ class Plant(object):
         self._xferSteamToCondenser()
         # then on to the tower
         self._xferToTower()
-        #Keeps temps from going negative if equations get messed up. 
+        #Increase due to SteamVoiding
+        if (self.steamVoiding == True):
+            self._steamVoidingAction()
+        #Keeps temps from going negative if equations get messed up.
         self._tempCap()
         #update risk for earthquakes
         self._calcRisk()
