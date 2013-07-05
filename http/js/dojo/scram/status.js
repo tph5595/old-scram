@@ -22,6 +22,12 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				this.boilingTemp.innerHTML = Math.round(obj.boilingtemp);
 				this.workers.innerHTML = Math.round(obj.workers);
 				this.risk.innerHTML = Math.round(obj.risk);
+				
+				var mins = Math.floor(Math.round(obj.simtime)/60%60);
+				var hours = Math.floor(Math.round(obj.simtime)/3660);
+				
+				var seconds = Math.floor(Math.round(obj.simtime)%60);
+				var time = hours+":"+mins+":"+seconds
 				this.simtime.innerHTML = Math.round(obj.simtime);
 			} catch(err) {
 				console.log("Error in socket:", err);
