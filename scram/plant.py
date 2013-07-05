@@ -32,14 +32,14 @@ class Plant(object):
         self.boilingTemp = 657
         
         # Temperatures from previous run
-        self.oldRcsHotLegTemp = 0
-        self.oldRcsColdLegTemp = 0
-        self.oldReactorTemp = 0
-        self.oldAfsColdLegTemp = 0
-        self.oldAfsHotLegTemp = 0
-        self.oldCsHotLegTemp = 0
-        self.oldCsColdLegTemp = 0
-        self.oldAfsHiddenTemp = 0
+        self.oldRcsHotLegTemp = 603
+        self.oldRcsColdLegTemp = 561
+        self.oldReactorTemp = 653
+        self.oldAfsColdLegTemp = 463
+        self.oldAfsHotLegTemp = 593
+        self.oldCsHotLegTemp = 94
+        self.oldCsColdLegTemp = 65
+        self.oldAfsHiddenTemp = 500
         
         # Aux Feed Water System
         self.afsHotLegTemp = 593
@@ -96,6 +96,7 @@ class Plant(object):
         # temp decrease from coldLegTemp.
         self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
         
+        #TODO: prove these calculations work.
         """
         Proof of calculations
         
@@ -148,7 +149,7 @@ class Plant(object):
             """
             
         """
-        proof of calculations
+        proof of old calculations
        initial cold leg = 562
         initial reactor temp = 655
        initial hot leg = 604
@@ -366,17 +367,31 @@ class Plant(object):
         """
         Logic test
         
+        old reactor temp = 145
+        reactor temp = 178
+        original pressure = 2294
+        
+        increase
+        pressure = 2294 * (178 / 145) = 2816.08276
+        
+        decrease by 5%
+        pressure = 2675
+        
+        psuedocode
         if (reactorTemp > oldReactorTemp)
             pressure =  pressure * (reactorTemp / oldreactortemp)
-           
-        pressure = pressure - 5%
-        
-        
+        pressure = pressure - 5%        
         """
         
+        #TODO: make changes in pressure due to valves and pumps
         
-        
-        
+        #if the temp is rising increase pressure
+        if (self.reactorTemp > self.oldReactorTemp):
+            self.rcsPressure = self.rcsPressure * (self.reactorTemp / self.oldReactorTemp)
+            self.rcsPressure = self.rcsPressure * .99 #decrease 2% each game tick after increase to keep it under control.
+        elif(self.reactorTemp < self.oldReactorTemp): #temp decreasing
+            self.rcsPressure = self.rcsPressure * .99 #decrease 1% each game tick that temp is decreasing
+            
         a = 8.14019
         b = 1810.94
         c = 244.485
@@ -387,19 +402,25 @@ class Plant(object):
         rp = self.rcsPressure * pConv
         bp = (b / (a - math.log10(rp))) - c
         
+        """
+        bp proof
+        
+        1810 / ((8.1 - 5.1) - 244) = -7.5??? WHATTT?
+        """
+        
         #convert to farenheight
         self.boilingTemp = bp * tConv
         
+        """
         press = math.pow(10,(a - (b / (c + bp))))
-        
         self.rcsPressure = press / pConv
+        """
         
         #Explosion in pressure tank
-        if (self.rcsPressure >= 3000):
-            self._reset()
+        if (self.rcsPressure >= 5000):
             self.pressureExplosion = True
+            self._reset()
             
-        
         """
         ***Antoine equation***
         P = pressure (mmHg) ~~~Needs Converted to PSI~~~
@@ -490,7 +511,7 @@ class Plant(object):
             size = 100
         
         magicNumber = random.randrange(0, size, 1)
-        magicNumber = 69 #to test earthquake
+        #magicNumber = 69 #to test earthquake
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
@@ -560,7 +581,7 @@ class Plant(object):
         self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
         self._reset()
         
-    #If there is a meltdown reset all the things!
+    #If there is a meltdown or pressure explosion reset all the things!
     def _reset(self):
         #Pause for 5 seconds while Nick Cage laughs.
         time.sleep(5)
@@ -593,9 +614,6 @@ class Plant(object):
         self.earthquake = False #This wont be needed after I make an earthquare pause.  It should reset to false immediately afterwards.
         #TODO:Reset water levels.
         
-        
-    #TODO: Are these min / max temps adequate?
-    #TODO: be sure this is called at the right place otherwise it will mess up calculations.
     def _tempCap(self):
         #keep hotleg hotter than cold leg
         if self.rcsHotLegTemp < self.rcsColdLegTemp:
@@ -610,7 +628,7 @@ class Plant(object):
         if self.afsColdLegTemp > self.afsHiddenTemp:
             self.afsColdLegTemp = self.afsHiddenTemp - 5
             
-        #capping minimums. hypothetically should never need these.
+        #capping minimums. hypothetically should never need these, but sometimes ya do.
         if self.reactorTemp < 100:
             self.reactorTemp = 100
             
@@ -634,6 +652,15 @@ class Plant(object):
         
         if self.csColdLegTemp < 2:
             self.csColdLegTemp = 2
+            
+        if self.boilingTemp > 1000:
+            self.boilingTemp = 1000
+        
+        if self.boilingTemp < 250:
+            self.boilingTemp = 250
+        
+        if self.rcsPressure < 1000:
+            self.rcsPressure = 1000
         
             
             
@@ -720,11 +747,13 @@ class Plant(object):
     def update(self):
         # increment game tick one second
         self.elapsedTime += 1
+        #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
+        self._boilAndPressure()
         # get temps from last game tick
         self._previousTemp()
         #Check for steam voiding
         self._steamVoiding()
-        # make some energy; which is heat and
+        # make reactor heat
         self._energyProduction()
         # xfer the heat from the reactor to the RCS water high side
         self._xferEnergyToRcsLoop() 
