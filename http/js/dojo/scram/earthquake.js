@@ -1,5 +1,6 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang, Declare, Socket) {
-	return Declare("scram.earthquake", null, {
+define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket", "dojo/Evented"], 
+function(lang, Declare, Socket, Evented) {
+	return Declare("scram.earthquake", [Evented], {
 		///
 		/// This is the class for earthquakes
 		///
@@ -9,7 +10,9 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket"], function(lang,
 		},
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
+			this.earthquake = obj['Earthquake']
 			console.log("Earthquake",obj);
+			this.emit("quake", {});
 		}
 	});
 });

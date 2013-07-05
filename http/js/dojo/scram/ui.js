@@ -30,7 +30,6 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, So
 						sockets : this._sockets
 					}, this.plantDAP);
 				}));
-						
 			}));
 			this.addChild(this.splash);
 			this.addChild(this.user);

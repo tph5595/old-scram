@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", 
+define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
 "scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/repairs", "scram/earthquake", "dojo/text!scram/templates/plant.html"], 
-function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, template) {
-	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
+function(on, lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, template) {
+	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
 		///
@@ -18,9 +18,12 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Ro
 		postCreate : function() {
 
 			this.earthquake = new Earthquake({
-				socket : this.sockets.earthquakeSocket
+				socket : this.sockets.earthquakeSocket,
+				poll : this.sockets.pollSocket
 			});
-
+			this.earthquake.on('quake', lang.hitch(this, function() {
+				console.log('Quake passthrough works. Now implement shaking here');
+			}));
 			this.temp = new Temp({
 				socket : this.sockets.pollSocket
 			});
