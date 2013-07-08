@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dojo/fx", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-class", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
-"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/repairs", "scram/earthquake", "dojo/text!scram/templates/plant.html"], 
-function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, template) {
+"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/repairs", "scram/earthquake", "scram/faces", "dojo/text!scram/templates/plant.html"], 
+function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, Faces, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
@@ -30,19 +30,19 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 					node : this.earthquakeDAP,
 					duration: 50,
 					top : 8,
-					left : 50
+					left : 125
 				});
 				this.earthquakeRight = fx.slideTo({
 					node : this.earthquakeDAP,
 					duration: 50,
 					top : 8,
-					left : 150
+					left : 250
 				});
 				this.earthquakeCenter = fx.slideTo({
 					node : this.earthquakeDAP,
 					duration: 50,
 					top : 8,
-					left : 85
+					left : 200
 				});
 				this.chain = fx.chain([this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, this.earthquakeRight,
 										this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, 
@@ -56,6 +56,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				domClass.remove(this.earthquakeDAP);
 				domClass.add(this.earthquakeDAP, 'prequake');
 			}));
+			this.faces = new Faces ({
+				socket : this.sockets.earthquakeSocket
+			});
 			this.temp = new Temp({
 				socket : this.sockets.pollSocket
 			});
@@ -87,6 +90,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			 poll : this.sockets.pollSocket
 			 });
 			 
+			this.addChild(this.faces);
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
