@@ -10,9 +10,16 @@ function(lang, Declare, Socket, Evented) {
 		},
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
-			this.earthquake = obj['Earthquake']
-			console.log("Earthquake",obj);
-			this.emit("quake", {});
+			this.earthquake = obj['quake']
+			console.log(this.earthquake,obj);
+			switch (this.earthquake){
+				case true:
+					this.emit("quake", {})
+					break;
+				case false:
+					this.emit("prequake", {})
+					break;
+			}
 		}
 	});
 });

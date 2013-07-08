@@ -3,10 +3,10 @@
 	height: 690px;
 }
 .bodyblack {
-	background-color: black;	
+	background-color: black;
 }
 .bodywhite {
-	background-color: white;	
+	background-color: white;
 }
 .bgblack {
 	width: 1500px;
@@ -29,6 +29,8 @@
 	background-repeat: no-repeat;
 	background-size: 1000px 615px;
 	background-position: center;
+}
+.scrambackgroundposition {
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -472,7 +474,7 @@
 	width: 40px;
 	height: 40px;
 	background-size: 40px 40px;
-	position:relative;
+	position: relative;
 	top: -440px;
 	left: 702px;
 }
@@ -501,22 +503,33 @@
 	position: relative;
 	top: 470px;
 	background-image: url(../images/userPages/loginBtn.png);
-	height:37px;
+	height: 37px;
 	width: 100px;
 	background-size: 100px 37px;
-	border-style:solid;
-	border-width:2px;
+	border-style: solid;
+	border-width: 2px;
 }
 .loginbackground {
 	margin-right: auto;
 	margin-left: auto;
-	background-image : url(../images/userPages/loginBackground.png);
+	background-image: url(../images/userPages/loginBackground.png);
 	background-size: 1120px 900px;
-	width : 1120px; 
-	height : 900px;	
+	width: 1120px;
+	height: 900px;
 }
 
 /*earthquake*/
+.prequake {
+	height: 0px;
+	width: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
 .quake {
-	
+	background-image: url(../images/main.png);
+	width: 1000px;
+	height: 615px;
+	background-repeat: no-repeat;
+	background-size: 1000px 615px;
+
 }

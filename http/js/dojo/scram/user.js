@@ -28,7 +28,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			dojo.style(this.loginbodyDAP, "opacity", "0");
 			var loginFadeArgs = {
 				node : this.loginbodyDAP,
-				duration : 5000,
+				duration : 1000,
 			};
 			dojo.fadeIn(loginFadeArgs).play();
 			this.inherited(arguments);
