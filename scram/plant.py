@@ -46,7 +46,7 @@ class Plant(object):
         self.afsColdLegTemp = 463
         self.afsValve = False
         self.afsPumps = 0  # 0-2 2 max 
-        self.afsTankLevel = 10  # TODO: need a max for this.
+        self.afsTankLevel = 7  # TODO: need a max for this.
         # This is a temp not displayed on screen between power generator and condenser in the afs loop.
         self.afsHiddenTemp = 500
         
@@ -66,13 +66,14 @@ class Plant(object):
         # HPI 
         self.hpiValve = False        
         self.hpiPump = 0  # HPI Pump step 0-3 3 max        
-        self.hpiWater = 100  # HPI water level        
+        self.hpiWater = 7  # HPI water level        
         
         # pressurizer
-        self.pressurizerWaterLevel = 50
-        self.pressurizerSteamLevel = 50
-        self.pressurizerQuenchTankLevel = 10
-        self.pressuizerValve = False
+        self.pressurizerWaterLevel = 0
+        #DO WE NEED THESE?
+        #self.pressurizerSteamLevel = 50
+        #self.pressurizerQuenchTankLevel = 10
+        self.pressurizerValve = False
       
         
         # initial value for temperature multipliers based upon pumps open
@@ -225,6 +226,21 @@ class Plant(object):
         pump rate
         energy being taken out of water (generatorMW)
         """
+        
+        
+        
+        """
+        #Fixed If Logic
+        if (self.conPumps == 2):
+            if (self.generatorMW == 0):
+                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .0001)
+            elif (self.generatorMW < 100):
+                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .01)
+            elif (self.generatorMW < 200):
+                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .02)
+        """    
+        
+        #TODO: is this if logic right?
         if (self.conPumps == 2): #pumps at 2
                 if (self.generatorMW > 900):
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .1)
@@ -356,65 +372,84 @@ class Plant(object):
         csCold = 94 - (94 * .4) = 56.4
         """
         
-     #TODO: make pressure always Increasing related to the rate of change of reactor temp.
-     #TODO: make pressure always Decreasing based on a fixed percent or number. 
     def _boilAndPressure(self):
         #resets explosion to false
         self.pressureExplosion = False
         
-        
         #dun dun dun dadadundun Under Pressure!
-        """
-        Logic test
-        
-        old reactor temp = 145
-        reactor temp = 178
-        original pressure = 2294
-        
-        increase
-        pressure = 2294 * (178 / 145) = 2816.08276
-        
-        decrease by 5%
-        pressure = 2675
-        
-        psuedocode
-        if (reactorTemp > oldReactorTemp)
-            pressure =  pressure * (reactorTemp / oldreactortemp)
-        pressure = pressure - 5%        
-        """
-        
         #TODO: make changes in pressure due to valves and pumps
+        difference = self.reactorTemp - self.oldReactorTemp
         
-        #if the temp is rising increase pressure
-        if (self.reactorTemp > self.oldReactorTemp):
-            self.rcsPressure = self.rcsPressure * (self.reactorTemp / self.oldReactorTemp)
-            self.rcsPressure = self.rcsPressure * .99 #decrease 2% each game tick after increase to keep it under control.
-        elif(self.reactorTemp < self.oldReactorTemp): #temp decreasing
-            self.rcsPressure = self.rcsPressure * .99 #decrease 1% each game tick that temp is decreasing
-            
-        a = 8.14019
-        b = 1810.94
-        c = 244.485
-        pConv = 51.7149241024
-        tConv = (9/5) + 32
+        #Temp is decreasing so decrease pressure by up to 10%
+        if (difference <= -99):
+            self.rcsPressure = self.rcsPressure / 1.1
+        elif (difference <= -89):
+            self.rcsPressure = self.rcsPressure / 1.09
+        elif (difference <= -79):
+            self.rcsPressure = self.rcsPressure / 1.08
+        elif (difference <= -69):
+            self.rcsPressure = self.rcsPressure / 1.07
+        elif (difference <= -59):
+            self.rcsPressure = self.rcsPressure / 1.06
+        elif (difference <= -49):
+            self.rcsPressure = self.rcsPressure / 1.05
+        elif (difference <= -39):
+            self.rcsPressure = self.rcsPressure / 1.04
+        elif (difference <= -29):
+            self.rcsPressure = self.rcsPressure / 1.03
+        elif (difference <= -19):
+            self.rcsPressure = self.rcsPressure / 1.02
+        elif (difference <= -9):
+            self.rcsPressure = self.rcsPressure / 1.01
+        elif (difference <= -1):
+            self.rcsPressure = self.rcsPressure / 1.005
+        #Temp is staying same
+        elif (difference == 0): 
+            self.rcsPressure = self.rcsPressure
+        #Temp is increasing
+        elif (difference <= 9):
+            self.rcsPressure = self.rcsPressure * 1.005
+        elif (difference <= 19):
+            self.rcsPressure = self.rcsPressure * 1.01
+        elif (difference <= 29):
+            self.rcsPressure = self.rcsPressure * 1.02
+        elif (difference <= 39):
+            self.rcsPressure = self.rcsPressure * 1.03
+        elif (difference <= 49):
+            self.rcsPressure = self.rcsPressure * 1.04
+        elif (difference <= 59):
+            self.rcsPressure = self.rcsPressure * 1.05
+        elif (difference <= 69):
+            self.rcsPressure = self.rcsPressure * 1.06
+        elif (difference <= 79):
+            self.rcsPressure = self.rcsPressure * 1.07
+        elif (difference <= 89):
+            self.rcsPressure = self.rcsPressure * 1.08
+        elif (difference <= 99):
+            self.rcsPressure = self.rcsPressure * 1.09
+        elif (difference >= 100):
+            self.rcsPressure = self.rcsPressure * 1.1
         
-        #to get in mmHg for equation
-        rp = self.rcsPressure * pConv
-        bp = (b / (a - math.log10(rp))) - c
+        #Decrease pressure by 5% every tick while valve is open. This number may need changed
+        if (self.pressurizerValve == True) and (self.pressurizerWaterLevel < 7):
+            self.rcsPressure = self.rcsPressure * .95
+            if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
+                self.pressurizerWaterLevel += 1
         
-        """
-        bp proof
-        
-        1810 / ((8.1 - 5.1) - 244) = -7.5??? WHATTT?
-        """
+        #Increase pressure by 2.5% every tick while this is open. This number may need changed
+        if (self.hpiValve == True) and (self.hpiPump >= 1) and (self.hpiWater > 0):
+            self.rcsPressure = self.rcsPressure * 1.025
+            if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
+                self.hpiWater -= 1
+                
+        #Increase pressure by 2.5% every tick while this is open. This number may need changed
+        if (self.afsValve == True) and (self.afsPumps >= 1) and (self.afsTankLevel > 0):
+            self.rcsPressure = self.rcsPressure * 1.025
+            if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
+                self.afsTankLevel -= 1
         
         #convert to farenheight
-        self.boilingTemp = bp * tConv
-        
-        """
-        press = math.pow(10,(a - (b / (c + bp))))
-        self.rcsPressure = press / pConv
-        """
+        self.boilingTemp = self.rcsPressure * .3 #boiling temp is always 30% less than pressure.  Kind of a hack job.
         
         #Explosion in pressure tank
         if (self.rcsPressure >= 5000):
@@ -544,7 +579,7 @@ class Plant(object):
             #disable hpiPump arrows
         #Pressurizer valve Destruction
         elif (destroy == 5):
-            self.pressuizerValve = False
+            self.pressurizerValve = False
             #disable pressurizerValve
         #Con Pump Destruction (The one on the secondary (afs) loop)
         elif (destroy == 6):
@@ -608,11 +643,18 @@ class Plant(object):
         self.elapsedTime = 0
         self.rcsPressure = 2294
         self.boilingTemp = 657
-        self.pressuizerValve = False
+        
+        #valves
+        self.pressurizerValve = False
         self.hpiValve = False
         self.afsValve = False
-        self.earthquake = False #This wont be needed after I make an earthquare pause.  It should reset to false immediately afterwards.
-        #TODO:Reset water levels.
+        
+        self.earthquake = False #This wont be needed after I make an earthquake pause.  It should reset to false immediately afterwards.
+        
+        #water levels
+        self.afsTankLevel = 7
+        self.hpiWater = 7
+        self.pressurizerWaterLevel = 0
         
     def _tempCap(self):
         #keep hotleg hotter than cold leg
@@ -653,11 +695,14 @@ class Plant(object):
         if self.csColdLegTemp < 2:
             self.csColdLegTemp = 2
             
-        if self.boilingTemp > 1000:
-            self.boilingTemp = 1000
+        """
+        #no reason to cap this if its based on rcsPressure.
+        if self.boilingTemp > 1500:
+            self.boilingTemp = 1500
         
-        if self.boilingTemp < 250:
-            self.boilingTemp = 250
+        if self.boilingTemp < 300:
+            self.boilingTemp = 300
+        """
         
         if self.rcsPressure < 1000:
             self.rcsPressure = 1000
