@@ -535,7 +535,7 @@
 
 /*faces*/
 .quakefaceclosed {
-	background-image: url(../images/events/eventsplash.png);
+	background-image: url(../images/events/earthquakeC.png);
 	background-size: 1000px 723px;
 	background-repeat: no-repeat;
 	height: 723px;
@@ -543,11 +543,12 @@
 	position: absolute;
 }
 .quakefaceopen {
-	background-image: url(../images/events/nickcage_opened.png);
+	background-image: url(../images/events/earthquakeO.png);
 	background-size: 1000px 723px;
 	background-repeat: no-repeat;
 	height: 723px;
 	width: 1000px;
+	position: absolute;
 	
 }
 .meltdownncclosed {

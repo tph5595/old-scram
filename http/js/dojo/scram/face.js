@@ -26,17 +26,22 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			switch (this.event) 
 			{
 				case true:
-					this.addFace();
+					setInterval(function(){this.addFaceClosed();}, 500);
 					break;
 				case false:
-					this.removeFace();
+					this.addFaceClosed();
+					this.addFaceOpen();
 					break;
 			}
 		},
 		
-		addFace : function(){
+		addFaceClosed : function(){
 			domClass.remove(this.faceDAP);
 			domClass.add(this.faceDAP, 'quakefaceclosed' + ' z4');
+		},
+		addFaceOpen : function (){
+			domClass.remove(this.faceDAP);
+			domClass.add(this.faceDAP, 'quakefaceopen' + ' z4');
 		},
 		removeFace : function(){
 			domClass.remove(this.faceDAP);
