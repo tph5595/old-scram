@@ -36,11 +36,11 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		
 		addFace : function(){
 			domClass.remove(this.faceDAP);
-			domClass.add(this.faceDAP, 'quakefaceclosed');
+			domClass.add(this.faceDAP, 'quakefaceclosed' + ' z4');
 		},
 		removeFace : function(){
 			domClass.remove(this.faceDAP);
-			domClass.add(this.faceDAP, 'noface');
+			domClass.add(this.faceDAP, 'noface' + ' z4');
 		}
 		
 	})

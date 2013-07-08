@@ -8,8 +8,6 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		templateString : template,
 		sockets : null,
 		'class' : "scrambackground scrambackgroundposition z1",
-		earthquakeClass : null,
-		_setEarthquakeClassAttr: {node:"earthquakeDAP",type:"class"},
 
 		constructor : function(args) {
 			this.sockets = args.sockets;
@@ -23,39 +21,6 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				socket : this.sockets.earthquakeSocket,
 				poll : this.sockets.pollSocket
 			});
-			this.earthquake.on('quake', lang.hitch(this, function() {
-				domClass.remove(this.earthquakeDAP);
-				domClass.add(this.earthquakeDAP, 'quake');
-				this.earthquakeLeft = fx.slideTo({
-					node : this.earthquakeDAP,
-					duration: 50,
-					top : 8,
-					left : 125
-				});
-				this.earthquakeRight = fx.slideTo({
-					node : this.earthquakeDAP,
-					duration: 50,
-					top : 8,
-					left : 250
-				});
-				this.earthquakeCenter = fx.slideTo({
-					node : this.earthquakeDAP,
-					duration: 50,
-					top : 8,
-					left : 200
-				});
-				this.chain = fx.chain([this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, this.earthquakeRight,
-										this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, 
-										this.earthquakeRight,this.earthquakeLeft, this.earthquakeRight,
-										this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, 
-										this.earthquakeRight,this.earthquakeLeft, this.earthquakeRight,
-										this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, this.earthquakeCenter]);
-				this.chain.play();
-			}));
-			this.earthquake.on('prequake', lang.hitch(this, function() {
-				domClass.remove(this.earthquakeDAP);
-				domClass.add(this.earthquakeDAP, 'prequake');
-			}));
 			this.faces = new Faces ({
 				socket : this.sockets.earthquakeSocket
 			});
@@ -90,6 +55,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			 poll : this.sockets.pollSocket
 			 });
 			 
+			this.addChild(this.earthquake);
 			this.addChild(this.faces);
 			this.addChild(this.temp);
 			this.addChild(this.rods);

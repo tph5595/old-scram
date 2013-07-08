@@ -64,6 +64,9 @@
 .z3 {
 	z-index: 3;
 }
+.z4 {
+	z-index: 4;
+}
 .downbutton {
 	height: 20px;
 	width: 40px;
@@ -520,11 +523,7 @@
 
 /*earthquake*/
 .prequake {
-	height: 0px;
-	width: 0px;
-	margin-left: auto;
-	margin-right: auto;
-	z-index: 3;
+	display: none;
 }
 .quake {
 	background-image: url(../images/main.png);
@@ -532,28 +531,24 @@
 	height: 615px;
 	background-repeat: no-repeat;
 	background-size: 1000px 615px;
-	z-index: 3;
 }
 
 /*faces*/
 .quakefaceclosed {
 	background-image: url(../images/events/eventsplash.png);
-	background-size: 1000px 615px;
+	background-size: 1000px 723px;
 	background-repeat: no-repeat;
-	height: 615px;
+	height: 723px;
 	width: 1000px;
-	z-index: 4;
+	position: absolute;
 }
 .quakefaceopen {
 	background-image: url(../images/events/nickcage_opened.png);
-	background-size: 50px 50px;
+	background-size: 1000px 723px;
 	background-repeat: no-repeat;
-	height: 50px;
-	width: 50px;
-	position: relative;
-	top: 600px;
-	left: 100px;
-	z-index: 4;	
+	height: 723px;
+	width: 1000px;
+	
 }
 .meltdownncclosed {
 	background-image: url(../images/events/nickcage_closed.png);
@@ -564,7 +559,6 @@
 	position: relative;
 	top: 600px;
 	left: 100px;
-	z-index: 4;
 }
 .meltdownncopen {
 	background-image: url(../images/events/nickcage_opened.png);
