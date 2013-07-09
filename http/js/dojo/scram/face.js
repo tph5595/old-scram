@@ -21,16 +21,15 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 	
 		socketMsg: function(event){
 			var obj = JSON.parse(event.data);
-			this.eventHolder = obj[this.faceId];
-			this.event = this.eventHolder;
-			switch (this.event) 
-			{
+			this.socketMsgHolder = obj[this.faceId];
+			this.socketMsg = this.socketMsgHolder;
+			switch (this.socketMsg){
 				case true:
-					setInterval(function(){this.addFaceClosed();}, 500);
-					break;
-				case false:
 					this.addFaceClosed();
 					this.addFaceOpen();
+					break;
+				case false:
+					this.removeFace();
 					break;
 			}
 		},
