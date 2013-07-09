@@ -598,11 +598,11 @@ class Plant(object):
         # Generate random number
         destroy = random.randrange(0, 8, 1)
         
-        if (len(damageArray) > 0):
-           damageArray.sort()
-           if (len(damageArray) >= (destroy)):
-                destroy = random.randrange((len(damageArray) + 1), 8, 1)
-                damageArray.append(destroy)
+        if (len(self.damageArray) > 0):
+           self.damageArray.sort()
+           if (len(self.damageArray) >= (destroy)):
+                destroy = random.randrange((len(self.damageArray) + 1), 8, 1)
+                self.damageArray.append(destroy)
                 # Do damage
                 # Rod Destruction
                 if (destroy == 0):
@@ -650,8 +650,8 @@ class Plant(object):
                     # disable towerPump
       
         else:
-            damageArray.append(destroy)
-            damageArray.sort()
+            self.damageArray.append(destroy)
+            self.damageArray.sort()
             
             # Do damage
             # Rod Destruction
