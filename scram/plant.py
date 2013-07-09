@@ -404,7 +404,6 @@ class Plant(object):
         
     def _boilAndPressure(self):
         #resets explosion to false
-        self.pressureExplosion = False
         
         #dun dun dun dadadundun Under Pressure!
         #TODO: make changes in pressure due to valves and pumps
@@ -488,7 +487,7 @@ class Plant(object):
         #Explosion in pressure tank
         if (self.rcsPressure >= 5000):
             self.pressureExplosion = True
-            self._reset()
+            self.clock.callLater(5, self._reset())
             
         """
         ***Antoine equation***
@@ -589,11 +588,25 @@ class Plant(object):
             #print"Safe!" #for testing
             self.earthquake = False
             
+            
+    """
+    Joe,
+    I need this method to generate a random number.
+    Then it needs to make sure that this number of the object is not still damaged from previous earthquakes by comparing it to the damageArray.
+    The array will also need to be populated in the if statements.  I could certainly do that part but I'm still not sure on how to search the array properly and loop it.
+    
+    Thanks!
+    """
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
-        #There are 9 places that can be damaged.  This chooses which 1 to destroy
+        self.damageArray = []
+        
         destroy = random.randrange(1, 9, 1)
+        
+        
+        #There are 9 places that can be damaged.  This chooses which 1 to destroy
+        
         
         #Rod Destruction
         if (destroy == 1):
@@ -649,15 +662,11 @@ class Plant(object):
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
         self.inMeltdown = True
-        self.clock.callLater(5, self.reset())
+        self.clock.callLater(5, self._reset())
         
     #If there is a meltdown or pressure explosion reset all the things!
+    #This is calledLater after meltdown or pressure explosion and causes 5 second pause
     def _reset(self):
-        #Pause for 5 seconds while Nick Cage laughs.
-        
-        #time.sleep(5)
-        #call later
-        
         self.rodLevel = 9
         self.reactorTemp = 653
         self.rcsColdLegTemp = 561
@@ -692,6 +701,10 @@ class Plant(object):
         self.afsTankLevel = 7
         self.hpiWater = 7
         self.pressurizerWaterLevel = 0
+        
+        #reset latches
+        self.inMeltdown = False
+        self.pressureExplosion = False
     
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
@@ -774,7 +787,7 @@ class Plant(object):
         print "CS Cold Leg Temp: %s" % (str(self.csColdLegTemp))  
         
     def update(self):
-        if not (self.inMeltdown):
+        if not (self.inMeltdown) and not (self.pressureExplosion):
             # increment game tick one second
             self.elapsedTime += 1
             #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
