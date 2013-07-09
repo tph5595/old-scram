@@ -750,6 +750,7 @@ class Plant(object):
         self.afsValve = False
         
         self.earthquake = False #This wont be needed after I make an earthquake pause.  It should reset to false immediately afterwards.
+        self.steamVoiding = False
         
         #water levels
         self.afsTankLevel = 7
