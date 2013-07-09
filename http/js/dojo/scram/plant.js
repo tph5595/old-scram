@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dojo/fx", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-class", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
-"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/repairs", "scram/earthquake", "scram/faces", "dojo/text!scram/templates/plant.html"], 
-function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, Faces, template) {
+"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/repairs", "scram/earthquake", "scram/faces", "scram/damages", "dojo/text!scram/templates/plant.html"], 
+function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Repairs, Earthquake, Faces, Damages, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
@@ -16,13 +16,17 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			}));
 		},
 		postCreate : function() {
-
+			/*
 			this.earthquake = new Earthquake({
 				socket : this.sockets.earthquakeSocket,
 				poll : this.sockets.pollSocket
-			});
+			});*/
+			this.damages = new Damages ({
+				socket : this.sockets.earthquakeSocket,
+			})
 			this.faces = new Faces ({
-				socket : this.sockets.earthquakeSocket
+				socket : this.sockets.earthquakeSocket,
+				poll : this.sockets.pollSocket
 			});
 			this.temp = new Temp({
 				socket : this.sockets.pollSocket
@@ -52,10 +56,10 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			 
 			 this.repairs = new Repairs({
 			 //"socket" : this.sockets.repairSocket,
-			 poll : this.sockets.pollSocket
+			 socket : this.sockets.earthquakeSocket
 			 });
 			 
-			this.addChild(this.earthquake);
+			//this.addChild(this.earthquake);
 			this.addChild(this.faces);
 			this.addChild(this.temp);
 			this.addChild(this.rods);

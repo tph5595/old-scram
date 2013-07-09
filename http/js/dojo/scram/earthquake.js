@@ -7,8 +7,8 @@ function(lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		///
 		socket : null,
 		templateString : template,
-		earthquakeClass : null,
-		_setEarthquakeClassAttr : {node : "earthquakeDAP", type : "class"},
+		//earthquakeClass : null,
+		//_setEarthquakeClassAttr : {node : "earthquakeDAP", type : "class"},
 		
 		constructor: function(args){
 			this.socket = args.socket;
@@ -17,22 +17,24 @@ function(lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
 			this.earthquake = obj['quake'];
-			console.log(this.earthquake,obj);
+			//console.log(this.earthquake,obj);
 			switch (this.earthquake){
 				case true:
-					//this.emit("quake", {})
-					this.startQuake();
+					this.emit("quake", {})
+					//this.startQuake();
 					break;
+					/*
 				case false:
-					//this.emit("prequake", {})
-					this.noQuake();
-					break;
+					this.emit("prequake", {})
+					//this.noQuake();
+					break;*/
 			}
 		},
 		postCreate : function() {
 
 			this.inherited(arguments);
 		},
+		/*
 		startQuake : function(){
 			domClass.remove(this.earthquakeDAP);
 			domClass.add(this.earthquakeDAP, 'quake' + ' z3');
@@ -66,5 +68,6 @@ function(lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			domClass.remove(this.earthquakeDAP);
 			domClass.add(this.earthquakeDAP, 'prequake' + ' z3');
 		}
+		*/
 	});
 });

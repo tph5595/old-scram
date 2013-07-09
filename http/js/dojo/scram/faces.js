@@ -19,6 +19,7 @@ function(lang, on, Declare, Socket, _WidgetBase, _Container, _Contained, _Templa
 		postCreate : function() {	
 			this.quakeFace = new Face ({
 				'socket' : this.socket,
+				'poll' : this.poll,
 				'faceId' : 'quake'				
 			}, this.quakefaceDAP);
 			
