@@ -30,11 +30,11 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		switchDamageState : function() {
 			if (this.damageState == true){
 				domClass.remove(this.damageDAP);
-				domClass.add(this.damageDAP, this.damageClass);
+				domClass.add(this.damageDAP, 'damage' + " " +this.damageClass);
 			}
 			else{
 				domClass.remove(this.damageDAP);
-				domClass.add(this.damageDAP, 'nodamage');
+				domClass.add(this.damageDAP, 'no'+this.damageClass);
 			}
 		},
 		damageUpdate : function(x) {

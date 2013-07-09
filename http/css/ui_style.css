@@ -523,7 +523,10 @@
 
 /*earthquake*/
 .prequake {
-	display: none;
+	width: 1000px;
+	height: 615px;
+	position: relative;
+	top: 500px;
 }
 .quake {
 	background-image: url(../images/main.png);
@@ -531,6 +534,8 @@
 	height: 615px;
 	background-repeat: no-repeat;
 	background-size: 1000px 615px;
+	position: relative;
+	top: 500px;
 }
 
 /*faces*/
@@ -577,19 +582,139 @@
 }
 
 /*damage*/
-.pumpdamage {
+.damage {
 	background-image: url(../images/damage.png);
-	background-size: 50px 50px;
+	background-repeat: no-repeat;
 	opacity: .5;
+	position: relative;
+	z-index: 4;
+}
+.rcsdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 100px;
+	top: -720px;
+	left: 250px;
+}
+.afsdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -865px;
+	left: 555px;
+}
+.csdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -985px;
+	left: 674px;
+}
+.hpitankdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -960px;
+	left: 175px;
+}
+.auxtankdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -1080px;
+	left: 585px;
+}
+.hpivalvedamage {
+	background-size: 50px 50px;
 	width: 50px;
 	height: 50px;
+	top: -1253px;
+	left: 190px;
 }
-.valvedamage {
-	
+.auxvalvedamage {
+	background-size: 50px 50px;
+	width: 50px;
+	height: 50px;
+	top: -1263px;
+	left: 480px;
+}
+.pressurizervalvedamage {
+	background-size: 50px 50px;
+	width: 50px;
+	height: 50px;
+	top: -1540px;
+	left: 360px;
 }
 .roddamage {
-	
+	background-size: 175px 150px;
+	width: 175px;
+	height: 150px;
+	top: -1685px;
+	left: 10px;
 }
-.nodamage {
-	display: none;	
+
+
+
+.norcsdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 100px;
+	top: -720px;
+	left: 250px;
+}
+.noafsdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -865px;
+	left: 555px;
+}
+.nocsdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -985px;
+	left: 674px;
+}
+.nohpitankdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -960px;
+	left: 175px;
+}
+.noauxtankdamage {
+	background-size: 120px 120px;
+	width: 120px;
+	height: 120px;
+	top: -1080px;
+	left: 585px;
+}
+.nohpivalvedamage {
+	background-size: 50px 50px;
+	width: 50px;
+	height: 50px;
+	top: -1253px;
+	left: 190px;
+}
+.noauxvalvedamage {
+	background-size: 50px 50px;
+	width: 50px;
+	height: 50px;
+	top: -1263px;
+	left: 480px;
+}
+.nopressurizervalvedamage {
+	background-size: 50px 50px;
+	width: 50px;
+	height: 50px;
+	top: -1540px;
+	left: 360px;
+}
+.noroddamage {
+	background-size: 175px 150px;
+	width: 175px;
+	height: 150px;
+	top: -1685px;
+	left: 10px;
 }

@@ -19,10 +19,73 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Dama
 				'socket' : this.socket,
 				'damagestate' : false,
 				'title' : 'RCS Pump Broken',
-				'damageId' : 'rcsDamage',
-				'damageClass' : 'pumpdamage'	
-			}, this.rcsPumpDamageDAP)
+				'damageId' : 'rcsdamage',
+				'damageClass' : 'rcsdamage'	
+			}, this.rcsPumpDamageDAP),
 			
+			this.afsPumpDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'AFS Pump Broken',
+				'damageId' : 'afsdamage',
+				'damageClass' : 'afsdamage'	
+			}, this.afsPumpDamageDAP),
+			this.csPumpDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'CS Pump Broken',
+				'damageId' : 'csdamage',
+				'damageClass' : 'csdamage'	
+			}, this.csPumpDamageDAP),
+			
+			this.hpiPumpDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'HPI Tank Pump Broken',
+				'damageId' : 'hpitankdamage',
+				'damageClass' : 'hpitankdamage'	
+			}, this.hpiPumpDamageDAP),
+			
+			this.auxPumpDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'AUX Tank Pump Broken',
+				'damageId' : 'auxtankdamage',
+				'damageClass' : 'auxtankdamage'	
+			}, this.auxPumpDamageDAP),
+			
+			this.hpiValveDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'HPI Tank Valve Broken',
+				'damageId' : 'hpivalvedamage',
+				'damageClass' : 'hpivalvedamage'	
+			}, this.hpiValveDamageDAP),
+			
+			this.auxValveDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'AUX Tank Valve Broken',
+				'damageId' : 'auxvalvedamage',
+				'damageClass' : 'auxvalvedamage'
+			}, this.auxValveDamageDAP),
+			
+			this.pressurizerValveDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'Pressurizer Tank Valve Broken',
+				'damageId' : 'pressurizervalvedamage',
+				'damageClass' : 'pressurizervalvedamage'
+			}, this.pressurizerValveDamageDAP),
+			
+			this.rodsDamage = new Damage({
+				'socket' : this.socket,
+				'damagestate' : false,
+				'title' : 'Rods Broken',
+				'damageId' : 'roddamage',
+				'damageClass' : 'roddamage'
+			}, this.rodsDamageDAP)
+					
 			
 			this.inherited(arguments);
 		}

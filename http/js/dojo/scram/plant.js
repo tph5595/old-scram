@@ -16,18 +16,6 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			}));
 		},
 		postCreate : function() {
-			/*
-			this.earthquake = new Earthquake({
-				socket : this.sockets.earthquakeSocket,
-				poll : this.sockets.pollSocket
-			});*/
-			this.damages = new Damages ({
-				socket : this.sockets.earthquakeSocket,
-			})
-			this.faces = new Faces ({
-				socket : this.sockets.earthquakeSocket,
-				poll : this.sockets.pollSocket
-			});
 			this.temp = new Temp({
 				socket : this.sockets.pollSocket
 			});
@@ -58,9 +46,20 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			 //"socket" : this.sockets.repairSocket,
 			 socket : this.sockets.earthquakeSocket
 			 });
+			 this.damages = new Damages ({
+				socket : this.sockets.earthquakeSocket,
+			})
+			/*
+			this.earthquake = new Earthquake({
+				socket : this.sockets.earthquakeSocket,
+				poll : this.sockets.pollSocket
+			});*/
+			this.faces = new Faces ({
+				socket : this.sockets.earthquakeSocket,
+				poll : this.sockets.pollSocket
+			});
 			 
-			//this.addChild(this.earthquake);
-			this.addChild(this.faces);
+			
 			this.addChild(this.temp);
 			this.addChild(this.rods);
 			this.addChild(this.pumps);
@@ -68,6 +67,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.addChild(this.waters);
 			this.addChild(this.tanks);
 			this.addChild(this.repairs);
+			this.addChild(this.damages);
+			//this.addChild(this.earthquake);
+			this.addChild(this.faces);
 			this.inherited(arguments);
 		}
 	});
