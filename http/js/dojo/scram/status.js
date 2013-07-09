@@ -28,7 +28,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				
 				var seconds = Math.floor(Math.round(obj.simtime)%60);
 				var time = hours+":"+mins+":"+seconds
-				this.simtime.innerHTML = Math.round(obj.simtime);
+				this.simtime.innerHTML = time;
 			} catch(err) {
 				console.log("Error in socket:", err);
 			}
