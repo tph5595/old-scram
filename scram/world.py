@@ -28,7 +28,7 @@ class World(SimulationTime):
         SimulationTime.__init__(self, granularity, platformClock)
         self.random = random
         #the plant
-        self.plant = Plant()
+        self.plant = Plant(platformClock)
         #array for the players
         self.players = []
         

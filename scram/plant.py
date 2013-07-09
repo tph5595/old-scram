@@ -10,7 +10,8 @@ Simulation time step is 1/second!! 1 step = 1 min
 """
 
 class Plant(object):
-    def __init__(self):
+    def __init__(self, clock):
+        self.clock = clock
         # Timings
         self.elapsedTime = 0  # add to this every cycle
         
