@@ -91,6 +91,8 @@ class Plant(object):
         self.steamVoiding = False #if reactorTemp > BoilingTemp
         self.pressureExplosion = False #if rcsPRess > 3000
         self.inMeltdown = False
+        #initialize damage array to pass what objects are currently damaged by earthquakes
+        self.damageArray = []
         
     #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
@@ -488,7 +490,7 @@ class Plant(object):
         #Explosion in pressure tank
         if (self.rcsPressure >= 5000):
             self.pressureExplosion = True
-            self.clock.callLater(5, self._reset())
+            self.clock.callLater(5, self._reset)
             
         """
         ***Antoine equation***
@@ -593,13 +595,8 @@ class Plant(object):
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
-        
-        # TODO: Move the damageArray to the appropriate location
-        self.damageArray = []
-        
         # Generate random number
         destroy = random.randrange(0, 8, 1)
-       
         
         if (len(damageArray) > 0):
            damageArray.sort()
@@ -702,9 +699,6 @@ class Plant(object):
                 self.towerPumps = 0
                 # disable towerPump
         
-        
-        
-      
     def getEarthquake(self):
         return self.earthquake
     
@@ -722,7 +716,7 @@ class Plant(object):
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
         self.inMeltdown = True
-        self.clock.callLater(5, self._reset())
+        self.clock.callLater(5, self._reset)
         
     #If there is a meltdown or pressure explosion reset all the things!
     #This is calledLater after meltdown or pressure explosion and causes 5 second pause
