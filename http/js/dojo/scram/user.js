@@ -1,6 +1,6 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
+define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", 
 "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", "dojo/dom-class", "dijit/form/TextBox","dojo/text!scram/templates/user.html"], 
-function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, TextBox, template) {
+function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, TextBox, template) {
 	return Declare("scram.user", [_WidgetBase, _TemplatedMixin, _Contained, _Container, Evented], {
 		///
 		/// This is the class for the valve
@@ -31,6 +31,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 				duration : 1000,
 			};
 			dojo.fadeIn(loginFadeArgs).play();
+			focusUtil.focus(this.userName);
 			this.inherited(arguments);
 		},
 		hide : function() {
