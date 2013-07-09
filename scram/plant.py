@@ -10,6 +10,7 @@ Simulation time step is 1/second!! 1 step = 1 min
 """
 
 class Plant(object):
+    
     def __init__(self, clock):
         self.clock = clock
         # Timings
@@ -588,63 +589,122 @@ class Plant(object):
             #print"Safe!" #for testing
             self.earthquake = False
             
-            
-    """
-    Joe,
-    I need this method to generate a random number.
-    Then it needs to make sure that this number of the object is not still damaged from previous earthquakes by comparing it to the damageArray.
-    The array will also need to be populated in the if statements.  I could certainly do that part but I'm still not sure on how to search the array properly and loop it.
-    
-    Thanks!
-    """
+
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
+        
+        # TODO: Move the damageArray to the appropriate location
         self.damageArray = []
         
-        destroy = random.randrange(1, 9, 1)
+        # Generate random number
+        destroy = random.randrange(0, 8, 1)
+       
         
-        
-        #There are 9 places that can be damaged.  This chooses which 1 to destroy
-        
-        
-        #Rod Destruction
-        if (destroy == 1):
-            self.rodlevel = 9
-            #disable rod movement?
-        #Reactor Pump Destruction
-        elif (destroy == 2):
-            self.reactorPumps = 0
-            #disable reactorPump arrows
-        #HPI valve Destruction
-        elif (destroy == 3):
-            self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
-            #disable hpiValve from opening or shutting
-        #HPI pump Destruction
-        elif (destroy == 4):
-            self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
-            #disable hpiPump arrows
-        #Pressurizer valve Destruction
-        elif (destroy == 5):
-            self.pressurizerValve = False
-            #disable pressurizerValve
-        #Con Pump Destruction (The one on the secondary (afs) loop)
-        elif (destroy == 6):
-            self.conPumps = 0
-            #disable conPumps
-        #afs valve Destruction (the tank under afs loop)
-        elif (destroy == 7):
-            self.afsValve = False
-            #disable afsValve
-        #afs Pump Destruction (the tank under afs loop)
-        elif (destroy == 8):
-            self.afsPumps = 0
-            #disable afsPump
-        #tower pump destruction
-        elif (destroy == 9):
-            self.towerPumps = 0
-            #disable towerPump
+        if (len(damageArray) > 0):
+           damageArray.sort()
+           if (len(damageArray) >= (destroy)):
+                destroy = random.randrange((len(damageArray) + 1), 8, 1)
+                damageArray.append(destroy)
+                # Do damage
+                # Rod Destruction
+                if (destroy == 0):
+                    self.rodlevel = 9
+                    # disable rod movement?
+                    
+                # Reactor Pump Destruction
+                elif (destroy == 1):
+                    self.reactorPumps = 0
+                    # disable reactorPump arrows
+                    
+                # HPI valve Destruction
+                elif (destroy == 2):
+                    self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
+                    # disable hpiValve from opening or shutting
+                    
+                # HPI pump Destruction
+                elif (destroy == 3):
+                    self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
+                    # disable hpiPump arrows
+                    
+                # Pressurizer valve Destruction
+                elif (destroy == 4):
+                    self.pressurizerValve = False
+                    # disable pressurizerValve
+                    
+                # Con Pump Destruction (The one on the secondary (afs) loop)
+                elif (destroy == 5):
+                    self.conPumps = 0
+                    # disable conPumps
+                    
+                # AFS Valve Destruction (the tank under afs loop)
+                elif (destroy == 6):
+                    self.afsValve = False
+                    # disable afsValve
+                    
+                # AFS Pump Destruction (the tank under afs loop)
+                elif (destroy == 7):
+                    self.afsPumps = 0
+                    # disable afsPump
+                    
+                # Tower Pump Destruction
+                elif (destroy == 8):
+                    self.towerPumps = 0
+                    # disable towerPump
+      
+        else:
+            damageArray.append(destroy)
+            damageArray.sort()
             
+            # Do damage
+            # Rod Destruction
+            if (destroy == 0):
+                self.rodlevel = 9
+                # disable rod movement?
+                
+            # Reactor Pump Destruction
+            elif (destroy == 1):
+                self.reactorPumps = 0
+                # disable reactorPump arrows
+                
+            # HPI valve Destruction
+            elif (destroy == 2):
+                self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
+                # disable hpiValve from opening or shutting
+                
+            # HPI pump Destruction
+            elif (destroy == 3):
+                self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
+                # disable hpiPump arrows
+                
+            # Pressurizer valve Destruction
+            elif (destroy == 4):
+                self.pressurizerValve = False
+                # disable pressurizerValve
+                
+            # Con Pump Destruction (The one on the secondary (afs) loop)
+            elif (destroy == 5):
+                self.conPumps = 0
+                # disable conPumps
+                
+            # AFS Valve Destruction (the tank under afs loop)
+            elif (destroy == 6):
+                self.afsValve = False
+                # disable afsValve
+                
+            # AFS Pump Destruction (the tank under afs loop)
+            elif (destroy == 7):
+                self.afsPumps = 0
+                # disable afsPump
+                
+            # Tower Pump Destruction
+            elif (destroy == 8):
+                self.towerPumps = 0
+                # disable towerPump
+        
+        
+        
+      
     def getEarthquake(self):
         return self.earthquake
     
