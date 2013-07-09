@@ -88,6 +88,7 @@ class Plant(object):
         self.earthquake = False #if magic number = 69
         self.steamVoiding = False #if reactorTemp > BoilingTemp
         self.pressureExplosion = False #if rcsPRess > 3000
+        self.inMeltdown = False
         
     #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
@@ -97,6 +98,9 @@ class Plant(object):
         # temp decrease from coldLegTemp.
         self.reactorTemp = self.reactorTemp - ((self.reactorTemp - self.rcsColdLegTemp) * self.coldMultiplier)
         
+        if self.reactorTemp < 100:
+            self.reactorTemp = 100
+            
         #TODO: prove these calculations work.
         """
         Proof of calculations
@@ -116,7 +120,16 @@ class Plant(object):
             self.rcsHotLegTemp = self.rcsHotLegTemp - ((reactorHeat / (self.waterMass[self.reactorPumps] * self.heatCapacity)) * 200)
         else:
             self.rcsHotLegTemp = self.rcsHotLegTemp
-            
+        
+        #cannot be colder than coldleg
+        if self.rcsHotLegTemp < self.rcsColdLegTemp:
+            self.rcsHotLegTemp = self.rcsColdLegTemp + 5
+        #rcsHotLeg cannot be hotter than reactor temp
+        if self.rcsHotLegTemp > self.reactorTemp:
+            self.rcsHotLegTemp = self.reactorTemp - 5
+       #rcsHotLeg can never be colder than 50 degrees
+        if self.rcsHotLegTemp < 50:
+            self.rcsHotLegTemp = 50
             """
             Cant figure out how this would work.  There would be issues if reactor temp was really high and cold leg was really small.  Hot leg could end up colder than cold leg.
             if the percents stay how they are.  Maybe put a cap on the percentage decrease at like 15%?
@@ -179,6 +192,15 @@ class Plant(object):
             self.afsHotLegTemp = self.afsHotLegTemp
             self.rcsColdLegTemp = self.rcsColdLegTemp 
         
+        #keep cold leg cooler than reactorTemp
+        if self.rcsColdLegTemp > self.reactorTemp:
+            self.rcsColdLegTemp = self.reactorTemp - 10
+        #keeps it hotter than 25 degrees
+        if self.rcsColdLegTemp < 25:
+            self.rcsColdLegTemp = 25
+        #keeps it hotter than 25 degrees
+        if self.afsHotLegTemp < 25:
+            self.afsHotLegTemp = 25
     
     # Going to call this first after each new game tick.  It will store the previous temps for calculations.
     def _previousTemp(self):
@@ -310,17 +332,12 @@ class Plant(object):
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .0001)
                 else: 
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .00000007)
-                
-        """
-        proof of calc
-        afsHidden = 500
-        MWPower = 650
-        pump = 2
-        
-        self.afsHiddenTemp = self.afsHiddenTemp - (self.afsHiddenTemp * .07)
-        
-         = 500 - (500 * .07) = 465
-        """
+                    
+        if self.afsHiddenTemp < 10:
+            self.afsHiddenTemp = 10
+       
+        #debugging
+        print "afs hidden: ", self.afsHiddenTemp
 
     def _xferSteamToCondenser(self):  
         condenserHeatExchange = ((self.afsHiddenTemp - self.csColdLegTemp) / self.thermalCon)
@@ -334,10 +351,22 @@ class Plant(object):
         elif(self.afsHiddenTemp < self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
+        """
+        #This section of code isn't going to do anything?
         #temp staying same
         else:
             self.csHotLegTemp = self.csHotLegTemp
             self.afsColdLegTemp = self.afsColdLegTemp
+        """
+      
+        if self.csHotLegTemp < 3:
+            self.csHotLegTemp = 3
+        #keep afsCold colder than hidden
+        if self.afsColdLegTemp > self.afsHiddenTemp:
+            self.afsColdLegTemp = self.afsHiddenTemp - 5
+            
+        if self.afsColdLegTemp < 10:
+            self.afsColdLegTemp = 10
             
             """
             proof of calc
@@ -447,6 +476,10 @@ class Plant(object):
             self.rcsPressure = self.rcsPressure * 1.025
             if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
                 self.afsTankLevel -= 1
+        
+        #put a low cap on pressure
+        if self.rcsPressure < 1000:
+            self.rcsPressure = 1000
         
         #convert to farenheight
         self.boilingTemp = self.rcsPressure * .3 #boiling temp is always 30% less than pressure.  Kind of a hack job.
@@ -614,12 +647,15 @@ class Plant(object):
             
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
-        self._reset()
+        self.inMeltdown = True
+        self.clock.callLater(5, self.reset())
         
     #If there is a meltdown or pressure explosion reset all the things!
     def _reset(self):
         #Pause for 5 seconds while Nick Cage laughs.
-        time.sleep(5)
+        
+        #time.sleep(5)
+        #call later
         
         self.rodLevel = 9
         self.reactorTemp = 653
@@ -655,60 +691,7 @@ class Plant(object):
         self.afsTankLevel = 7
         self.hpiWater = 7
         self.pressurizerWaterLevel = 0
-        
-    def _tempCap(self):
-        #keep hotleg hotter than cold leg
-        if self.rcsHotLegTemp < self.rcsColdLegTemp:
-            self.rcsHotLegTemp = self.rcsColdLegTemp + 5
-        #rcsHotLeg cannot be hotter than reactor temp
-        if self.rcsHotLegTemp > self.reactorTemp:
-            self.rcsHotLegTemp = self.reactorTemp - 5
-        #keep cold leg cooler than reactorTemp
-        if self.rcsColdLegTemp > self.reactorTemp:
-            self.rcsColdLegTemp = self.reactorTemp - 10
-        #keep afsCold colder than hidden
-        if self.afsColdLegTemp > self.afsHiddenTemp:
-            self.afsColdLegTemp = self.afsHiddenTemp - 5
-            
-        #capping minimums. hypothetically should never need these, but sometimes ya do.
-        if self.reactorTemp < 100:
-            self.reactorTemp = 100
-            
-        if self.rcsHotLegTemp < 50:
-            self.rcsHotLegTemp = 50
-            
-        if self.rcsColdLegTemp < 25:
-            self.rcsColdLegTemp = 25
-            
-        if self.afsHotLegTemp < 25:
-            self.afsHotLegTemp = 25
-            
-        if self.afsColdLegTemp < 10:
-            self.afsColdLegTemp = 10
-        
-        if self.afsHiddenTemp < 10:
-            self.afsHiddenTemp = 10
-        
-        if self.csHotLegTemp < 3:
-            self.csHotLegTemp = 3
-        
-        if self.csColdLegTemp < 2:
-            self.csColdLegTemp = 2
-            
-        """
-        #no reason to cap this if its based on rcsPressure.
-        if self.boilingTemp > 1500:
-            self.boilingTemp = 1500
-        
-        if self.boilingTemp < 300:
-            self.boilingTemp = 300
-        """
-        
-        if self.rcsPressure < 1000:
-            self.rcsPressure = 1000
-        
-            
-            
+    
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
         output = ""
@@ -790,43 +773,42 @@ class Plant(object):
         print "CS Cold Leg Temp: %s" % (str(self.csColdLegTemp))  
         
     def update(self):
-        # increment game tick one second
-        self.elapsedTime += 1
-        #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
-        self._boilAndPressure()
-        # get temps from last game tick
-        self._previousTemp()
-        #Check for steam voiding
-        self._steamVoiding()
-        # make reactor heat
-        self._energyProduction()
-        # xfer the heat from the reactor to the RCS water high side
-        self._xferEnergyToRcsLoop() 
-        # run thru the steam gen and xfer energy to AFS
-        self._xferEnergyToAfs()
-        # then run the steam thru the generator
-        self._xferSteamToGen()
-        # then pass the steam to the condenser
-        self._xferSteamToCondenser()
-        # then on to the tower
-        self._xferToTower()
-        #Increase due to SteamVoiding
-        if (self.steamVoiding == True):
-            self._steamVoidingAction()
-        #Keeps temps from going negative if equations get messed up.
-        self._tempCap()
-        #update risk for earthquakes
-        self._calcRisk()
-        #Check for eathquake
-        if (self.risk > 0):
-            self._getEarthQuake()
-        #Restore workers every 20 minutes. (1200 game ticks (sec))
-        if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
-            self._restoreWorkers()
-        #Meltdown or Scram. Decrease points. Reset everything.
-        if (self.reactorTemp > 5000):
-            self._meltDown()
-        # self.display()
+        if not (self.inMeltdown):
+            # increment game tick one second
+            self.elapsedTime += 1
+            #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
+            self._boilAndPressure()
+            # get temps from last game tick
+            self._previousTemp()
+            #Check for steam voiding
+            self._steamVoiding()
+            # make reactor heat
+            self._energyProduction()
+            # xfer the heat from the reactor to the RCS water high side
+            self._xferEnergyToRcsLoop() 
+            # run thru the steam gen and xfer energy to AFS
+            self._xferEnergyToAfs()
+            # then run the steam thru the generator
+            self._xferSteamToGen()
+            #then pass the steam to the condenser
+            self._xferSteamToCondenser()
+            # then on to the tower
+            self._xferToTower()
+            #Increase due to SteamVoiding
+            if (self.steamVoiding == True):
+                self._steamVoidingAction()
+                #update risk for earthquakes
+            self._calcRisk()
+                #Check for eathquake
+            if (self.risk > 0):
+                self._getEarthQuake()
+            #Restore workers every 20 minutes. (1200 game ticks (sec))
+            if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
+                self._restoreWorkers()
+            #Meltdown or Scram. Decrease points. Reset everything.
+            if (self.reactorTemp > 5000):
+                self._meltDown()
+            # self.display()
             
             
             
