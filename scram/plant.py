@@ -348,7 +348,7 @@ class Plant(object):
             self.afsHiddenTemp = 10
        
         #debugging
-        print "afs hidden: ", self.afsHiddenTemp
+        #print "afs hidden: ", self.afsHiddenTemp
 
     def _xferSteamToCondenser(self):  
         condenserHeatExchange = ((self.afsHiddenTemp - self.csColdLegTemp) / self.thermalCon)
