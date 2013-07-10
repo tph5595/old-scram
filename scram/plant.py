@@ -91,8 +91,12 @@ class Plant(object):
         self.steamVoiding = False #if reactorTemp > BoilingTemp
         self.pressureExplosion = False #if rcsPRess > 3000
         self.inMeltdown = False
-        #initialize damage array to pass what objects are currently damaged by earthquakes
-        self.damageArray = []
+        
+        #initialize damage; integer to "or" in damage; to determine current damage "and" it; to remove it xor it
+        # self.damage = self.damage|randomNumber <- adds damage
+        # randomNumber == self.damage|randomNumber <- contains damage
+        # self.damage = self.damage^randomNumber <- removes damage
+        self.damage = 0
         
     #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
@@ -606,6 +610,9 @@ class Plant(object):
       """
    
         destroy = random.randrange(0, 8, 1)
+        #"or" in the generated damage to the current damage
+        self.damage = self.damage|destroy
+        
         # Do damage
         # Rod Destruction
         if (destroy == 0):
@@ -653,7 +660,11 @@ class Plant(object):
               # disable towerPump
         
     def getEarthquake(self):
-        return self.earthquake
+        return {'quake':self.earthquake,'damage':self.damage}
+    
+    def repairDamage(self,repaired):
+        #just xor the damage with the repaired
+        self.damage = self.damage^repaired
     
     def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:

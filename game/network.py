@@ -57,8 +57,11 @@ class Earthquake(Command):
     """
     This is the earth quake!!!
     """
-    arguments = [('quake',Boolean())]
+    arguments = [('quake',Boolean()),('damage',Integer())]
     #response = [('response',Boolean())]
+    
+class RepairDamage(Command):
+    arguments = [('damage',Integer())]
     
 class AddUser(Command):
     """
@@ -157,6 +160,14 @@ class NetworkController(AMP):
         d.addCallback(cb)
         return d
     
+    def repairDamage(self,msg):
+        j = json.loads(msg)
+        d = self.callRemote(RepairDamage, damage=int(j['damage']))
+        def cb(box):
+            pass
+        d.addCallback(cb)
+        return d        
+        
     def getLastPoll(self):
         return {} if self.lastPoll==None else self.lastPoll
     
@@ -176,10 +187,10 @@ class NetworkController(AMP):
         d.addCallback(cbHs)
         return d
     
-    def earthquake(self,quake):
+    def earthquake(self,quake,damage):
         #TODO: add objects to the response for damage
         #TODO: need to "leak" the flags to the server in the wild.
-        j = {'quake':quake}
+        j = {'quake':quake,'damage':damage}
         try:
             if len(self.factory.frontEndListeners['earthquake'].connections) > 0:
                 for conn in self.factory.frontEndListeners['earthquake'].connections:

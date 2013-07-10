@@ -42,7 +42,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 						this.earthquakeRight = fx.slideTo({
 							node : this.plantDAP,
 							duration: 50,
-							top : 8,
+							top : 20,
 							left : 500
 						});
 						this.earthquakeCenter = fx.slideTo({

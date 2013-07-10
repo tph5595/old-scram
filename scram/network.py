@@ -7,7 +7,7 @@ from twisted.internet import reactor
 from twisted.protocols.amp import AMP
 
 # from game.terrain import CHUNK_GRANULARITY
-from game.network import (Handshake, PollPlant, SetRod, SetPump, Earthquake, SetValve)
+from game.network import (Handshake, PollPlant, SetRod, SetPump, Earthquake, SetValve, RepairDamage)
 
 class ScramServer(AMP):
     """
@@ -83,10 +83,17 @@ class ScramServer(AMP):
         return{}
         
     def getEarthquake(self):
-        eq = 1 if self.world.plant.getEarthquake() else 0  
-        self.callRemote(Earthquake, quake=eq)
+        obj = self.world.plant.getEarthquake()
+        eq = 1 if obj['quake'] else 0  
+        self.callRemote(Earthquake, quake=eq, damage=obj['damage'])
         return{}
-         
+        
+    def repairDamage(self,damage):   
+        self.world.plant.repairDamage(damage)
+        print "Repairing Damage"
+        return{}
+    RepairDamage.responder(repairDamage)
+        
     def sendExistingState(self):
         """
         Add observers (push) to the world.

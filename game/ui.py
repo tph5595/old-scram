@@ -149,6 +149,7 @@ class UI(object):
         
     def _handleEarthquake(self,conn,msg):
         if(self._handleStash("earthquake", conn, msg)):return
+        self.protocol.repairDamage(msg)
         
     
     def _initFlags(self):

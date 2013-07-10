@@ -28,10 +28,10 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 			this.inherited(arguments);
 		},
 		increment : function() {
-			this.rodMove(1);
+			this.rodUpdate(1);
 		},
 		decrement : function() {
-			this.rodMove(-1);
+			this.rodUpdate(-1);
 		},
 		rodUpdate:function(x){
 			this.rodLevel = this.rodLevel + x
@@ -47,6 +47,7 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 			};
 			console.log(JSON.stringify(j), j);
 			this._socket.send(JSON.stringify(j));	
+			this.rodMove();
 		},
 		rodMove : function() {
 
