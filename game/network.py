@@ -109,7 +109,15 @@ class PollPlant(Command):
                 ('cs',Integer()),
                 ('rods',Integer()),
                 ('hpivalve',Boolean()),
-                ('afsvalve',Boolean())]
+                ('afsvalve',Boolean()),
+                ('pressurizervalve',Boolean()),
+                ('explosion',Boolean()),
+                ('meltdown',Boolean()),
+                ('damage',Integer()),
+                ('hpiwater',Integer()),
+                ('pressurizerwater',Integer()),
+                ('afswater',Integer())
+                ]
     #response = [('updateid',String()),('mwh',String())]
 
 class NetworkController(AMP):
@@ -222,7 +230,24 @@ class NetworkController(AMP):
                 cs,
                 rods,
                 hpivalve,
-                afsvalve):
+                afsvalve,
+                pressurizervalve,
+                explosion,
+                meltdown,
+                damage,
+                hpiwater,
+                pressurizerwater,
+                afswater):
+        
+        '''
+                        ('pressurizervalve',Boolean()),
+                ('explosion',Boolean()),
+                ('meltdown',Boolean()),
+                ('damage',Integer()),
+                ('hpiwater',Integer()),
+                ('pressurizerwater',Integer()),
+                ('afswater',Integer())
+        '''
         
         j = {'mwh':mwh,
                 'simtime':simtime,
@@ -245,7 +270,14 @@ class NetworkController(AMP):
                 'cs':cs,
                 'rods':rods,
                 'hpivalve':hpivalve,
-                'afsvalve':afsvalve
+                'afsvalve':afsvalve,
+                'pressurizervalve':pressurizervalve,
+                'explosion':explosion,
+                'meltdown':meltdown,
+                'damage':damage,
+                'hpiwater':hpiwater,
+                'pressurizerwater':pressurizerwater,
+                'afswater':afswater
                 }
         self.lastPoll = j
         try:

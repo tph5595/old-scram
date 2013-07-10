@@ -25,7 +25,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 			this.pressurizerValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
-				'valveId' : 'pressurizerValve',
+				'valveId' : 'pressurizervalve',
 				'title': 'Pressurizer Tank Valve',
 				valveClass : 'pressurizertankvalve valvefalse z2',
 			}, this.pressurizerValveDAP);

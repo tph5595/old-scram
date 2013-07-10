@@ -12,7 +12,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		constructor : function(args) {
 			this.sockets = args.sockets;
 			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
-				//console.log("Poll Data", msg.data);
+				console.log("Poll Data", msg.data);
 			}));
 		},
 		postCreate : function() {

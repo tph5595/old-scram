@@ -736,7 +736,14 @@ class Plant(object):
                 'cs':self.towerPumps,
                 'rods':self.rodLevel,
                 'hpivalve':self.hpiValve,
-                'afsvalve':self.afsValve
+                'afsvalve':self.afsValve,
+                'pressurizervalve':self.pressurizerValve,
+                'explosion':self.pressureExplosion,
+                'meltdown':self.inMeltdown,
+                'damage':self.damage,
+                'hpiwater':self.hpiWater,
+                'pressurizerwater':self.pressurizerWaterLevel,
+                'afswater':self.afsTankLevel
                 }
         
     def setRod(self, level):
@@ -747,6 +754,8 @@ class Plant(object):
             self.afsValve = state
         if valveid == 'hpivalve':
             self.hpiValve = state
+        if valveid=='pressurizervalve':
+            self.pressurizerValve = state
         
     def setPump(self, pumpid, level):
         if pumpid == 'rcs':
