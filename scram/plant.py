@@ -88,7 +88,6 @@ class Plant(object):
         self.steamVoiding = False #if reactorTemp > BoilingTemp
         self.pressureExplosion = False #if rcsPRess > 3000
         self.inMeltdown = False
-        
         #initialize damage; integer to "or" in damage; to determine current damage "and" it; to remove it xor it
         # self.damage = self.damage|randomNumber <- adds damage
         # randomNumber == self.damage|randomNumber <- contains damage
