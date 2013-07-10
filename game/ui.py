@@ -184,7 +184,7 @@ class UI(object):
     def connectToScoreboard(self):
         #TODO:Move scoreboard IP to config
         self.scoreClient = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.scoreClient.connect(('localhost',6007)) 
+        self.scoreClient.connect(('192.168.15.5',6006)) 
         self._scoreClientLoop = LoopingCall(self._sendScore)
         finishedDeferred = self._scoreClientLoop.start(2,now=True)
         
