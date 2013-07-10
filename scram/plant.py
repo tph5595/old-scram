@@ -72,9 +72,6 @@ class Plant(object):
         
         # pressurizer
         self.pressurizerWaterLevel = 0
-        #DO WE NEED THESE?
-        #self.pressurizerSteamLevel = 50
-        #self.pressurizerQuenchTankLevel = 10
         self.pressurizerValve = False
       
         
@@ -260,19 +257,6 @@ class Plant(object):
         energy being taken out of water (generatorMW)
         """
         
-        
-        
-        """
-        #Fixed If Logic
-        if (self.conPumps == 2):
-            if (self.generatorMW == 0):
-                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .0001)
-            elif (self.generatorMW < 100):
-                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .01)
-            elif (self.generatorMW < 200):
-                self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .02)
-        """    
-        
         #TODO: is this if logic right?
         if (self.conPumps == 2): #pumps at 2
                 if (self.generatorMW > 900):
@@ -413,61 +397,58 @@ class Plant(object):
         """
         
     def _boilAndPressure(self):
-        #resets explosion to false
-        
         #dun dun dun dadadundun Under Pressure!
-        #TODO: make changes in pressure due to valves and pumps
         difference = self.reactorTemp - self.oldReactorTemp
         
         #Temp is decreasing so decrease pressure by up to 10%
         if (difference <= -99):
-            self.rcsPressure = self.rcsPressure / 1.1
+            self.rcsPressure = self.rcsPressure / 1.0795
         elif (difference <= -89):
-            self.rcsPressure = self.rcsPressure / 1.09
+            self.rcsPressure = self.rcsPressure / 1.07272725
         elif (difference <= -79):
-            self.rcsPressure = self.rcsPressure / 1.08
+            self.rcsPressure = self.rcsPressure / 1.06272725
         elif (difference <= -69):
-            self.rcsPressure = self.rcsPressure / 1.07
+            self.rcsPressure = self.rcsPressure / 1.05545455
         elif (difference <= -59):
-            self.rcsPressure = self.rcsPressure / 1.06
+            self.rcsPressure = self.rcsPressure / 1.04818185
         elif (difference <= -49):
-            self.rcsPressure = self.rcsPressure / 1.05
+            self.rcsPressure = self.rcsPressure / 1.04090915
         elif (difference <= -39):
-            self.rcsPressure = self.rcsPressure / 1.04
+            self.rcsPressure = self.rcsPressure / 1.03363635
         elif (difference <= -29):
-            self.rcsPressure = self.rcsPressure / 1.03
+            self.rcsPressure = self.rcsPressure / 1.02636365
         elif (difference <= -19):
-            self.rcsPressure = self.rcsPressure / 1.02
+            self.rcsPressure = self.rcsPressure / 1.01909095
         elif (difference <= -9):
-            self.rcsPressure = self.rcsPressure / 1.01
+            self.rcsPressure = self.rcsPressure / 1.01181825
         elif (difference <= -1):
-            self.rcsPressure = self.rcsPressure / 1.005
+            self.rcsPressure = self.rcsPressure / 1.0005
         #Temp is staying same
         elif (difference == 0): 
             self.rcsPressure = self.rcsPressure
         #Temp is increasing
         elif (difference <= 9):
-            self.rcsPressure = self.rcsPressure * 1.005
+            self.rcsPressure = self.rcsPressure * 1.00005
         elif (difference <= 19):
-            self.rcsPressure = self.rcsPressure * 1.01
+            self.rcsPressure = self.rcsPressure * 1.0118182
         elif (difference <= 29):
-            self.rcsPressure = self.rcsPressure * 1.02
+            self.rcsPressure = self.rcsPressure * 1.0190909
         elif (difference <= 39):
-            self.rcsPressure = self.rcsPressure * 1.03
+            self.rcsPressure = self.rcsPressure * 1.0263636
         elif (difference <= 49):
-            self.rcsPressure = self.rcsPressure * 1.04
+            self.rcsPressure = self.rcsPressure * 1.0336363
         elif (difference <= 59):
-            self.rcsPressure = self.rcsPressure * 1.05
+            self.rcsPressure = self.rcsPressure * 1.0409091
         elif (difference <= 69):
-            self.rcsPressure = self.rcsPressure * 1.06
+            self.rcsPressure = self.rcsPressure * 1.0481818
         elif (difference <= 79):
-            self.rcsPressure = self.rcsPressure * 1.07
+            self.rcsPressure = self.rcsPressure * 1.0554545
         elif (difference <= 89):
-            self.rcsPressure = self.rcsPressure * 1.08
+            self.rcsPressure = self.rcsPressure * 1.0627272
         elif (difference <= 99):
-            self.rcsPressure = self.rcsPressure * 1.09
+            self.rcsPressure = self.rcsPressure * 1.0727272
         elif (difference >= 100):
-            self.rcsPressure = self.rcsPressure * 1.1
+            self.rcsPressure = self.rcsPressure * 1.075
         
         #Decrease pressure by 5% every tick while valve is open. This number may need changed
         if (self.pressurizerValve == True) and (self.pressurizerWaterLevel < 7):
@@ -558,8 +539,6 @@ class Plant(object):
         #csLoop
         self.csColdLegTemp = self.csColdLegTemp * percent
         self.csHotLegTemp = self.csHotLegTemp * percent
-        
-        #TODO: What to do with MWH?
         #MWH calculation will be called after steam voiding is set to true or false and will be changed there.
         
         
