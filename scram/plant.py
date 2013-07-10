@@ -600,7 +600,7 @@ class Plant(object):
         # Do damage
         # Rod Destruction
         if (destroy == 0):
-            self.rodLevel = 0
+            self.rodLevel = 2
             self.damage = self.damage | 1
               
           # Reactor Pump Destruction
