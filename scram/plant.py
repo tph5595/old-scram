@@ -524,7 +524,7 @@ class Plant(object):
     #gonna make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
         #percent to increase all temps by
-        percent = 1.05
+        percent = 1.025
         #rcsLoop
         self.reactorTemp = self.reactorTemp * percent
         self.rcsColdLegTemp = self.rcsColdLegTemp * percent
@@ -575,67 +575,59 @@ class Plant(object):
         else:
             #print"Safe!" #for testing
             self.earthquake = False
-            
 
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
         # Generate random number
-        """
-        else:
-      self.damageArray.append(destroy)
-      self.damageArray.sort()
-      """
-   
         destroy = random.randrange(0, 8, 1)
         #"or" in the generated damage to the current damage
-        self.damage = self.damage|destroy
         
         # Do damage
         # Rod Destruction
         if (destroy == 0):
-            self.rodlevel = 9
-              # disable rod movement?
+            self.rodLevel = 9
+            self.damage = self.damage | 1
               
           # Reactor Pump Destruction
         elif (destroy == 1):
             self.reactorPumps = 0
-              # disable reactorPump arrows
+            self.damage = self.damage | 2
               
           # HPI valve Destruction
         elif (destroy == 2):
             self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
-              # disable hpiValve from opening or shutting
+            self.damage = self.damage | 4
               
           # HPI pump Destruction
         elif (destroy == 3):
             self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
-              # disable hpiPump arrows
+            self.damage = self.damage | 8
               
           # Pressurizer valve Destruction
         elif (destroy == 4):
             self.pressurizerValve = False
-              # disable pressurizerValve
+            self.damage = self.damage | 16
               
           # Con Pump Destruction (The one on the secondary (afs) loop)
         elif (destroy == 5):
             self.conPumps = 0
-              # disable conPumps
+            self.damage = self.damage | 32
               
           # AFS Valve Destruction (the tank under afs loop)
         elif (destroy == 6):
             self.afsValve = False
-              # disable afsValve
+            self.damage = self.damage | 64
               
           # AFS Pump Destruction (the tank under afs loop)
         elif (destroy == 7):
             self.afsPumps = 0
-              # disable afsPump
+            self.damage = self.damage | 128
               
           # Tower Pump Destruction
         elif (destroy == 8):
             self.towerPumps = 0
-              # disable towerPump
+            self.damage = self.damage | 256
         
     def getEarthquake(self):
         return {'quake':self.earthquake,'damage':self.damage}
@@ -684,7 +676,6 @@ class Plant(object):
         self.rcsPressure = 2294
         self.elapsedTime = 0
     
-        
         #valves
         self.pressurizerValve = False
         self.hpiValve = False
