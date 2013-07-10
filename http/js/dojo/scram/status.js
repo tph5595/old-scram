@@ -24,11 +24,14 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Co
 				this.risk.innerHTML = Math.round(obj.risk);
 				
 				var mins = Math.floor(Math.round(obj.simtime)/60%60);
-				var hours = Math.floor(Math.round(obj.simtime)/3660);
-				
+				var hours = Math.floor(Math.round(obj.simtime)/3660);				
 				var seconds = Math.floor(Math.round(obj.simtime)%60);
-				var time = hours+":"+mins+":"+seconds
-				this.simtime.innerHTML = time;
+				var d = new Date();
+				d.setHours(hours);
+				d.setMinutes(mins);
+				d.setSeconds(seconds);
+				var simTime = d.toTimeString().split(" ")[0];
+				this.simtime.innerHTML = simTime;
 			} catch(err) {
 				console.log("Error in socket:", err);
 			}
