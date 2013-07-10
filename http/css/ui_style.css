@@ -73,6 +73,7 @@
 	background-image: url(../images/elements/downBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
+	cursor: pointer;
 }
 .upbutton {
 	height: 20px;
@@ -80,6 +81,7 @@
 	background-image: url(../images/elements/upBtn.png);
 	background-size: 30px 15px;
 	background-repeat: no-repeat;
+	cursor: pointer;
 }
 .statsbarelements {
 	/*background-color: green;*/
@@ -328,26 +330,31 @@
 	background-repeat: no-repeat;
 	width: 40px;
 	height: 40px;
+	cursor: pointer;
 }
 .valvefalse {/*closed valve*/
 	background-repeat: no-repeat;
 	width: 40px;
 	height: 40px;
+	cursor: pointer;
 }
 .hpitankvalve {
 	position: relative;
 	top: -304px;
 	left: 213px;
+	cursor: pointer;
 }
 .auxtankvalve {
 	position: relative;
 	top: -345px;
 	left: 501px;
+	cursor: pointer;
 }
 .pressurizertankvalve {
 	position: relative;
 	top: -530px;
 	left: 382px;
+	cursor: pointer;
 }
 
 /*moving water*/
@@ -467,6 +474,7 @@
 	width: 100%;
 	background-size: 900px 550px;
 	background-position: center;
+	cursor: pointer;
 }
 .hidden {
 	display: none;
@@ -484,10 +492,12 @@
 .repairstatefalse {
 	background-image: url(../images/wrench.png);
 	/*cursor: auto;*/
+	cursor: pointer;
 }
 .repairstatetrue {
 	background-image: url(../images/wrenchClicked.png);
 	/*cursor: url(../images/wrench_mouse.png), wait;*/
+	cursor: pointer;
 }
 
 /*User*/
@@ -510,6 +520,7 @@
 	width: 100px;
 	background-size: 100px 37px;
 	border-style: solid;
+	cursor: pointer;
 	border-width: 2px;
 }
 .loginbackground {
@@ -588,6 +599,7 @@
 	opacity: .5;
 	position: relative;
 	z-index: 4;
+	cursor: pointer;
 }
 .rcsdamage {
 	background-size: 120px 120px;
