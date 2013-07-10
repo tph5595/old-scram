@@ -93,6 +93,9 @@ class Plant(object):
         # randomNumber == self.damage|randomNumber <- contains damage
         # self.damage = self.damage^randomNumber <- removes damage
         self.damage = 0
+         #initialize critFlag for bit operations to make temps red or not
+        self.critFlag = 0
+        
         
     #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
@@ -572,8 +575,10 @@ class Plant(object):
             size = 300
         elif (self.risk <90):
             size = 200
-        elif (self.risk >= 100):
+        elif (self.risk < 100):
             size = 100
+        elif (self.risk >= 100):
+            size = 70
         
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
@@ -711,6 +716,22 @@ class Plant(object):
         #reset latches
         self.inMeltdown = False
         self.pressureExplosion = False
+        
+        #everything fixed on meltdown
+        self.damage = 0
+    
+    #Make temperatures red if it is approaching critical point.
+    #DANGER! DANGER! High Voltage! *Electric Six*
+    def _critCheck(self):
+        reactorCrit = 3800
+        pressureCrit = 3900
+        
+        #is the reactor Core approaching a meltdown?
+        if (self.reactorTemp >= reactorCrit):
+            self.critFlag = self.critFlag | 1
+        
+        if (self.rcsPressure >= pressureCrit):
+            self.critFlag = self.critFlag | 2
     
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
@@ -825,9 +846,11 @@ class Plant(object):
             #Increase due to SteamVoiding
             if (self.steamVoiding == True):
                 self._steamVoidingAction()
-                #update risk for earthquakes
+            #Check if numbers are getting too hot and alert them.
+            self._critCheck()
+            #update risk for earthquakes
             self._calcRisk()
-                #Check for eathquake
+            #Check for eathquake
             if (self.risk > 0):
                 self._getEarthQuake()
             #Restore workers every 20 minutes. (1200 game ticks (sec))
