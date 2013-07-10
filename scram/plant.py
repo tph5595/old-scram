@@ -352,15 +352,19 @@ class Plant(object):
             self.csHotLegTemp = self.csHotLegTemp
             self.afsColdLegTemp = self.afsColdLegTemp
         """
-      
+        
+        if self.csHotLegTemp < (self.afsHiddenTemp * .25):
+            self.csHotLegTemp = self.afsHiddenTemp * .25
+            
         if self.csHotLegTemp < 3:
             self.csHotLegTemp = 3
+            
         #keep afsCold colder than hidden
         if self.afsColdLegTemp > self.afsHiddenTemp:
             self.afsColdLegTemp = self.afsHiddenTemp - 5
             
-        if self.afsColdLegTemp < (self.afsHotLegTemp * .50):
-            self.afsColdLegTemp = self.afsHotLegTemp * .50
+        if self.afsColdLegTemp < (self.afsHiddenTemp * .50):
+            self.afsColdLegTemp = self.afsHiddenTemp * .50
             
         if self.afsColdLegTemp < 10:
             self.afsColdLegTemp = 10
@@ -591,7 +595,7 @@ class Plant(object):
         # Do damage
         # Rod Destruction
         if (destroy == 0):
-            self.rodLevel = 9
+            self.rodLevel = 0
             self.damage = self.damage | 1
               
           # Reactor Pump Destruction
@@ -601,12 +605,12 @@ class Plant(object):
               
           # HPI valve Destruction
         elif (destroy == 2):
-            self.hpiValve = False #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
+            self.hpiValve = True #TODO: Should I just leave this in its current state? or should I turn it on, or should I turn it off?
             self.damage = self.damage | 4
               
           # HPI pump Destruction
         elif (destroy == 3):
-            self.hpiPump = 0 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
+            self.hpiPump = 2 #TODO: Should I turn it on or off? depends on what I decide to do with valve. On makes their tank drain, but off makes them more likely to overheat.
             self.damage = self.damage | 8
               
           # Pressurizer valve Destruction
@@ -621,12 +625,12 @@ class Plant(object):
               
           # AFS Valve Destruction (the tank under afs loop)
         elif (destroy == 6):
-            self.afsValve = False
+            self.afsValve = True
             self.damage = self.damage | 64
               
           # AFS Pump Destruction (the tank under afs loop)
         elif (destroy == 7):
-            self.afsPumps = 0
+            self.afsPumps = 1
             self.damage = self.damage | 128
               
           # Tower Pump Destruction
