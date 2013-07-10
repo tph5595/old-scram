@@ -359,8 +359,13 @@ class Plant(object):
         if self.afsColdLegTemp > self.afsHiddenTemp:
             self.afsColdLegTemp = self.afsHiddenTemp - 5
             
+        if self.afsColdLegTemp < (self.afsHotLegTemp * .50):
+            self.afsColdLegTemp = self.afsHotLegTemp * .50
+            
         if self.afsColdLegTemp < 10:
             self.afsColdLegTemp = 10
+        
+        
             
             """
             proof of calc
@@ -524,7 +529,7 @@ class Plant(object):
     #gonna make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
         #percent to increase all temps by
-        percent = 1.025
+        percent = 1.035
         #rcsLoop
         self.reactorTemp = self.reactorTemp * percent
         self.rcsColdLegTemp = self.rcsColdLegTemp * percent
@@ -676,6 +681,16 @@ class Plant(object):
         self.rcsPressure = 2294
         self.elapsedTime = 0
     
+        #reset temps from previous run
+        self.oldAfsColdLegTemp = 463
+        self.oldAfsHiddenTemp = 500
+        self.oldAfsHotLegTemp = 593
+        self.oldCsColdLegTemp = 65
+        self.oldCsHotLegTemp = 94
+        self.oldRcsColdLegTemp = 561
+        self.oldRcsHotLegTemp = 603
+        self.oldReactorTemp = 653
+        
         #valves
         self.pressurizerValve = False
         self.hpiValve = False
@@ -765,7 +780,6 @@ class Plant(object):
                 'feedwater':self.conPumps,
                 'cs':self.towerPumps
                 }
-        
         
     def display(self):
         print"*****************************" 
