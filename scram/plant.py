@@ -684,8 +684,7 @@ class Plant(object):
         self.boilingTemp = 657
         self.rcsPressure = 2294
         self.elapsedTime = 0
-        self.rcsPressure = 2294
-        self.boilingTemp = 657
+    
         
         #valves
         self.pressurizerValve = False
