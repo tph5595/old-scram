@@ -20,6 +20,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'poll' : this.poll,
 				'valveId' : 'hpivalve',
 				'title': 'HPI Tank Valve',
+				'damageId' : 4,
 				valveClass : 'hpitankvalve valvefalse z2',
 			}, this.hpiTankValveDAP);
 			this.pressurizerValve = new Valve({
@@ -27,12 +28,14 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'poll' : this.poll,
 				'valveId' : 'pressurizervalve',
 				'title': 'Pressurizer Tank Valve',
+				'damageId' : 16,
 				valveClass : 'pressurizertankvalve valvefalse z2',
 			}, this.pressurizerValveDAP);
 			this.auxTankValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'valveId' : 'afsvalve',
+				'damageId' : 64,
 				'title': 'Auxiliary Tank Valve',
 				valveClass : 'auxtankvalve valvefalse z2',
 			}, this.auxTankValveDAP);

@@ -1,6 +1,6 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", 
+define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dojo/dom-class", "dijit/_Container", 
 "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/fx", "dojo/text!scram/templates/rod.html"], 
-function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx, template) {
+function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _TemplatedMixin, fx, template) {
 	return Declare("scram.rod", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
 		///
 		/// This is the class for the rods
@@ -8,6 +8,8 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 		templateString : template,
 		_socket : null,
 		pollSocket:null,
+		damageId: null,
+		damageMsg: null,
 		rodLevel : null,
 		tip : null,
 		_setRodTipAttr : {
@@ -21,17 +23,28 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 			this.pollSocket = args.pollSocket;
 			this.pollSocket.on("message", lang.hitch(this, this.pollMsg));
 			this.tip = args.tip;
+			this.damageId = 1;
 			this.rodLevel = 9;
 		},
 		postCreate : function() {
-
 			this.inherited(arguments);
 		},
 		increment : function() {
-			this.rodUpdate(1);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				this.rodMove();
+			}
+			else {
+				this.rodUpdate(1);
+			}
+			
 		},
 		decrement : function() {
-			this.rodUpdate(-1);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				this.rodMove();
+			}
+			else {
+				this.rodUpdate(-1);
+			}
 		},
 		rodUpdate:function(x){
 			this.rodLevel = this.rodLevel + x
@@ -50,17 +63,22 @@ function(lang, Declare, _WidgetBase, _Container,_Contained, _TemplatedMixin, fx,
 			this.rodMove();
 		},
 		rodMove : function() {
-
-			fx.slideTo({
-				top : this.rodTop[this.rodLevel],
-				left : 86,
-				node : this.rod
-			}).play();
-
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				domClass.remove(this.rod);
+				domClass.add(this.rod, 'roddamage z1');//this needs to become a different image
+			}
+			else{ 
+				fx.slideTo({
+					top : this.rodTop[this.rodLevel],
+					left : 86,
+					node : this.rod
+				}).play();
+			}
 		},
 		pollMsg : function(event) {
 			var obj = JSON.parse(event.data);
 			this.rodLevel = obj['rods'];
+			this.damageMsg = obj['damage'];
 			this.rodMove();
 		}
 	});

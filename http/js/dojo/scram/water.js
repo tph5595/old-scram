@@ -8,6 +8,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		templateString:template,
 		socket : null,
 		poll:null,
+		tankLevel : null,
 		waterState : null,
 		rcsWaterClass : null,
 		_setRcsWaterClassAttr: {node: 'rcsDAP', type:"class"},
@@ -22,6 +23,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		
 		constructor : function(args) {
 			this.poll = args.poll;
+			this.tankLevel = args.tankLevel;
 			this.rcsWaterClass = args.rcsWaterClass;
 			this.afsWaterClass = args.afsWaterClass;
 			this.csWaterClass = args.csWaterClass;
@@ -302,7 +304,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
-			
+			this.tankLevel = obj[this.tankLevel];
 			//rcs
 			this.rcsPumpState = obj['rcs'];
 			if (this.rcsPumpState != 0){
@@ -321,13 +323,13 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			//aux
 			this.auxPumpState = obj['auxTank'];
 			this.auxValveState = obj['afsvalve'];//yes this says afs. Naming confusion made earlier
-			if (this.auxPumpState != 0 && this.auxValveState == true){
+			if (this.auxPumpState != 0 && this.auxValveState == true  && this.tankLevel ){
 				this.auxWaterMove();
 			}
 			//hpi
 			this.hpiPumpState = obj['hpiTank'];
 			this.hpiValveState = obj['hpivalve'];
-			if (this.hpiPumpState != 0 && this.hpiValveState == true){
+			if (this.hpiPumpState != 0 && this.hpiValveState == true  && this.tankLevel ){
 				this.hpiWaterMove();
 			}
 			

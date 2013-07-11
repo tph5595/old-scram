@@ -6,75 +6,59 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		/// This is the class for the tank
 		///
 		templateString:template,
-	//	socket : null,
 		poll:null,
 		tankLevel : null,
-		//pumpLevel : null,
-	//	valveState: null,
+		pumpLevel : null,
+		valveState: null,
 		tankLevelMax : null,
 		tankId : null,
+		valveId : null,
 		tankClass : null,
+		tip : null,
 		_setTankClassAttr: {node:"tankDAP",type:"class"},
 		_setTankTipAttr: {node:"tankDAP",type:"title"},
 
 		constructor : function(args) {
-		//	this.socket = args.socket;
 			this.poll = args.poll;
 			this.tankClass = args.tankClass;
 			this.tankLevel = 0;
+			this.valveId = args.valveId;
+			this.pumpLevel = args.pumpLevel;
 			this.tankLevelMax = args.tankLevelMax;
-			this.tip = args.tip;
-		//	this.socket.on("message", lang.hitch(this, this.tankMsg));
+			this.tip = args.title;
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {
 			this.inherited(arguments);
 		},
-		decrement:function(){
-			this.tankUpdate(-1);
-		},
 		tankMove : function() {
-			
-			if (this.tankLevel < 0) {
-				this.tankLevel = 0
+			if (this.valveState == true && this.pumpLevel != 0){
+				if (this.tankLevel < 0) {
+					this.tankLevel = 0
+				}
+				if (this.tankLevel > this.tankLevelMax) {
+					this.tankLevel = this.tankLevelMax;
+				}
+				if (this.tankId == 'pressurizerTank') {
+					domClass.remove(this.tankDAP);
+					domClass.add(this.tankDAP, this.tankId + ' pressurizertanklevel' + this.tankLevel + " " + this.tankClass);
+				}
+				else {
+					domClass.remove(this.tankDAP);
+					domClass.add(this.tankDAP, this.tankId + ' tanklevel' + this.tankLevel + " "+this.tankClass);
+				}
 			}
-			if (this.tankLevel > this.tankLevelMax) {
-				this.tankLevel = this.tankLevelMax;
-			}
-			if (this.tankId == 'pressurizerTank') {
-				domClass.remove(this.tank);
-				domClass.add(this.tank, this.tankId + ' pressurizertanklevel' + this.tankLevel + " " + this.tankClass);
-			}
-			else {
-				domClass.remove(this.tank);
-				domClass.add(this.tank, this.tankId + ' tanklevel' + this.tankLevel + " "+this.tankClass);
-			}
-			
 		},
-		tankUpdate : function(x) {
-			this.tankLevel = this.tankLevel + x
-			j = {
-				"level" : this.tankLevel,
-				"tankid" : this.tankId
-			};
-			console.log(JSON.stringify(j), j);
-		//	this.socket.send(JSON.stringify(j));
-			this.tankMove();
-		},
-		tankMsg : function(event) {
-			var obj = JSON.parse(event.data);
-			this.tankLevel = obj[this.tankId];
-			this.tankMove();
-		},
-		/*
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
-			//this.valveState = obj.valveState();
-		//	this.pumpLevel = obj.pumpLevel();
+			this.valveState = obj[this.valveId];
+			if (this.valveId != 'pressurizervalve'){
+				this.pumpLevel = obj[this.pumpLevel];
+			}
 			this.tankLevel = obj[this.tankId];
+			console.log(this.tankId+': '+this.tankLevel)
 			this.tankMove()
 			
 		}
-		*/
 	});
 });

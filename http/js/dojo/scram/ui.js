@@ -31,8 +31,11 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 					}, this.plantDAP);
 					this.earthquake = new Earthquake({
 						socket : this._sockets.earthquakeSocket
-					}, this.plantDAP),
+					}),
 					this.earthquake.on("quake", lang.hitch(this,function(){
+						console.log('emit passthrough working');
+						domClass.remove(this.plantDAP);
+						domClass.add(this.plantDAP, 'scrambackground '+ 'scrambackgroundposition'+' z1');
 						this.earthquakeLeft = fx.slideTo({
 							node : this.plantDAP,
 							duration: 50,
@@ -57,12 +60,14 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 												this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, this.earthquakeRight,
 												this.earthquakeLeft, this.earthquakeRight,this.earthquakeLeft, this.earthquakeCenter]);
 						this.chain.play();
-					}))
+					}));
+				this.earthquake.on("noquake", lang.hitch(this,function(){
+						console.log('noquake passthrough good');
+					}));
 				}));
 			}));
 			this.addChild(this.splash);
 			this.addChild(this.user);
-			this.addChild(this.earthquake);
 			this.addChild(this.plant);
 
 			dojo.style(this.userDAP, "opacity", "0");

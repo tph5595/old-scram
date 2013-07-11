@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/fx", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojox/socket", "dojo/Evented", 
+define(["dojo/on","dojo/_base/lang", "dojo/fx", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojox/socket", "dojo/Evented", 
 "dojo/dom-class", "dojo/text!scram/templates/earthquake.html"], 
-function(lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Socket, Evented, domClass, template) {
-	return Declare("scram.earthquake", [_WidgetBase, _TemplatedMixin, _Contained, _Container, Evented], {
+function(on, lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, Socket, domClass, template) {
+	return Declare("scram.earthquake", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for earthquakes
 		///
@@ -17,17 +17,13 @@ function(lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
 			this.earthquake = obj['quake'];
-			//console.log(this.earthquake,obj);
-			switch (this.earthquake){
-				case true:
-					this.emit("quake", {})
-					//this.startQuake();
-					break;
-					/*
-				case false:
-					this.emit("prequake", {})
-					//this.noQuake();
-					break;*/
+			if (this.earthquake == true){
+				console.log('about to emit earthquake');
+				this.emit("quake", {});
+			}
+			else if (this.earthquake == false){
+				console.log('about to emit no quake');
+				this.emit('noquake', {});
 			}
 		},
 		postCreate : function() {

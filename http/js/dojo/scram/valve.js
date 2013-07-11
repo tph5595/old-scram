@@ -11,6 +11,8 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveState : null,
 		valveId : null,
 		valveClass : null,
+		damageId : null,
+		damageMsg : null,
 		_setValveClassAttr: {node:"valve",type:"class"},
 		tip:null,
 		_setValveTipAttr: {node:"valve",type:"title"},
@@ -18,6 +20,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		constructor : function(args) {
 			this.socket = args.socket;
 			this.poll = args.poll;
+			this.damageId = args.damageId;
 			this.valveClass = args.valveClass;
 			this.valveState = false; //false = closed true = open
 			this.tip = args.tip;
@@ -27,12 +30,25 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.inherited(arguments);
 		},
 		valveSwitch:function(){
-			this.valveState = !this.valveState
-			this.valveUpdate(this.valveState);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				this.valveMove();	
+			}
+			else{
+				this.valveState = !this.valveState
+				this.valveUpdate(this.valveState);
+			}
 		},
 		valveMove : function() {
-			domClass.remove(this.valve);
-			domClass.add(this.valve, 'valve'+this.valveState + " " + this.valveClass);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				//console.log('hi');
+				//domClass.remove(this.valve);
+				domClass.add(this.valve, this.valveId + ' brokenvalve '+ 'z2');
+			}
+			else {
+				domClass.remove(this.valve);
+				domClass.add(this.valve, 'valve'+this.valveState + " " + this.valveClass);
+			}
+			
 		},
 		valveUpdate : function(newValveState) {
 			j = {
@@ -46,6 +62,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		pollMsg:function(event){
 			var obj = JSON.parse(event.data);
 			this.valveState = obj[this.valveId];
+			this.damageMsg = obj['damage'];			
 			this.valveMove();
 		}
 	});

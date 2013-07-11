@@ -11,6 +11,8 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		pumpLevel : null,
 		pumpLevelMax : null,
 		pumpId : null,
+		damageId : null,
+		damageMsg: null,
 		pumpClass : null,
 		_setPumpClassAttr : {
 			node : "pump",
@@ -34,6 +36,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 
 		constructor : function(args) {
 			this.socket = args.socket;
+			this.damageId = args.damageId;
 			this.poll = args.poll;
 			this.pumpClass = args.pumpClass;
 			this.pumpUpClass = args.pumpUpClass;
@@ -46,15 +49,47 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		postCreate : function() {
 			this.inherited(arguments);
 		},
+		fix : function(){
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				console.log('Only a temporary fix');
+				i = {
+					"damage" : this.damageId
+				};
+				console.log(JSON.stringify(i), i);
+				this.socket.send(JSON.stringify(i));
+				this.pumpMove();
+			}
+			else{
+			}
+		},
 		increment : function() {
-			this.pumpUpdate(1);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				this.pumpMove();
+			}
+			else{
+				this.pumpUpdate(1);
+			}
 		},
 		decrement : function() {
-			this.pumpUpdate(-1);
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				this.pumpMove();
+			}
+			else{
+				this.pumpUpdate(-1);
+			}
 		},
 		pumpMove : function() {
-			domClass.remove(this.pump);
-			domClass.add(this.pump, 'pump' + this.pumpLevel + ' pumpsize ' + this.pumpClass);
+			//console.log(this.pumpId+': '+(this.damageMsg & this.damageId));
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				//console.log('hi');
+				domClass.remove(this.pump);
+				domClass.add(this.pump, 'pumpsize ' + 'brokenpump '+ this.pumpClass);
+			}
+			else{
+				domClass.remove(this.pump);
+				domClass.add(this.pump, 'pump' + this.pumpLevel + ' pumpsize ' + this.pumpClass);
+			}
+			
 		},
 		pumpUpdate : function(x) {
 			this.pumpLevel = this.pumpLevel + x
@@ -75,6 +110,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		pollMsg : function(event) {
 			var obj = JSON.parse(event.data);
 			this.pumpLevel = obj[this.pumpId];
+			this.damageMsg = obj['damage'];
 			this.pumpMove();
 		}
 	});

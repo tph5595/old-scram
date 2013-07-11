@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/dom-construct", 
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", 
 "dojo/dom-class", "dojo/text!scram/templates/repair.html"], 
-function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, domConstruct, domClass, template) {
-	return Declare("scram.repair", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
+function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, template) {
+	return Declare("scram.repair", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the repair
 		///
@@ -31,11 +31,18 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			domClass.add(this.repairDAP, 'repairbutton '+ ' repairstate'+state +' '+this.repairClass);
 		},
 		repairUpdate : function(x) {
-			j = {
+			/*j = {
 				"repairstate" : this.repairState
 			};
-			console.log(JSON.stringify(j), j);
-			this.socket.send(JSON.stringify(j));
+			console.log(JSON.stringify(j), j);*/
+			console.log('Repair State: '+this.repairState);
+			if (this.repairState== false){
+					this.emit('repairstatefalse', {});
+			}	
+			else if (this.repairState == true){
+					this.emit('repairstatetrue', {});
+			}
+			//this.socket.send(JSON.stringify(j));
 			this.switchRepairState(this.repairState);
 		}
 	});

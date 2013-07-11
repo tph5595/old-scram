@@ -243,6 +243,11 @@
 	top: -315px;
 	left: 745px;
 }
+.brokenpump {
+	background-image: url(../images/brokenIndication.png);
+	background-size: 25px 35px;
+	cursor: pointer;
+}
 
 /*stats bar*/
 
@@ -356,6 +361,11 @@
 	left: 382px;
 	cursor: pointer;
 }
+.brokenvalve {
+	background-image: url(../images/brokenIndication.png);
+	background-size: 25px 35px;
+	cursor: pointer;
+}
 
 /*moving water*/
 .dot {
@@ -391,25 +401,28 @@
 }
 
 /*Tanks*/
-.tanklevel0 {
+.tanklevel7 {
 	background-size: 89px 60px;
 }
-.tanklevel1 {
+.tanklevel6 {
 	background-size: 89px 50px;
 }
-.tanklevel2 {
+.tanklevel5 {
 	background-size: 89px 40px;
 }
-.tanklevel3 {
+.tanklevel4 {
 	background-size: 89px 30px;
 }
-.tanklevel4 {
+.tanklevel3 {
 	background-size: 89px 20px;
 }
-.tanklevel5 {
+.tanklevel2 {
+	background-size: 89px 15px;
+}
+.tanklevel1 {
 	background-size: 89px 10px;
 }
-.tanklevel6 {
+.tanklevel0 {
 	background-size: 89px 0px;
 }
 .pressurizertanklevel0 {
@@ -594,7 +607,7 @@
 
 /*damage*/
 .damage {
-	background-image: url(../images/damage.png);
+	background-image: url(../images/brokenindication.png);
 	background-repeat: no-repeat;
 	opacity: .5;
 	position: relative;
@@ -658,11 +671,15 @@
 	left: 360px;
 }
 .roddamage {
-	background-size: 175px 150px;
-	width: 175px;
-	height: 150px;
-	top: -1685px;
-	left: 10px;
+	width: 66px;
+	height: 53px;
+	position: relative;
+	left: 86px;
+	top: -105px; /*rods at pos9: -105px, rods at pos0; -53px*/
+	background-image: url(../images/rodDamage.png);
+	background-size: 66px 53px;
+	background-repeat: no-repeat;cursor: pointer;
+	z-index: 4;
 }
 
 

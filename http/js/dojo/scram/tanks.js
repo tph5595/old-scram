@@ -7,11 +7,9 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 		/// This is the class for the tanks
 		///
 		templateString:template,
-		//socket : null,
 		poll:null,
 
 		constructor : function(args) {
-		//	this.socket = args.socket;
 			this.poll = args.poll;
 		},
 		postCreate : function() {
@@ -19,7 +17,9 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
-				'tankId' : 'pressurizerTank',
+				'tankId' : 'pressurizerwater',
+				'valveId' : 'pressurizervalve',
+				'pumpLevel' : -1,
 				'title': 'Pressurizer Tank',
 				tankClass :'pressurizertank pressurizertanklevel0 z2',
 			},this.pressurizerTankDAP);
@@ -28,18 +28,22 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Tank,
 				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
-				'tankId' : 'hpiTank',
+				'tankId' : 'hpiwater',
+				'valveId' : 'hpivalve',
+				'pumpLevel' : 'hpiTank',
 				'title':"HPI Tank",
-				tankClass :'hpitank tanklevel0 z2',
+				tankClass :'hpitank tanklevel7 z2',
 			},this.hpiTankDAP);
 			
 			this.auxTank = new Tank({
 				//'socket' : this.socket,
 				'poll':this.poll,
 				'tankLevelMax' : 6,
-				'tankId' : 'auxTank',
+				'tankId' : 'afswater',
+				'valveId' : 'afsvalve',
+				'pumpLevel' : 'auxTank',
 				'title': 'Auxiliary Tank',
-				tankClass :'auxtank tanklevel0 z2',
+				tankClass :'auxtank tanklevel7 z2',
 			},this.auxTankDAP);
 			
 			
