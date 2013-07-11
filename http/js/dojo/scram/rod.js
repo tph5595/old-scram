@@ -29,6 +29,19 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 		postCreate : function() {
 			this.inherited(arguments);
 		},
+		fix : function(){
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				console.log('Rods Fixed');
+				i = {
+					"damage" : this.damageId
+				};
+				console.log(JSON.stringify(i), i);
+				this.socket.send(JSON.stringify(i));
+				this.rodMove();
+			}
+			else{
+			}
+		},
 		increment : function() {
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				this.rodMove();

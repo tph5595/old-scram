@@ -51,7 +51,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		},
 		fix : function(){
 			if ((this.damageMsg & this.damageId) == this.damageId){
-				console.log('Only a temporary fix');
+				console.log('Pump Fixed');
 				i = {
 					"damage" : this.damageId
 				};
