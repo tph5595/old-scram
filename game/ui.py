@@ -14,6 +14,7 @@ from Queue import Queue, Empty
 
 from game.network import NetworkController
 import socket
+import ConfigParser
 
 #front end listeners
 from http.servers.websocket2 import PollServerProtocol, \
@@ -64,6 +65,8 @@ class UI(object):
         self.q = Queue() #not sure I need this
         self.frontEndListeners={}
         self._initFlags()
+        self.config = ConfigParser.RawConfigParser() # Config file parser
+        self.config.read('game/config.ini')   # Config file
 
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
@@ -182,20 +185,43 @@ class UI(object):
             return False  
         
     def connectToScoreboard(self):
-        #TODO:Move scoreboard IP to config
+
+        #NOTE: Not sure if this is the best way to do this (try/except when reading value)
+        try:
+            # Load values from config file
+            scoreboardIP = self.config.get('ui', 'scoreboardIP')
+            scoreboardPort = int(self.config.get('ui', 'scoreboardPort'))
+            
+        except:
+            # Default values if there is an issue with config file
+            print("Failed to load config file, loading defaults")
+            scoreboardIP = 'localhost'
+            scoreboardPort = int('6007')
+            
+              
         self.scoreClient = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        self.scoreClient.connect(('localhost',6007)) 
+        self.scoreClient.connect((scoreboardIP,scoreboardPort)) 
         self._scoreClientLoop = LoopingCall(self._sendScore)
         finishedDeferred = self._scoreClientLoop.start(2,now=True)
         
     def _sendScore(self): 
+        
+        #NOTE: Not sure if this is the best way to do this (try/except when reading value)
+        try:
+            # Load values from config file
+            teamName = self.config.get('ui', 'teamName')
+        
+        except:
+            # Default values if there is an issue with config file
+            print("Failed to load config file, loading defaults")
+            teamName = "Local"
+            
         try:
             x = self.protocol.getLastPoll()
             j = {}
             j['simtime'] = x['simtime']
             j['mwh'] = x['mwh']
-            #TODO: move team name into config
-            j['team'] = "Local"
+            j['team'] = teamName
             resp = {}
             resp['cmd'] = "poll"
             resp['data'] = j
