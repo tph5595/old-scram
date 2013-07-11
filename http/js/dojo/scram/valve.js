@@ -32,11 +32,11 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveSwitch:function(){
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				console.log('Valve Fixed');
-				i = {
+				j = {
 					"damage" : this.damageId
 				};
-				console.log(JSON.stringify(i), i);
-				this.socket.send(JSON.stringify(i));
+				console.log(JSON.stringify(j), j);
+				this.socket.send(JSON.stringify(j));
 				this.valveMove();
 			}
 			else{
@@ -47,7 +47,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		valveMove : function() {
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				//console.log('hi');
-				//domClass.remove(this.valve);
+				domClass.remove(this.valve);
 				domClass.add(this.valve, this.valveId + ' brokenvalve '+ 'z2');
 			}
 			else {
@@ -56,9 +56,9 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			}
 			
 		},
-		valveUpdate : function(newValveState) {
+		valveUpdate : function(event) {
 			j = {
-				"state" : newValveState,
+				"state" : event,
 				"valveid" : this.valveId
 			};
 			console.log(JSON.stringify(j), j);

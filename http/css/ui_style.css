@@ -569,7 +569,9 @@
 	background-repeat: no-repeat;
 	height: 723px;
 	width: 1000px;
-	position: absolute;
+	position: relative;
+	top: -1058px;
+	left: 0px;
 }
 .quakefaceopen {
 	background-image: url(../images/events/earthquakeO.png);
@@ -577,29 +579,30 @@
 	background-repeat: no-repeat;
 	height: 723px;
 	width: 1000px;
-	position: absolute;
+	position: relative;
+	top: -1058px;
+	left: 0px;
 	
 }
-.meltdownncclosed {
-	background-image: url(../images/events/nickcage_closed.png);
-	background-size: 50px 50px;
+.meltdownfaceclosed {
+	background-image: url(../images/events/meltdownC.png);
+	background-size: 1000px 723px;
 	background-repeat: no-repeat;
-	height: 50px;
-	width: 50px;
+	height: 723px;
+	width: 1000px;
 	position: relative;
-	top: 600px;
-	left: 100px;
+	top: -1780px;
+	left: 0px;
 }
-.meltdownncopen {
-	background-image: url(../images/events/nickcage_opened.png);
-	background-size: 50px 50px;
+.meltdownfaceopen {
+	background-image: url(../images/events/meltdownO.png);
+	background-size: 1000px 723px;
 	background-repeat: no-repeat;
-	height: 50px;
-	width: 50px;
+	height: 723px;
+	width: 1000px;
 	position: relative;
-	top: 600px;
-	left: 100px;
-	z-index: 4;	
+	top: -1780px;
+	left: 0px;
 }
 .noface {
 	display: none;	

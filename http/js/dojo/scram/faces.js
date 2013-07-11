@@ -8,20 +8,25 @@ function(lang, on, Declare, Socket, _WidgetBase, _Container, _Contained, _Templa
 	
 		templateString : template,
 		socket : null,
+		poll : null,
 								
 			
 		constructor: function(args){
 			this.socket = args.socket;
-			this.socket.on("message",lang.hitch(this,this.socketMsg));
+			this.poll = args.poll;
 			
 		},
-		
 		postCreate : function() {	
 			this.quakeFace = new Face ({
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'faceId' : 'quake'				
 			}, this.quakefaceDAP);
+			this.meltdownFace = new Face ({
+				'socket' : this.socket,
+				'poll' : this.poll,
+				'faceId' : 'meltdown'
+			}, this.meltdownfaceDAP)
 			
 			this.inherited(arguments);
 		}
