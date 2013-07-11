@@ -586,7 +586,7 @@ class Plant(object):
             #print"EarthQuake!" #for testing
             self.earthquake = True
             #THIS MIGH NEED MOVED! DUNNO IF IT BELONGS HERE
-############self.repairDamage(repaired) repair msg
+            #self.repairDamage(repaired)
             self._earthquakeDamage()
         else:
             #print"Safe!" #for testing
@@ -744,9 +744,8 @@ class Plant(object):
             output += character
         return output
  
- 
-    def poll(self):
-        # self.display()
+    def poll(self): #somehow this whole line got deleted in last push.  Does this fix it?
+      # self.display()
         # return self.generatorMWH
         return {'mwh':self.generatorMWH,
                 'simtime':self.elapsedTime,
@@ -824,9 +823,14 @@ class Plant(object):
         print "CS Cold Leg Temp: %s" % (str(self.csColdLegTemp))  
         
     def update(self):
+        
+        #Front end needs sim time to function even during pauses. Needs called no matter what.
+        # increment game tick one second
+        self.elapsedTime += 1
+            
         if not (self.inMeltdown) and not (self.pressureExplosion):
-            # increment game tick one second
-            self.elapsedTime += 1
+            #increment game tick one second
+            #self.elapsedTime += 1 #This needs called even during pause.
             #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
             self._boilAndPressure()
             # get temps from last game tick
