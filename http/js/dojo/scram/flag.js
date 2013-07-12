@@ -12,8 +12,8 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 		},
 		onFlagSubmission : function() {
 			var xhrArgs = {
-				url:"http://192.168.15.5",
-				form : this.flagformDAP,
+				url:"http://192.168.15.5:50505/flag",
+				content:{'flag':"test"},
 				handleAs : "text",
 				load : function(data) {
 					console.log("posted Flag",data)
@@ -22,7 +22,7 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 					console.log("Flag",error);
 				}
 			}
-			var deferred = dojo.xhrPost(xhrArgs);
+			var deferred = dojo.xhrGet(xhrArgs);
 
 		}
 	});

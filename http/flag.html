@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>SCRAM CTF Tester</title>
+		<script>
+			dojoConfig = {
+				"isDebug" : true,
+				"debugAtAllCosts" : true,
+				"parseOnLoad" : false,
+				"baseUrl" : "./js/dojo/dojo"
+			}
+		</script>
+		<script type="text/javascript" src="http://127.0.0.1/js/dojo/dojo/dojo.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/ui_style.css"/>
+		<link rel="stylesheet" type="text/css" href="/css/font_stylesheet.css"/>
+		<script type="text/javascript" charset="utf-8">
+			require(["dojo/_base/lang","scram/flag", "dojo/domReady!"], function(lang, Flag) {
+				this.flag = new Flag({}, "main");
+			});
+
+		</script>
+	</head>
+	<body id="body" class="body" style="background-color: #333333">
+		<div id='main'></div>
+	</body>
+</html>
