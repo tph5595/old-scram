@@ -36,9 +36,10 @@
 }
 .twitterfeed {
 	position: relative;
-	left: 0px;
+	left: 20px;
 	top: -722px;
-	width: 22%;
+	width: 20%;
+	z-index: -1;
 }
 .statsbarbackground {
 	background-image: url(../images/statsBar.png);
@@ -453,9 +454,12 @@
 	background-size: 82px 40px;
 }
 .pressurizertanklevel5 {
-	background-size: 82px 50px;
+	background-size: 82px 45px;
 }
 .pressurizertanklevel6 {
+	background-size: 82px 50px;
+}
+.pressurizertanklevel7 {
 	background-size: 82px 60px;
 }
 
