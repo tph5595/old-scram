@@ -1,7 +1,7 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dojo/dom-class", "dijit/_Container", 
-"dijit/_Contained", "dijit/_TemplatedMixin", "dojo/fx", "dojo/text!scram/templates/rod.html"], 
-function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _TemplatedMixin, fx, template) {
-	return Declare("scram.rod", [_WidgetBase, _Container, _Contained, _TemplatedMixin], {
+"dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/fx", "dojo/text!scram/templates/rod.html"], 
+function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _TemplatedMixin, Evented, fx, template) {
+	return Declare("scram.rod", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the rods
 		///

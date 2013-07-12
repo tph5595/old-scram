@@ -17,6 +17,7 @@ function(on, lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedM
 		onMsg: function(event){
 			var obj = JSON.parse(event.data);
 			this.earthquake = obj['quake'];
+			this.earthquake = true;
 			if (this.earthquake == true){
 				this.emit("quake", {});
 			}

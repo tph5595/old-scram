@@ -1,8 +1,8 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
-"dijit/_Contained", "dijit/_TemplatedMixin",
+"dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
 "scram/valve","dojo/text!scram/templates/valves.html"], 
-function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve,template) {
-	return Declare("scram.valves", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
+function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Evented, Valve,template) {
+	return Declare("scram.valves", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the valves
 		///
@@ -15,7 +15,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 			this.poll = args.poll;
 		},
 		postCreate : function() {
-			this.hpiTankValveDAP = new Valve({
+			this.hpiTankValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'valveId' : 'hpivalve',
@@ -23,6 +23,8 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'damageId' : 4,
 				valveClass : 'hpitankvalve valvefalse z2',
 			}, this.hpiTankValveDAP);
+			this.hpiTankValve.on('damageRepaired', lang.hitch(this, this.repair));
+			
 			this.pressurizerValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
@@ -31,6 +33,8 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'damageId' : 16,
 				valveClass : 'pressurizertankvalve valvefalse z2',
 			}, this.pressurizerValveDAP);
+			this.pressurizerValve.on('damageRepaired', lang.hitch(this, this.repair));
+			
 			this.auxTankValve = new Valve({
 				'socket' : this.socket,
 				'poll' : this.poll,
@@ -39,10 +43,13 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Valve
 				'title': 'Auxiliary Tank Valve',
 				valveClass : 'auxtankvalve valvefalse z2',
 			}, this.auxTankValveDAP);
+			this.auxTankValve.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.inherited(arguments);
+		},
+		repair : function(){
+			this.emit('damageRepaired', {'damage' : event})
 		}
-		
 
 
 	});

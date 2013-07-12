@@ -1,8 +1,8 @@
 define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container",
-"dijit/_Contained", "dijit/_TemplatedMixin",
+"dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
 "scram/pump","dojo/text!scram/templates/pumps.html"], 
-function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,template) {
-	return Declare("scram.pumps", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
+function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Evented, Pump,template) {
+	return Declare("scram.pumps", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the pumps
 		///
@@ -12,7 +12,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 
 		constructor : function(args) {
 			this.socket = args.socket;
-			this.poll = args.poll;
+			this.poll = args.poll;			
 		},
 		postCreate : function() {
 			this.rcsPump = new Pump({
@@ -27,6 +27,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 				pumpUpClass : 'rcspumpup upbutton z2',
 				pumpDownClass : 'rcspumpdown downbutton z2',
 			},this.rcsPumpDAP);
+			this.rcsPump.on('damageRepaired', lang.hitch(this.repair));
 			
 			this.hpiTankPump = new Pump({
 				'socket' : this.socket,
@@ -40,6 +41,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 				pumpUpClass : 'hpitankpumpup upbutton z2',
 				pumpDownClass : 'hpitankpumpdown downbutton z2',
 			},this.hpiPumpDAP);
+			this.hpiTankPump.on('damageRepaired', lang.hitch(this.repair));
 			
 			this.auxTankPump = new Pump({
 				'socket' : this.socket,
@@ -53,6 +55,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 				pumpUpClass : 'auxtankpumpup upbutton z2',
 				pumpDownClass : 'auxtankpumpdown downbutton z2',
 			},this.auxPumpDAP);
+			this.auxTankPump.on('damageRepaired', lang.hitch(this.repair));
 			
 			this.feedwaterPump = new Pump({
 				'socket' : this.socket,
@@ -66,6 +69,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 				pumpUpClass : 'feedwaterpumpup upbutton z2',
 				pumpDownClass : 'feedwaterpumpdown downbutton z2',
 			},this.fwPumpDAP);
+			this.feedwaterPump.on('damageRepaired', lang.hitch(this.repair));
 			
 			this.csPump = new Pump({
 				'socket' : this.socket,
@@ -79,8 +83,12 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Pump,
 				pumpUpClass : 'cspumpup upbutton z2',
 				pumpDownClass : 'cspumpdown downbutton z2',
 			},this.csPumpDAP);
+			this.csPump.on('damageRepaired', lang.hitch(this.repair));
 			
 			this.inherited(arguments);
+		},
+		repair : function(event) {
+			this.emit('damageRepaired', {'damage' : event})
 		}
 
 

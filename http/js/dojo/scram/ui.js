@@ -36,7 +36,6 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 						poll : this._sockets.pollSocket
 					}),
 					this.earthquake.on("quake", lang.hitch(this,function(){
-						console.log('emit passthrough working');
 						domClass.remove(this.plantDAP);
 						domClass.add(this.plantDAP, 'scrambackground '+ 'scrambackgroundposition'+' z1');
 						this.earthquakeLeft = fx.slideTo({
@@ -65,7 +64,6 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 						this.chain.play();
 					}));
 				this.earthquake.on("noquake", lang.hitch(this,function(){
-						console.log('noquake passthrough good');
 					}));
 				}));
 			}));

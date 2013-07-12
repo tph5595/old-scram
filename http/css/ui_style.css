@@ -377,6 +377,8 @@
 .brokenvalve {
 	background-image: url(../images/brokenIndication.png);
 	background-size: 25px 35px;
+	width: 40px;
+	height: 40px;
 	cursor: pointer;
 }
 

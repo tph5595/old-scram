@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container","dijit/_Contained", "dijit/_TemplatedMixin",
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container","dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
 "dojo/dom-construct", "dojo/dom-class","dojo/text!scram/templates/valve.html"], 
-function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, domConstruct, domClass,template) {
-	return Declare("scram.valve", [_WidgetBase, _TemplatedMixin, _Contained, _Container], {
+function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass,template) {
+	return Declare("scram.valve", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the valve
 		///
@@ -39,6 +39,8 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				console.log(JSON.stringify(j), j);
 				this.socket.send(JSON.stringify(j));
 				*/
+				console.log('Valve Repair CLicked');
+				console.log(this.damageId);
 				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.valveMove();
 			}
