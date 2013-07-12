@@ -584,8 +584,6 @@ class Plant(object):
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
-            #THIS MIGH NEED MOVED! DUNNO IF IT BELONGS HERE
-            #self.repairDamage(repaired)
             self._earthquakeDamage()
         else:
             #print"Safe!" #for testing
