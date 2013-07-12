@@ -49,9 +49,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.tanks = new Tanks({
 				poll : this.sockets.pollSocket
 			});
-			this.flag = new Flag({
-				socket : this.sockets.userSocket
-			});
+			this.flag = new Flag();
 			/*in
 			 this.repairs = new Repairs({
 			 //"socket" : this.sockets.repairSocket,
