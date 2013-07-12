@@ -35,12 +35,10 @@
 	margin-right: auto;
 }
 .twitterfeed {
-	width: 300px;
-	height: 500px;
-	background-color: yellow;
-	float: left;
-	margin-top: 100px;
-	margin-right: 100px;
+	position: relative;
+	left: 0px;
+	top: -722px;
+	width: 22%;
 }
 .statsbarbackground {
 	background-image: url(../images/statsBar.png);
@@ -798,6 +796,7 @@
 	cursor: pointer;
 	border-width: 2px;
 }
+
 .flag{
 	position: relative;
 	width: 70px;
