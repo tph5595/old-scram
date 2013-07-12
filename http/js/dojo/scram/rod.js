@@ -31,13 +31,7 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 		},
 		fix : function(){
 			if ((this.damageMsg & this.damageId) == this.damageId){
-				console.log('Rods Fixed');
-				i = {
-					"damage" : this.damageId
-				};
-				console.log(JSON.stringify(i), i);
-				this.socket.send(JSON.stringify(i));
-				this.rodMove();
+				this.rodUpdate();
 			}
 			else{
 			}
@@ -67,13 +61,23 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 			if (this.rodLevel > 9) {
 				this.rodLevel = 9
 			}
-
-			j = {
-				"level" : this.rodLevel
-			};
-			console.log(JSON.stringify(j), j);
-			this._socket.send(JSON.stringify(j));	
-			this.rodMove();
+			if ((this.damageMsg & this.damageId) == this.damageId){
+				j = {
+					"level" : this.rodLevel,
+					"damage" : this.damageId
+				};
+				console.log(JSON.stringify(j), j);
+				this._socket.send(JSON.stringify(j));	
+				this.rodMove();
+			}
+			else{
+				j = {
+					"level" : this.rodLevel
+				};
+				console.log(JSON.stringify(j), j);
+				this._socket.send(JSON.stringify(j));	
+				this.rodMove();
+			}
 		},
 		rodMove : function() {
 			if ((this.damageMsg & this.damageId) == this.damageId){

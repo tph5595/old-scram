@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dojo/fx", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-class", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented",
-"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "scram/faces", "dojo/text!scram/templates/plant.html"], 
-function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, Faces, template) {
+"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "scram/faces", "scram/flag", "dojo/text!scram/templates/plant.html"], 
+function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, Faces, Flag, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
@@ -40,6 +40,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			 this.tanks = new Tanks({
 			 poll : this.sockets.pollSocket
 			 });
+			 this.flag = new Flag({
+			 	socket : this.sockets.userSocket
+			 })
 			 /*in
 			 this.repairs = new Repairs({
 			 //"socket" : this.sockets.repairSocket,
@@ -66,6 +69,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.addChild(this.valves);
 			this.addChild(this.waters);
 			this.addChild(this.tanks);
+			this.addChild(this.flag);
 		//	this.addChild(this.repairs);
 			//this.addChild(this.damages);
 			//this.addChild(this.earthquake);

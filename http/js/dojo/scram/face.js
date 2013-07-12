@@ -6,7 +6,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		/// This is the class for face
 		///
 		
-		'faceId' : null,
+		faceId : null,
 		socket : null,
 		poll: null,
 		faceClass : null,
@@ -14,7 +14,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		templateString : template,
 			
 		constructor: function(args){
-			this.faceId = args.faceId;	
+			this.faceId = args.faceId;
 			this.socket = args.socket;
 			this.poll = args.poll;
 			this.socket.on("message",lang.hitch(this,this.socketMsg));
@@ -22,17 +22,16 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		},
 		socketMsg: function(event){
 			var obj = JSON.parse(event.data);
-			this.socketMsgHolder = obj[this.faceId];
+			this.socketMsgHolder = obj['quake'];
 			this.socketMsg = this.socketMsgHolder;
 			//this.socketMsg = true;
 			if (this.socketMsg == true){
-				console.log('should of earthquaked')
 				switch (this.modSimtime){
 					case 0:
-						this.addFaceClosed();
+						this.addFaceClosed('quake');
 						break;
 					case 1:
-						this.addFaceOpen();
+						this.addFaceOpen('quake');
 						break;
 				}
 			}
@@ -42,13 +41,13 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			}
 		},
 		
-		addFaceClosed : function(){
-				domClass.remove(this.faceDAP);
-				domClass.add(this.faceDAP, this.faceId+'faceclosed' + ' z4');
-		},
-		addFaceOpen : function (){
+		addFaceClosed : function(id){
 			domClass.remove(this.faceDAP);
-			domClass.add(this.faceDAP, this.faceId+'faceopen' + ' z4');
+			domClass.add(this.faceDAP, this.id+'faceclosed' + ' z4');
+		},
+		addFaceOpen : function (id){
+			domClass.remove(this.faceDAP);
+			domClass.add(this.faceDAP, this.id+'faceopen' + ' z4');
 		},
 		removeFace : function(){
 			domClass.remove(this.faceDAP);
@@ -59,19 +58,25 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			this.simTime = this.obj['simtime'];
 			this.modSimtime = this.simTime % 2;
 			this.meltdown = this.obj['meltdown'];
-			//this.meltdown = true;
-			if (this.meltdown == true){
-					console.log('should of melted down');
-					switch (this.modSimtime){
-						case 0:
-							this.addFaceClosed();
-							break;
-						case 1:
-							this.addFaceOpen();
-							break;
-					};
-				}
+			this.explosion = this.obj['explosion'];
+			console.log(this.faceId + ': '+this.explosion);
+			if (this.meltdown == true && this.modSimtime == 0){
+				this.addFaceClosed('meltdown');
 			}
-		
+			else if (this.meltdown == true && this.modSimtime == 1){
+				this.addFaceOpen('meltdown');
+			}
+			else if (this.explosion == true  && this.modSimtime == 0){
+				this.addFaceClosed('explosion');
+			}
+			else if (this.explosion == true  && this.modSimtime == 1){
+				this.addFaceOpen('explosion');
+			}
+			/*
+			this.meltdown = this.obj['meltdown'];
+			this.explosion = this.obj['explosion']; 
+			this.explosion = true; //for testing
+			*/
+		}
 	})
 });

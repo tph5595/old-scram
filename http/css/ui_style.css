@@ -604,6 +604,26 @@
 	top: -1780px;
 	left: 0px;
 }
+.explosionfaceclosed {
+	background-image: url(../images/events/pexplodeC.png);
+	background-size: 1000px 723px;
+	background-repeat: no-repeat;
+	height: 723px;
+	width: 1000px;
+	position: relative;
+	top: -1780px;
+	left: 0px;
+}
+.explosionfaceopen {
+	background-image: url(../images/events/pexplodeO.png);
+	background-size: 1000px 723px;
+	background-repeat: no-repeat;
+	height: 723px;
+	width: 1000px;
+	position: relative;
+	top: -1780px;
+	left: 0px;
+}
 .noface {
 	display: none;	
 }
@@ -749,4 +769,24 @@
 	height: 150px;
 	top: -1685px;
 	left: 10px;
+}
+
+/*Flag*/
+.flagsubmission{
+	position: relative;
+	top: -499px;
+	left: 935px;
+	background-image: url(../images/submitBtn.png);
+	height: 20px;
+	width: 50px;
+	background-size: 50px 18px;
+	border-style: solid;
+	cursor: pointer;
+	border-width: 2px;
+}
+.flag{
+	position: relative;
+	width: 70px;
+	top: -475px;
+	left: 850px;
 }

@@ -26,7 +26,12 @@ function(lang, on, Declare, Socket, _WidgetBase, _Container, _Contained, _Templa
 				'socket' : this.socket,
 				'poll' : this.poll,
 				'faceId' : 'meltdown'
-			}, this.meltdownfaceDAP)
+			}, this.meltdownfaceDAP);
+			this.explosionFace = new Face ({
+				'socket' : this.socket,
+				'poll' : this.poll,
+				'faceId' : 'explosion'
+			}, this.explosionfaceDAP);
 			
 			this.inherited(arguments);
 		}
