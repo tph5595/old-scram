@@ -775,7 +775,9 @@ class Plant(object):
                 'damage':self.damage,
                 'hpiwater':self.hpiWater,
                 'pressurizerwater':self.pressurizerWaterLevel,
-                'afswater':self.afsTankLevel
+                'afswater':self.afsTankLevel,
+                'critflag':self.critFlag,
+                'steamvoiding':self.steamVoiding
                 }
         
     def setRod(self, level):

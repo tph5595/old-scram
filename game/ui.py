@@ -151,6 +151,7 @@ class UI(object):
         #TODO: add user to array
         
     def _handleEarthquake(self,conn,msg):
+        print "EarthQuake Repair",msg
         if(self._handleStash("earthquake", conn, msg)):return
         self.protocol.repairDamage(msg)
         

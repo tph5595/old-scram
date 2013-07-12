@@ -116,7 +116,9 @@ class PollPlant(Command):
                 ('damage',Integer()),
                 ('hpiwater',Integer()),
                 ('pressurizerwater',Integer()),
-                ('afswater',Integer())
+                ('afswater',Integer()),
+                ('critflag',Integer()),
+                ('steamvoiding',Boolean())
                 ]
     #response = [('updateid',String()),('mwh',String())]
 
@@ -237,7 +239,9 @@ class NetworkController(AMP):
                 damage,
                 hpiwater,
                 pressurizerwater,
-                afswater):
+                afswater,
+                critflag,
+                steamvoiding):
         
         '''
                         ('pressurizervalve',Boolean()),
@@ -277,7 +281,9 @@ class NetworkController(AMP):
                 'damage':damage,
                 'hpiwater':hpiwater,
                 'pressurizerwater':pressurizerwater,
-                'afswater':afswater
+                'afswater':afswater,
+                'critflag':critflag,
+                'steamvoiding':steamvoiding
                 }
         self.lastPoll = j
         try:

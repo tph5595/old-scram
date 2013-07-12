@@ -85,7 +85,9 @@ class ScramServer(AMP):
                 damage=poll['damage'],
                 hpiwater=poll['hpiwater'],
                 pressurizerwater=poll['pressurizerwater'],
-                afswater=poll['afswater']
+                afswater=poll['afswater'],
+                critflag=poll['critflag'],
+                steamvoiding=poll['steamvoiding']
                         )
         return{}
         
