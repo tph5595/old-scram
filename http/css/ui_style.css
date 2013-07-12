@@ -337,6 +337,20 @@
 	height: 40px;
 	cursor: pointer;
 }
+.pressurizervalvetrue{/* open valve*/
+	background-image: url(../images/elements/yellowSample.png);
+	background-size: 5px 40px;
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
+.pressurizervalvefalse{/* closed valve*/
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
 .valvefalse {/*closed valve*/
 	background-repeat: no-repeat;
 	width: 40px;

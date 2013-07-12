@@ -51,8 +51,14 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				domClass.add(this.valve, this.valveId + ' brokenvalve '+ 'z2');
 			}
 			else {
-				domClass.remove(this.valve);
-				domClass.add(this.valve, 'valve'+this.valveState + " " + this.valveClass);
+				if (this.valveId == 'pressurizervalve'){
+					domClass.remove(this.valve);
+					domClass.add(this.valve, 'pressurizervalve'+this.valveState + " " + this.valveClass);
+				}
+				else{
+					domClass.remove(this.valve);
+					domClass.add(this.valve, 'valve'+this.valveState + " " + this.valveClass);
+				}
 			}
 			
 		},
