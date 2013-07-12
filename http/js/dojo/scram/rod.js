@@ -62,12 +62,15 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 				this.rodLevel = 9
 			}
 			if ((this.damageMsg & this.damageId) == this.damageId){
+				/*
 				j = {
 					"level" : this.rodLevel,
 					"damage" : this.damageId
 				};
 				console.log(JSON.stringify(j), j);
 				this._socket.send(JSON.stringify(j));	
+				*/
+				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.rodMove();
 			}
 			else{

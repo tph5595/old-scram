@@ -31,12 +31,15 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		},
 		valveSwitch:function(){
 			if ((this.damageMsg & this.damageId) == this.damageId){
+				/*
 				console.log('Valve Fixed');
 				j = {
 					"damage" : this.damageId
 				};
 				console.log(JSON.stringify(j), j);
 				this.socket.send(JSON.stringify(j));
+				*/
+				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.valveMove();
 			}
 			else{

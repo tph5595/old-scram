@@ -1,6 +1,6 @@
-define(["dojo/on","dojo/_base/lang", "dojo/fx", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojox/socket", "dojo/Evented", 
+define(["dojo/on","dojo/_base/lang", "dojo/fx", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", 
 "dojo/dom-class", "dojo/text!scram/templates/earthquake.html"], 
-function(on, lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, Socket, domClass, template) {
+function(on, lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domClass, template) {
 	return Declare("scram.earthquake", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for earthquakes
@@ -18,11 +18,9 @@ function(on, lang, fx, Declare, _WidgetBase, _Container, _Contained, _TemplatedM
 			var obj = JSON.parse(event.data);
 			this.earthquake = obj['quake'];
 			if (this.earthquake == true){
-				console.log('about to emit earthquake');
 				this.emit("quake", {});
 			}
 			else if (this.earthquake == false){
-				console.log('about to emit no quake');
 				this.emit('noquake', {});
 			}
 		},

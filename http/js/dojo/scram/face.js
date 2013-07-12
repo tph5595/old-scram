@@ -16,6 +16,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		constructor: function(args){
 			this.faceId = args.faceId;
 			this.socket = args.socket;
+			this.faceClass = args.faceClass;
 			this.poll = args.poll;
 			this.socket.on("message",lang.hitch(this,this.socketMsg));
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
@@ -28,10 +29,10 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			if (this.socketMsg == true){
 				switch (this.modSimtime){
 					case 0:
-						this.addFaceClosed('quake');
+						//this.addFaceClosed('quake');
 						break;
 					case 1:
-						this.addFaceOpen('quake');
+						//this.addFaceOpen('quake');
 						break;
 				}
 			}
@@ -40,10 +41,13 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 				this.removeFace();
 			}
 		},
-		
-		addFaceClosed : function(id){
+		addFace : function(){
+			domClass.toggle(this.faceDAP, this.faceId+'faceclosed ' + this.faceId+'faceopen');
+		},
+		addFaceClosed : function(){
 			domClass.remove(this.faceDAP);
-			domClass.add(this.faceDAP, this.id+'faceclosed' + ' z4');
+			domClass.add(this.faceDAP, this.faceId+'faceclosed' + ' z4');
+			console.log('did face closed run?)');
 		},
 		addFaceOpen : function (id){
 			domClass.remove(this.faceDAP);
@@ -54,23 +58,12 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			domClass.add(this.faceDAP, 'noface' + ' z4');
 		},
 		pollMsg : function(event) {
-			this.obj = JSON.parse(event.data);
-			this.simTime = this.obj['simtime'];
-			this.modSimtime = this.simTime % 2;
-			this.meltdown = this.obj['meltdown'];
-			this.explosion = this.obj['explosion'];
-			console.log(this.faceId + ': '+this.explosion);
-			if (this.meltdown == true && this.modSimtime == 0){
-				this.addFaceClosed('meltdown');
-			}
-			else if (this.meltdown == true && this.modSimtime == 1){
-				this.addFaceOpen('meltdown');
-			}
-			else if (this.explosion == true  && this.modSimtime == 0){
-				this.addFaceClosed('explosion');
-			}
-			else if (this.explosion == true  && this.modSimtime == 1){
-				this.addFaceOpen('explosion');
+			var obj = JSON.parse(event.data);
+			if (this.faceId != 'quake'){
+				this.pollMsg = obj[this.faceId]
+				if (this.pollMsg == true){
+					//this.addFace();
+				}
 			}
 			/*
 			this.meltdown = this.obj['meltdown'];

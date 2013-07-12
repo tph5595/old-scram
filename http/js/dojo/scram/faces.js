@@ -20,16 +20,19 @@ function(lang, on, Declare, Socket, _WidgetBase, _Container, _Contained, _Templa
 			this.quakeFace = new Face ({
 				'socket' : this.socket,
 				'poll' : this.poll,
+				'faceClass' : 'noface z4',
 				'faceId' : 'quake'				
 			}, this.quakefaceDAP);
 			this.meltdownFace = new Face ({
 				'socket' : this.socket,
 				'poll' : this.poll,
+				'faceClass' : 'noface z4',
 				'faceId' : 'meltdown'
 			}, this.meltdownfaceDAP);
 			this.explosionFace = new Face ({
 				'socket' : this.socket,
 				'poll' : this.poll,
+				'faceClass' : 'noface z4',
 				'faceId' : 'explosion'
 			}, this.explosionfaceDAP);
 			

@@ -579,7 +579,6 @@ class Plant(object):
             size = 100
         elif (self.risk >= 100):
             size = 70
-        
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
         if magicNumber == 69:

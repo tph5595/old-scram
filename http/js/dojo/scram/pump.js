@@ -51,12 +51,15 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		},
 		fix : function(){
 			if ((this.damageMsg & this.damageId) == this.damageId){
+				/*
 				console.log('Pump Fixed');
 				i = {
 					"damage" : this.damageId
 				};
 				console.log(JSON.stringify(i), i);
 				this.socket.send(JSON.stringify(i));
+				*/
+				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.pumpMove();
 			}
 			else{
