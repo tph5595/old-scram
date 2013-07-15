@@ -538,29 +538,12 @@ class Plant(object):
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _getEarthQuake(self):
         self.earthquake = False
+        size = 1000
+        size = size - (self.risk * 12)
         
-        if (self.risk < 10):
-            size = 1000
-        elif (self.risk < 20):
-            size = 900
-        elif (self.risk < 30):
-            size = 800
-        elif (self.risk < 40):
-            size = 700
-        elif (self.risk < 50):
-            size = 600
-        elif (self.risk <60):
-            size = 500
-        elif (self.risk <70):
-            size = 400
-        elif (self.risk <80):
-            size = 300
-        elif (self.risk <90):
-            size = 200
-        elif (self.risk < 100):
-            size = 100
-        elif (self.risk >= 100):
-            size = 70
+        if (size < 30):
+            size = 30
+      
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
         if magicNumber == 69:
