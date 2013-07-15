@@ -6,7 +6,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		/// This is the class for the repair
 		///
 		templateString : template,
-		_socket : null,
 		repairState : null,
 		tip : null,
 		repairClass : null,
@@ -15,7 +14,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		
 		constructor : function(args) {
 			this.tip = args.tip;
-			this.socket = args.socket;
 			this.repairState = args.repairState;
 			this.repairClass = args.repairClass;
 		},
@@ -42,7 +40,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			else if (this.repairState == true){
 					this.emit('repairstatetrue', {});
 			}
-			//this.socket.send(JSON.stringify(j));
 			this.switchRepairState(this.repairState);
 		}
 	});

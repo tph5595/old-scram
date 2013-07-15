@@ -28,19 +28,19 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				'tip' : 'Reactor Core Rods',
 				'class' : "z2"
 			});
-			this.rods.on('damageRepaired', lang.hitch(this.repair));
+			this.rods.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.pumps = new Pumps({
 				socket : this.sockets.pumpSocket,
 				poll : this.sockets.pollSocket
 			});
-			this.pumps.on('damageRepaired', lang.hitch(this.repair));
+			this.pumps.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.valves = new Valves({
 				socket : this.sockets.valveSocket,
 				poll : this.sockets.pollSocket
 			});
-			this.valves.on('damageRepaired', lang.hitch(this.repair));
+			this.valves.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.waters = new Waters({
 				poll : this.sockets.pollSocket
@@ -83,12 +83,13 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.inherited(arguments);
 		},
 		repair : function(event) {
-			console.log('Finally got to the repair function in plant.js');
+			this.damageId = event['damage'];
+			console.log('plant: ' + this.damageId)
 			j = {
-				"damage" : 'event'
-			};
-			console.log(JSON.stringify(j), j);
+				'damage' : this.damageId
+			}
 			this.sockets.earthquakeSocket.send(JSON.stringify(j));
+			console.log('After json send in plant.js');
 		}
 	});
 });

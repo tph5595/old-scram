@@ -88,6 +88,8 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 				domClass.add(this.rod, 'roddamage z1');//this needs to become a different image
 			}
 			else{ 
+				domClass.remove(this.rod);
+				domClass.add(this.rod, 'rods z1');
 				fx.slideTo({
 					top : this.rodTop[this.rodLevel],
 					left : 86,

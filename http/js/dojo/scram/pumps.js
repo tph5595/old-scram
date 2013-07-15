@@ -27,7 +27,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpUpClass : 'rcspumpup upbutton z2',
 				pumpDownClass : 'rcspumpdown downbutton z2',
 			},this.rcsPumpDAP);
-			this.rcsPump.on('damageRepaired', lang.hitch(this.repair));
+			this.rcsPump.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.hpiTankPump = new Pump({
 				'socket' : this.socket,
@@ -41,7 +41,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpUpClass : 'hpitankpumpup upbutton z2',
 				pumpDownClass : 'hpitankpumpdown downbutton z2',
 			},this.hpiPumpDAP);
-			this.hpiTankPump.on('damageRepaired', lang.hitch(this.repair));
+			this.hpiTankPump.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.auxTankPump = new Pump({
 				'socket' : this.socket,
@@ -55,7 +55,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpUpClass : 'auxtankpumpup upbutton z2',
 				pumpDownClass : 'auxtankpumpdown downbutton z2',
 			},this.auxPumpDAP);
-			this.auxTankPump.on('damageRepaired', lang.hitch(this.repair));
+			this.auxTankPump.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.feedwaterPump = new Pump({
 				'socket' : this.socket,
@@ -69,7 +69,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpUpClass : 'feedwaterpumpup upbutton z2',
 				pumpDownClass : 'feedwaterpumpdown downbutton z2',
 			},this.fwPumpDAP);
-			this.feedwaterPump.on('damageRepaired', lang.hitch(this.repair));
+			this.feedwaterPump.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.csPump = new Pump({
 				'socket' : this.socket,
@@ -83,12 +83,12 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpUpClass : 'cspumpup upbutton z2',
 				pumpDownClass : 'cspumpdown downbutton z2',
 			},this.csPumpDAP);
-			this.csPump.on('damageRepaired', lang.hitch(this.repair));
+			this.csPump.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.inherited(arguments);
 		},
 		repair : function(event) {
-			this.emit('damageRepaired', {'damage' : event})
+			this.emit('damageRepaired', event)
 		}
 
 

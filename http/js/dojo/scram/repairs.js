@@ -7,15 +7,11 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,Repai
 		/// This is the class for the repairs
 		///
 		templateString:template,
-		//socket : null,
-		socket:null,
 
 		constructor : function(args) {
-			this.socket = args.socket;
 		},
 		postCreate : function() {
 			this.repair = new Repair({
-				'socket' : this.socket,
 				'repairstate': false,
 				'title': 'Repair Button',
 				repairClass :'repairbutton repairstatefalse z2',

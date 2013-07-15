@@ -21,7 +21,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				'valveId' : 'hpivalve',
 				'title': 'HPI Tank Valve',
 				'damageId' : 4,
-				valveClass : 'hpitankvalve valvefalse z2',
+				valveClass : 'hpivalve valvefalse z2',
 			}, this.hpiTankValveDAP);
 			this.hpiTankValve.on('damageRepaired', lang.hitch(this, this.repair));
 			
@@ -31,7 +31,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				'valveId' : 'pressurizervalve',
 				'title': 'Pressurizer Tank Valve',
 				'damageId' : 16,
-				valveClass : 'pressurizertankvalve valvefalse z2',
+				valveClass : 'pressurizervalve valvefalse z2',
 			}, this.pressurizerValveDAP);
 			this.pressurizerValve.on('damageRepaired', lang.hitch(this, this.repair));
 			
@@ -41,14 +41,14 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				'valveId' : 'afsvalve',
 				'damageId' : 64,
 				'title': 'Auxiliary Tank Valve',
-				valveClass : 'auxtankvalve valvefalse z2',
+				valveClass : 'afsvalve valvefalse z2',
 			}, this.auxTankValveDAP);
 			this.auxTankValve.on('damageRepaired', lang.hitch(this, this.repair));
 			
 			this.inherited(arguments);
 		},
-		repair : function(){
-			this.emit('damageRepaired', {'damage' : event})
+		repair : function(event){
+			this.emit('damageRepaired', event)
 		}
 
 

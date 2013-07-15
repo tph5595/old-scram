@@ -39,7 +39,7 @@
 	left: 20px;
 	top: -722px;
 	width: 20%;
-	z-index: -1;
+	z-index: 4;
 }
 .statsbarbackground {
 	background-image: url(../images/statsBar.png);
@@ -336,6 +336,12 @@
 	height: 40px;
 	cursor: pointer;
 }
+.valvefalse {/*closed valve*/
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+}
 .pressurizervalvetrue{/* open valve*/
 	background-image: url(../images/elements/yellowSample.png);
 	background-size: 5px 40px;
@@ -350,25 +356,19 @@
 	height: 40px;
 	cursor: pointer;
 }
-.valvefalse {/*closed valve*/
-	background-repeat: no-repeat;
-	width: 40px;
-	height: 40px;
-	cursor: pointer;
-}
-.hpitankvalve {
+.hpivalve {
 	position: relative;
 	top: -304px;
 	left: 213px;
 	cursor: pointer;
 }
-.auxtankvalve {
+.afsvalve {
 	position: relative;
 	top: -345px;
 	left: 501px;
 	cursor: pointer;
 }
-.pressurizertankvalve {
+.pressurizervalve {
 	position: relative;
 	top: -530px;
 	left: 382px;
@@ -377,8 +377,27 @@
 .brokenvalve {
 	background-image: url(../images/brokenIndication.png);
 	background-size: 25px 35px;
+	background-repeat: no-repeat;
 	width: 40px;
 	height: 40px;
+	cursor: pointer;
+}
+.hpivalvebroken {
+	position: relative;
+	top: -304px;
+	left: 203px;
+	cursor: pointer;
+}
+.afsvalvebroken {
+	position: relative;
+	top: -345px;
+	left: 491px;
+	cursor: pointer;
+}
+.pressurizervalvebroken {
+	position: relative;
+	top: -530px;
+	left: 372px;
 	cursor: pointer;
 }
 

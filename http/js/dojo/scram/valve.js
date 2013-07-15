@@ -53,7 +53,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				//console.log('hi');
 				domClass.remove(this.valve);
-				domClass.add(this.valve, this.valveId + ' brokenvalve '+ 'z2');
+				domClass.add(this.valve,  this.valveId + 'broken' + ' brokenvalve '+ 'z2');
 			}
 			else {
 				if (this.valveId == 'pressurizervalve'){

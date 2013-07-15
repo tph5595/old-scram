@@ -1,7 +1,7 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dojo/Evented", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/dom-construct", 
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", 
 "dojo/dom-class", "dojo/text!scram/templates/pump.html"], 
-function(lang, on, Declare, _WidgetBase,Evented, _Container, _Contained, _TemplatedMixin, domConstruct, domClass, template) {
-	return Declare("scram.pump", [_WidgetBase, Evented, _TemplatedMixin, _Contained, _Container], {
+function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, template) {
+	return Declare("scram.pump", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the pump
 		///

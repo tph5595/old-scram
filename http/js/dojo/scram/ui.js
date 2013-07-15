@@ -34,7 +34,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 					this.earthquake = new Earthquake({
 						socket : this._sockets.earthquakeSocket,
 						poll : this._sockets.pollSocket
-					}),
+					}, this.plantDAP),
 					this.earthquake.on("quake", lang.hitch(this,function(){
 						domClass.remove(this.plantDAP);
 						domClass.add(this.plantDAP, 'scrambackground '+ 'scrambackgroundposition'+' z1');
