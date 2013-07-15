@@ -539,7 +539,7 @@ class Plant(object):
     def _getEarthQuake(self):
         self.earthquake = False
         size = 1000
-        size = size - (self.risk * 12)
+        size = size - (self.risk * 15)
         
         if (size < 30):
             size = 30
