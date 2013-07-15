@@ -96,8 +96,6 @@ class Plant(object):
          #initialize critFlag for bit operations to make temps red or not
         self.critFlag = 0
         
-        
-    #TODO:  Need to prove that this gets hotter just as frequently as colder.  Something wrong with rcsHotLegTemp
     # Relationship between reactor temp and cold leg
     def _energyProduction(self):
         # temp increase from rod energy and number of pumps open
@@ -107,13 +105,6 @@ class Plant(object):
         
         if self.reactorTemp < 100:
             self.reactorTemp = 100
-            
-        #TODO: prove these calculations work.
-        """
-        Proof of calculations
-        
-        
-        """
     
     # Relationship between reactor temp and hot leg
     def _xferEnergyToRcsLoop(self):
@@ -259,7 +250,6 @@ class Plant(object):
         energy being taken out of water (generatorMW)
         """
         
-        #TODO: is this if logic right?
         if (self.conPumps == 2): #pumps at 2
                 if (self.generatorMW > 900):
                     self.afsHiddenTemp = self.afsHotLegTemp - (self.afsHotLegTemp * .1)
@@ -348,13 +338,6 @@ class Plant(object):
         elif(self.afsHiddenTemp < self.oldAfsHiddenTemp): 
             self.csHotLegTemp = (self.csColdLegTemp - tempChange)
             self.afsColdLegTemp = self.afsColdLegTemp - tempChange
-        """
-        #This section of code isn't going to do anything?
-        #temp staying same
-        else:
-            self.csHotLegTemp = self.csHotLegTemp
-            self.afsColdLegTemp = self.afsColdLegTemp
-        """
         
         if self.csHotLegTemp < (self.afsHiddenTemp * .25):
             self.csHotLegTemp = self.afsHiddenTemp * .25
@@ -372,8 +355,6 @@ class Plant(object):
         if self.afsColdLegTemp < 10:
             self.afsColdLegTemp = 10
         
-        
-            
             """
             proof of calc
             afsHidden = 500
@@ -492,6 +473,7 @@ class Plant(object):
             self.clock.callLater(5, self._reset)
             
         """
+        Couldn't get this implemented properly
         ***Antoine equation***
         P = pressure (mmHg) ~~~Needs Converted to PSI~~~
         T = boiling temp (Celcius) ~~~Needs Converted to Farenheight~~~
@@ -533,7 +515,7 @@ class Plant(object):
     
     #action due to steam voiding
     #Reactor Temp increases rapidly because the steam acts as an insulator.  It doesn't allow it to cool properly.
-    #gonna make all the temps hotter by a percent.  Big bada-boom
+    #make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
         #percent to increase all temps by
         percent = 1.02
@@ -590,7 +572,6 @@ class Plant(object):
             self.earthquake = False
 
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
-    #TODO: determine how earthquake will effect game.  Invisible alteration to calculation (regular scram), disable user movement?, visible damage and point deduction every x seconds?
     def _earthquakeDamage(self):
         # Generate random number
         destroy = random.randrange(0, 8, 1)
@@ -661,7 +642,7 @@ class Plant(object):
             self.workers += 5
             
     def _meltDown(self):
-        self.generatorMWH = self.generatorMWH * .9 #TODO: figure out an appropriate amount of points to lose. How will MWH affect actual score.
+        self.generatorMWH = self.generatorMWH * .9
         self.inMeltdown = True
         self.clock.callLater(5, self._reset)
         
@@ -741,9 +722,8 @@ class Plant(object):
             output += character
         return output
  
-    def poll(self): #somehow this whole line got deleted in last push.  Does this fix it?
+    def poll(self):
       # self.display()
-        # return self.generatorMWH
         return {'mwh':self.generatorMWH,
                 'simtime':self.elapsedTime,
                 'reactortemp':self.reactorTemp,
@@ -828,8 +808,6 @@ class Plant(object):
         self.elapsedTime += 1
             
         if not (self.inMeltdown) and not (self.pressureExplosion):
-            #increment game tick one second
-            #self.elapsedTime += 1 #This needs called even during pause.
             #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
             self._boilAndPressure()
             # get temps from last game tick
