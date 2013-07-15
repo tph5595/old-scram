@@ -612,6 +612,7 @@ class Plant(object):
     def repairDamage(self,repaired):
         #just xor the damage with the repaired
         self.damage = self.damage^repaired
+        self.workers -= 5
     
     def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
