@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dojo/fx", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-class", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", 
-"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "scram/faces", "scram/flag", "dojo/text!scram/templates/plant.html"], 
-function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, Faces, Flag, template) {
+"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "scram/faces", "scram/flag", "scram/repairs", "dojo/text!scram/templates/plant.html"], 
+function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, Faces, Flag, Repairs, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
@@ -11,12 +11,12 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 
 		constructor : function(args) {
 			this.sockets = args.sockets;
-			/*this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
+			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
 				console.log("Poll Data", msg.data);
-			}));*/
-			this.sockets.earthquakeSocket.on("message", lang.hitch(this, function(msg) {
-				console.log("EarthquakeData", msg.data);
 			}));
+			/*this.sockets.earthquakeSocket.on("message", lang.hitch(this, function(msg) {
+				console.log("EarthquakeData", msg.data);
+			}));*/
 		},
 		postCreate : function() {
 			this.temp = new Temp({
@@ -50,11 +50,10 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				poll : this.sockets.pollSocket
 			});
 			this.flag = new Flag();
-			/*in
-			 this.repairs = new Repairs({
-			 //"socket" : this.sockets.repairSocket,
-			 socket : this.sockets.earthquakeSocket
-			 });
+			
+			this.repairs = new Repairs();
+			this.repairs.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));
+			this.repairs.on('repairstatetrue', lang.hitch(this, this.repairStateSwitch));
 			 /*
 			 this.damages = new Damages ({
 			 socket : this.sockets.earthquakeSocket,
@@ -76,20 +75,26 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.addChild(this.waters);
 			this.addChild(this.tanks);
 			this.addChild(this.flag);
-			//	this.addChild(this.repairs);
+			this.addChild(this.repairs);
 			//this.addChild(this.damages);
 			//this.addChild(this.earthquake);
 			this.addChild(this.faces);
 			this.inherited(arguments);
 		},
 		repair : function(event) {
-			this.damageId = event['damage'];
-			console.log('plant: ' + this.damageId)
-			j = {
-				'damage' : this.damageId
+			if (this.repairState == true){
+				this.damageId = event['damage'];
+				j = {
+					'damage' : this.damageId
+				}
+				this.sockets.earthquakeSocket.send(JSON.stringify(j));
 			}
-			this.sockets.earthquakeSocket.send(JSON.stringify(j));
-			console.log('After json send in plant.js');
+			else {
+				alert('ERROR: Repair State Off')
+			}
+		},
+		repairStateSwitch : function(event){
+			this.repairState = event['repairstate'];
 		}
 	});
 });

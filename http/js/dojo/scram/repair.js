@@ -29,16 +29,11 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			domClass.add(this.repairDAP, 'repairbutton '+ ' repairstate'+state +' '+this.repairClass);
 		},
 		repairUpdate : function(x) {
-			/*j = {
-				"repairstate" : this.repairState
-			};
-			console.log(JSON.stringify(j), j);*/
-			console.log('Repair State: '+this.repairState);
 			if (this.repairState== false){
-					this.emit('repairstatefalse', {});
+					this.emit('repairstatefalse', {'repairstate' : this.repairState});
 			}	
 			else if (this.repairState == true){
-					this.emit('repairstatetrue', {});
+					this.emit('repairstatetrue', {'repairstate' : this.repairState});
 			}
 			this.switchRepairState(this.repairState);
 		}
