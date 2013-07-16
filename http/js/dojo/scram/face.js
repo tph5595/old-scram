@@ -41,7 +41,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			if (this.faceId != 'quake'){
 				this.pollFace = obj[this.faceId];
 				this.addFacePrep();
-			}	
+			}
 			
 		},
 		addFacePrep : function(){
