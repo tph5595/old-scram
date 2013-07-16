@@ -39,7 +39,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				if (this.tankLevel > this.tankLevelMax) {
 					this.tankLevel = this.tankLevelMax;
 				}
-				if (this.tankId == 'pressurizerTank') {
+				if (this.tankId == 'pressurizerwater') {
 					domClass.remove(this.tankDAP);
 					domClass.add(this.tankDAP, this.tankId + ' pressurizertanklevel' + this.tankLevel + " " + this.tankClass);
 				}
@@ -55,7 +55,11 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			if (this.valveId != 'pressurizervalve'){
 				this.pumpLevel = obj[this.pumpLevel];
 			}
+			else if (this.valveId == 'pressurizervalve'){
+				this.pumpLevel =-1;
+			}
 			this.tankLevel = obj[this.tankId];
+			console.log(this.tankId+': '+this.tankLevel + ' valvestate: '+this.valveState);
 			//console.log(this.tankId+': '+this.tankLevel)
 			this.tankMove()
 			
