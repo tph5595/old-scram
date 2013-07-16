@@ -11,10 +11,12 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 			this.inherited(arguments);
 		},
 		onFlagSubmission : function() {
+			var submitFlag = 'flag=test';
 			var xhrArgs = {
-				url:"http://192.168.15.5:50505/flag",
-				content:{'flag':"test"},
-				handleAs : "text",
+				url:"http://127.0.0.1:50505",
+				postData:submitFlag,
+				handleAs : "text/html",
+				//headers:{"Content-Length":submitFlag.length},
 				load : function(data) {
 					console.log("posted Flag",data)
 				},
@@ -22,7 +24,7 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 					console.log("Flag",error);
 				}
 			}
-			var deferred = dojo.xhrGet(xhrArgs);
+			var deferred = dojo.xhrPost(xhrArgs);
 
 		}
 	});

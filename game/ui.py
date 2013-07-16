@@ -152,7 +152,7 @@ class UI(object):
         
     def _handleEarthquake(self,conn,msg):
         print "EarthQuake Repair",msg
-        if(self._handleStash("earthquake", conn, msg)):return
+        if(self._handleStash("earthquake", conn, msg, True)):return
         self.protocol.repairDamage(msg)
         
     
