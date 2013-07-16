@@ -685,10 +685,14 @@ class Plant(object):
         
         #everything fixed on meltdown
         self.damage = 0
+        
+        #reset criticals
+        self.critFlag = 0
     
     #Make temperatures red if it is approaching critical point.
     #DANGER! DANGER! High Voltage! *Electric Six*
     def _critCheck(self):
+        self.critFlag = 0
         reactorCrit = 4000
         pressureCrit = 3900
         
