@@ -95,6 +95,8 @@ class Plant(object):
         self.damage = 0
          #initialize critFlag for bit operations to make temps red or not
         self.critFlag = 0
+        #temp turn steam voiding off for front end visuals.
+        self.steamWasTrue = False
         
     # Relationship between reactor temp and cold leg
     def _energyProduction(self):
@@ -470,6 +472,7 @@ class Plant(object):
         #Explosion in pressure tank
         if (self.rcsPressure >= 5000):
             self.pressureExplosion = True
+            self.steamVoiding = False
             self.clock.callLater(5, self._reset)
             
         """
@@ -602,10 +605,18 @@ class Plant(object):
         elif (destroy == 8):
             self.towerPumps = 0
             self.damage = self.damage | 256
+        #Need to make steam voiding false right before pauses to make front end visuals work better
+        if (self.steamVoiding == True):
+            self.steamVoiding = False
+            self.steamWasTrue = True
             
         self.clock.callLater(5, self._earthquakeReset)
-    
+            
     def _earthquakeReset(self):
+        if self.steamWasTrue == True:
+            self.steamVoiding = True
+            
+        self.steamWasTrue = False
         self.earthquake = False
         
     def getEarthquake(self):
@@ -630,6 +641,10 @@ class Plant(object):
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9
         self.inMeltdown = True
+        
+         #Need to make steam voiding false right before pauses to make front end visuals work better
+        self.steamVoiding = False
+        
         self.clock.callLater(5, self._reset)
         
     #If there is a meltdown or pressure explosion reset all the things!
@@ -703,7 +718,7 @@ class Plant(object):
         if (self.rcsPressure >= pressureCrit):
             self.critFlag = self.critFlag | 2
             
-        if ((self.reactorTemp * 1.08) >= self.boilingTemp):
+        if ((self.reactorTemp * 1.04) >= self.boilingTemp):
             self.critFlag = self.critFlag | 4
     
     def cryptXOR(self, s, key="\x1027"):
