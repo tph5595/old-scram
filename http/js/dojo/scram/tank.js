@@ -59,8 +59,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				this.pumpLevel =-1;
 			}
 			this.tankLevel = obj[this.tankId];
-			console.log(this.tankId+': '+this.tankLevel + ' valvestate: '+this.valveState);
-			//console.log(this.tankId+': '+this.tankLevel)
 			this.tankMove()
 			
 		}
