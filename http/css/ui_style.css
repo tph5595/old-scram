@@ -663,23 +663,23 @@
 }
 .steamvoidingfaceclosed {
 	background-image: url(../images/events/steamvoidC.png);
-	background-size: 200px 73px;
+	background-size: 200px 100px;
 	background-repeat: no-repeat;
-	height: 73px;
+	height: 100px;
 	width: 200px;
 	position: relative;
 	top: -1123px;
-	left: 500px;
+	left: 400px;
 }
 .steamvoidingfaceopen {
 	background-image: url(../images/events/steamvoidO.png);
-	background-size: 100px 73px;
+	background-size: 200px 100px;
 	background-repeat: no-repeat;
-	height: 73px;
+	height: 100px;
 	width: 200px;
 	position: relative;
 	top: -1123px;
-	left: 500px;
+	left: 400px;
 }
 .noface {
 	display: none;	
