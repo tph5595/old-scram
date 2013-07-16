@@ -550,9 +550,6 @@ class Plant(object):
             #print"EarthQuake!" #for testing
             self.earthquake = True
             self._earthquakeDamage()
-        else:
-            #print"Safe!" #for testing
-            self.earthquake = False
 
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
     def _earthquakeDamage(self):
@@ -605,6 +602,11 @@ class Plant(object):
         elif (destroy == 8):
             self.towerPumps = 0
             self.damage = self.damage | 256
+            
+        self.clock.callLater(5, self._earthquakeReset)
+    
+    def _earthquakeReset(self):
+        self.earthquake = False
         
     def getEarthquake(self):
         return {'quake':self.earthquake,'damage':self.damage}
@@ -687,7 +689,7 @@ class Plant(object):
     #Make temperatures red if it is approaching critical point.
     #DANGER! DANGER! High Voltage! *Electric Six*
     def _critCheck(self):
-        reactorCrit = 3800
+        reactorCrit = 4000
         pressureCrit = 3900
         
         #is the reactor Core approaching a meltdown?
@@ -696,6 +698,9 @@ class Plant(object):
         
         if (self.rcsPressure >= pressureCrit):
             self.critFlag = self.critFlag | 2
+            
+        if ((self.reactorTemp * 1.08) >= self.boilingTemp):
+            self.critFlag = self.critFlag | 4
     
     def cryptXOR(self, s, key="\x1027"):
         # TODO: save me for later.
@@ -791,7 +796,7 @@ class Plant(object):
         # increment game tick one second
         self.elapsedTime += 1
             
-        if not (self.inMeltdown) and not (self.pressureExplosion):
+        if not (self.inMeltdown) and not (self.pressureExplosion) and not (self.earthquake):
             #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
             self._boilAndPressure()
             # get temps from last game tick
@@ -817,12 +822,12 @@ class Plant(object):
             self._critCheck()
             #update risk for earthquakes
             self._calcRisk()
-            #Check for eathquake
-            if (self.risk > 0):
-                self._getEarthQuake()
             #Restore workers every 20 minutes. (1200 game ticks (sec))
             if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
                 self._restoreWorkers()
+            #Check for eathquake
+            if (self.risk > 0):
+                self._getEarthQuake()
             #Meltdown or Scram. Decrease points. Reset everything.
             if (self.reactorTemp > 5000):
                 self._meltDown()
