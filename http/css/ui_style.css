@@ -661,6 +661,26 @@
 	top: -1123px;
 	left: 0px;
 }
+.steamvoidingfaceclosed {
+	background-image: url(../images/events/steamvoidC.png);
+	background-size: 200px 73px;
+	background-repeat: no-repeat;
+	height: 73px;
+	width: 200px;
+	position: relative;
+	top: -1123px;
+	left: 500px;
+}
+.steamvoidingfaceopen {
+	background-image: url(../images/events/steamvoidO.png);
+	background-size: 100px 73px;
+	background-repeat: no-repeat;
+	height: 73px;
+	width: 200px;
+	position: relative;
+	top: -1123px;
+	left: 500px;
+}
 .noface {
 	display: none;	
 }

@@ -35,6 +35,12 @@ function(lang, on, Declare, Socket, _WidgetBase, _Container, _Contained, _Templa
 				'faceClass' : 'noface z4',
 				'faceId' : 'explosion'
 			}, this.explosionfaceDAP);
+			this.steamvoidingFace = new Face ({
+				'socket' : this.socket,
+				'poll' : this.poll,
+				'faceClass' : 'noface z4',
+				'faceId' : 'steamvoiding'
+			}, this.steamvoidingfaceDAP);
 			
 			this.inherited(arguments);
 		}

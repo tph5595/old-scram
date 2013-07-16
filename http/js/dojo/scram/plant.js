@@ -11,9 +11,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 
 		constructor : function(args) {
 			this.sockets = args.sockets;
-			/*this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
+			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
 				console.log("Poll Data", msg.data);
-			}));
+			}));/*
 			this.sockets.earthquakeSocket.on("message", lang.hitch(this, function(msg) {
 				console.log("EarthquakeData", msg.data);
 			}));*/
