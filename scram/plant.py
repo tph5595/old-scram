@@ -451,12 +451,14 @@ class Plant(object):
                 self.pressurizerWaterLevel += 1
         
         #Increase pressure by 2.5% every tick while this is open. This number may need changed
+        #TODO: calculate change in rcsPressure based on what the pump level is set to.
         if (self.hpiValve == True) and (self.hpiPump >= 1) and (self.hpiWater > 0):
             self.rcsPressure = self.rcsPressure * 1.025
             if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
                 self.hpiWater -= 1
                 
         #Increase pressure by 2.5% every tick while this is open. This number may need changed
+        #TODO: calculate change in rcsPressure based on what the pump level is set to.
         if (self.afsValve == True) and (self.afsPumps >= 1) and (self.afsTankLevel > 0):
             self.rcsPressure = self.rcsPressure * 1.025
             if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
