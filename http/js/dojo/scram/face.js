@@ -29,7 +29,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		},
 		socketMsg: function(event){
 			var obj = JSON.parse(event.data);
-			if (this.faceId != 'meltdown' && this.faceId != 'explosion'){
+			if (this.faceId != 'meltdown' && this.faceId != 'explosion' && this.faceId != 'steamvoiding'){
 				this.socketFace = obj['quake'];
 				this.addFacePrep();
 			}	

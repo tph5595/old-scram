@@ -32,7 +32,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.inherited(arguments);
 		},
 		tankMove : function() {
-			if (this.valveState == true && this.pumpLevel != 0){
+			if (this.pumpLevel != 0){
 				if (this.tankLevel < 0) {
 					this.tankLevel = 0
 				}

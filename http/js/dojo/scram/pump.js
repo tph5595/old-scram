@@ -50,6 +50,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			this.inherited(arguments);
 		},
 		fix : function(){
+			this.emit('removeRepair', {});
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				/*
 				console.log('Pump Fixed');

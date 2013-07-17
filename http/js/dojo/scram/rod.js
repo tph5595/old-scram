@@ -30,6 +30,7 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 			this.inherited(arguments);
 		},
 		fix : function(){
+			this.emit('removeRepair', {});
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				this.rodUpdate();
 			}
