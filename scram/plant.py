@@ -17,7 +17,7 @@ class Plant(object):
         self.elapsedTime = 0  # add to this every cycle
         
         #5 every 20 minutes or so.  
-        self.workers = 80 
+        self.workers = 50
         
         # Risk Level
         self.risk = 0  # Increments based on Net MWH and time; determines earth quakes
@@ -451,16 +451,29 @@ class Plant(object):
                 self.pressurizerWaterLevel += 1
         
         #Increase pressure by 2.5% every tick while this is open. This number may need changed
-        #TODO: calculate change in rcsPressure based on what the pump level is set to.
         if (self.hpiValve == True) and (self.hpiPump >= 1) and (self.hpiWater > 0):
-            self.rcsPressure = self.rcsPressure * 1.025
+            if (self.hpiPump == 4):
+                self.rcsPressure = self.rcsPressure * 1.042
+            elif (self.hpiPump == 3):
+                self.rcsPressure = self.rcsPressure * 1.032
+            elif (self.hpiPump == 2):
+                self.rcsPressure = self.rcsPressure * 1.022
+            else: #Pump at 1
+                self.rcsPressure = self.rcsPressure * 1.015
+            
             if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
                 self.hpiWater -= 1
                 
         #Increase pressure by 2.5% every tick while this is open. This number may need changed
         #TODO: calculate change in rcsPressure based on what the pump level is set to.
         if (self.afsValve == True) and (self.afsPumps >= 1) and (self.afsTankLevel > 0):
-            self.rcsPressure = self.rcsPressure * 1.025
+            if (self.afsPumps == 3):
+                self.rcsPressure = self.rcsPressure * 1.032
+            elif (self.afsPumps == 2):
+                self.rcsPressure = self.rcsPressure * 1.022
+            else: #Pump at 1
+                self.rcsPressure = self.rcsPressure * 1.015
+                
             if (self.elapsedTime % 10 == 0): #Game Exploit - tank levels only decrease every tenth second.
                 self.afsTankLevel -= 1
         
@@ -523,7 +536,7 @@ class Plant(object):
     #make all the temps hotter by a percent.  Big bada-boom
     def _steamVoidingAction(self):
         #percent to increase all temps by
-        percent = 1.02
+        percent = 1.021
         #rcsLoop
         self.reactorTemp = self.reactorTemp * percent
         self.rcsColdLegTemp = self.rcsColdLegTemp * percent
@@ -544,10 +557,10 @@ class Plant(object):
     def _getEarthQuake(self):
         self.earthquake = False
         size = 1000
-        size = size - (self.risk * 15)
+        size = size - (self.risk * 20)
         
-        if (size < 30):
-            size = 30
+        if (size < 45):
+            size = 45
       
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
@@ -635,11 +648,11 @@ class Plant(object):
             
         if self.generatorMWH > 1000 and self.generatorMWH % 1000 == 0:
             self.risk += 1
-            
-    #call every 20 minutes.      
+    
+    #call every 25 minutes.      
     def _restoreWorkers(self):
             self.workers += 5
-            
+    
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9
         self.inMeltdown = True
@@ -668,7 +681,7 @@ class Plant(object):
         self.conPumps = 2
         self.hpiPump = 0
         self.towerPumps = 2
-        self.workers = 80
+        self.workers = 50
         self.boilingTemp = 657
         self.rcsPressure = 2294
         self.elapsedTime = 0
@@ -843,9 +856,11 @@ class Plant(object):
             self._critCheck()
             #update risk for earthquakes
             self._calcRisk()
-            #Restore workers every 20 minutes. (1200 game ticks (sec))
-            if (self.elapsedTime >= 1200) and (self.elapsedTime % 1200 == 0):
+            
+            #Restore workers every 25 minutes. (1200 game ticks (sec))
+            if (self.elapsedTime >= 1500) and (self.elapsedTime % 1500 == 0):
                 self._restoreWorkers()
+            
             #Check for eathquake
             if (self.risk > 0):
                 self._getEarthQuake()
