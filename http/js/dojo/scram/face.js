@@ -49,6 +49,9 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 				if (this.socketFace == true && this.pollFace == false){
 					this.faceId = 'quake';
 				}
+				if (this.socketFace == true && this.faceId == 'steamvoiding' && this.pollFace == true){
+					this.pollFace = false
+				}
 				switch (this.modSimtime){
 					case 0:
 						this.addFaceClosed(this.faceId);
