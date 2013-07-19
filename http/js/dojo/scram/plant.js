@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dojo/fx", "dijit/_WidgetBase", "dijit/_Container", "dojo/dom-class", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", 
-"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/earthquake", "scram/faces", "scram/flag", "scram/repairs", "dojo/text!scram/templates/plant.html"], 
-function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Earthquake, Faces, Flag, Repairs, template) {
+"scram/rod", "scram/pumps", "scram/temp", "scram/valves", "scram/waters", "scram/tanks", "scram/faces", "scram/flag", "scram/repairs", "dojo/text!scram/templates/plant.html"], 
+function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _TemplatedMixin, Evented, Rods, Pumps, Temp, Valves, Waters, Tanks, Faces, Flag, Repairs, template) {
 	return Declare("scram.plant", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 		///
 		/// This is the class for the plant
@@ -54,15 +54,8 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.repairs = new Repairs();
 			this.repairs.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));
 			this.repairs.on('repairstatetrue', lang.hitch(this, this.repairStateSwitch));
-			 /*
-			 this.damages = new Damages ({
-			 socket : this.sockets.earthquakeSocket,
-			 })*/
 			 
-			 this.earthquake = new Earthquake({
-			 socket : this.sockets.earthquakeSocket,
-			 poll : this.sockets.pollSocket
-			 });
+			 
 			this.faces = new Faces({
 				socket : this.sockets.earthquakeSocket,
 				poll : this.sockets.pollSocket
@@ -76,8 +69,6 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.addChild(this.tanks);
 			this.addChild(this.flag);
 			this.addChild(this.repairs);
-			//this.addChild(this.damages);
-			//this.addChild(this.earthquake);
 			this.addChild(this.faces);
 			this.inherited(arguments);
 		},
