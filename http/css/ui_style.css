@@ -861,8 +861,8 @@
 /*Flag*/
 .flagsubmission{
 	position: relative;
-	top: -475px;
-	left: 860px;
+	top: -575px;
+	left: 1150px;
 	background-image: url(../images/submitBtn.png);
 	height: 20px;
 	width: 50px;
@@ -875,6 +875,6 @@
 .flag{
 	position: relative;
 	width: 70px;
-	top: -477px;
-	left: 850px;
+	top: -577px;
+	left: 1140px;
 }
