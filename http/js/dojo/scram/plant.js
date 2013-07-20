@@ -8,6 +8,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		templateString : template,
 		sockets : null,
 		'class' : "scrambackground scrambackgroundposition z1",
+		repairRemoveVar: null,
 
 		constructor : function(args) {
 			this.sockets = args.sockets;
@@ -35,6 +36,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				poll : this.sockets.pollSocket
 			});
 			this.pumps.on('damageRepaired', lang.hitch(this, this.repair));
+			this.pumps.on('repairRemoveVar', lang.hitch(this, this.removeRepair));
 			
 			this.valves = new Valves({
 				socket : this.sockets.valveSocket,
@@ -51,7 +53,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			});
 //			this.flag = new Flag();
 			
-			this.repairs = new Repairs();
+			this.repairs = new Repairs({
+				repairRemoveVar : this.repairRemoveVar
+			});
 			this.repairs.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));
 			this.repairs.on('repairstatetrue', lang.hitch(this, this.repairStateSwitch));
 			 
@@ -86,6 +90,10 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		},
 		repairStateSwitch : function(event){
 			this.repairState = event['repairstate'];
+		},
+		removeRepair : function(){
+			this.repairRemoveVar = true;
+			console.log('removeRepair');
 		}
 	});
 });

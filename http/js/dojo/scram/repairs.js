@@ -7,13 +7,16 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 		/// This is the class for the repairs
 		///
 		templateString:template,
+		repairRemoveVar : null,
 
 		constructor : function(args) {
+			this.repairRemoveVar = args.repairRemoveVar;
 		},
 		postCreate : function() {
 			this.repair = new Repair({
 				'repairstate': false,
 				'title': 'Repair Button',
+				'repairRemoveVar' : this.repairRemoveVar,
 				repairClass :'repairbutton repairstatefalse z2',
 			},this.repairDAP);
 			this.repair.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));

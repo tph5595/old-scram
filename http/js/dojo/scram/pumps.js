@@ -28,6 +28,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpDownClass : 'rcspumpdown downbutton z2',
 			},this.rcsPumpDAP);
 			this.rcsPump.on('damageRepaired', lang.hitch(this, this.repair));
+			this.rcsPump.on('repairRemoveVar', lang.hitch(this, this.removeRepair));
 			
 			this.hpiTankPump = new Pump({
 				'socket' : this.socket,
@@ -42,6 +43,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpDownClass : 'hpitankpumpdown downbutton z2',
 			},this.hpiPumpDAP);
 			this.hpiTankPump.on('damageRepaired', lang.hitch(this, this.repair));
+			this.hpiTankPump.on('removeRepair', lang.hitch(this, this.removeRepair));
 			
 			this.auxTankPump = new Pump({
 				'socket' : this.socket,
@@ -56,6 +58,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpDownClass : 'auxtankpumpdown downbutton z2',
 			},this.auxPumpDAP);
 			this.auxTankPump.on('damageRepaired', lang.hitch(this, this.repair));
+			this.auxTankPump.on('removeRepair', lang.hitch(this, this.removeRepair));
 			
 			this.feedwaterPump = new Pump({
 				'socket' : this.socket,
@@ -70,6 +73,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpDownClass : 'feedwaterpumpdown downbutton z2',
 			},this.fwPumpDAP);
 			this.feedwaterPump.on('damageRepaired', lang.hitch(this, this.repair));
+			this.feedwaterPump.on('removeRepair', lang.hitch(this, this.removeRepair));
 			
 			this.csPump = new Pump({
 				'socket' : this.socket,
@@ -84,11 +88,15 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 				pumpDownClass : 'cspumpdown downbutton z2',
 			},this.csPumpDAP);
 			this.csPump.on('damageRepaired', lang.hitch(this, this.repair));
+			this.csPump.on('removeRepair', lang.hitch(this, this.removeRepair));
 			
 			this.inherited(arguments);
 		},
 		repair : function(event) {
 			this.emit('damageRepaired', event)
+		},
+		removeRepair : function(){
+			this.emit('repairRemoveVar', {});
 		}
 
 

@@ -11,11 +11,13 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		repairClass : null,
 		_setRepairClassAttr: {node:"repairDAP",type:"class"},
 		_setRepairTipAttr: {node:"repairDAP",type:"title"},
+		repairRemoveVar: null,
 		
 		constructor : function(args) {
 			this.tip = args.tip;
 			this.repairState = args.repairState;
 			this.repairClass = args.repairClass;
+			this.repairRemoveVar = args.repairRemoveVar;
 		},
 		postCreate : function() {
 			this.inherited(arguments);
@@ -29,6 +31,11 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			domClass.add(this.repairDAP, 'repairbutton '+ ' repairstate'+state +' '+this.repairClass);
 		},
 		repairUpdate : function(x) {
+			if (this.repairRemoveVar == true){
+				this.repairState = false;
+				this.repairRemoveVar = false;
+				console.log('testing');
+			}
 			if (this.repairState== false){
 					this.emit('repairstatefalse', {'repairstate' : this.repairState});
 			}	
