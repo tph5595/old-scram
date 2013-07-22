@@ -64,6 +64,14 @@
 	margin-right: auto;
 	margin-top: 20px;
 }
+.shadestop{
+	background-image: url(../images/mainSample.png);
+	background-size: 1000px 20px;
+	width: 1000px;
+	height: 25px;
+	position: relative;
+	top: -165px;
+}
 .twitterfeed {
 	position: relative;
 	left: 1450px;
@@ -71,7 +79,10 @@
 	width: 300px;
 	z-index: 4;
 }
-.toolbar {
+.toolbar {/*
+	border-width : 1px;
+	border-color: gray;
+	border-style: solid;*/
 	background-size: 300px 300px;
 	position: relative;
 	left: 90px;
@@ -897,6 +908,7 @@
 .flagsubmission{
 	position: relative;
 	top: 2px;
+	left: 10px;
 	background-image: url(../images/submitBtn.png);
 	height: 20px;
 	width: 50px;
@@ -908,5 +920,6 @@
 
 .flag{
 	position: relative;
+	left: 10px;
 	width: 70px;
 }
