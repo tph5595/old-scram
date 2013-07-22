@@ -6,15 +6,20 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		/// This is the class for the toolbar
 		///
 		templateString : template,
-
+		sockets : null,
+		
 		constructor : function(args) {
-			
+			this.sockets = args.sockets
 		},
 		postCreate : function() {
 			
-			this.score = new Score();
+			this.score = new Score({
+				poll : this.sockets.pollSocket,
+				earthquakeSocket : this.sockets.earthquakeSocket
+			});
 			this.flag = new Flag();
 			
+			this.addChild(this.score);
 			this.addChild(this.flag);
 			this.inherited(arguments);
 		}

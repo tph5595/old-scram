@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dojo/fx", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-class", 
-"scram/sockets", "scram/plant", "scram/status", "scram/splash", "scram/user", "scram/tweet", "scram/toolbar", "dojo/text!scram/templates/ui.html"], 
-function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedMixin, Evented, domClass, Sockets, Plant, Status, Splash, User, Tweet,Toolbar, template) {
+"scram/sockets", "scram/plant", "scram/status", "scram/splash", "scram/user", "scram/tweet", "scram/toolbar", "scram/banner", "dojo/text!scram/templates/ui.html"], 
+function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedMixin, Evented, domClass, Sockets, Plant, Status, Splash, User, Tweet,Toolbar, Banner, template) {
 	return Declare("scram.ui", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the main UI
@@ -26,13 +26,17 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 					this.status = new Status({
 						socket : this._sockets.pollSocket
 					}, this.statusDAP);
+					this.banner = new Banner({
+					}, this.bannerDAP);
 					this.plant = new Plant({
 						sockets : this._sockets
 					}, this.plantDAP);
 					this.tweet = new Tweet({
 					}, this.tweetDAP);
 					this.toolbar = new Toolbar({
+						sockets : this._sockets
 					}, this.toolbarDAP);
+
 					//this._sockets.earthquakeSocket.on('message', lang.hitch(this, this.quakeShake));
 					/*
 					this.earthquake = new Earthquake({
@@ -45,6 +49,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 			}));
 			this.addChild(this.splash);
 			this.addChild(this.user);
+			this.addChild(this.banner);
 			this.addChild(this.plant);
 			this.addChild(this.tweet);
 			this.addChild(this.toolbar);
@@ -52,6 +57,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 			dojo.style(this.userDAP, "opacity", "0");
 			dojo.style(this.statusDAP, "opacity", "0");
 			dojo.style(this.plantDAP, "opacity", "0");
+			
 			this.inherited(arguments);
 		},
 		startup : function() {

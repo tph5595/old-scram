@@ -3,7 +3,7 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojo/dom-class", "dijit/_Widge
 
 		_socket : null,
 		templateString : template,
-		'class' : "statsbarbackground z1",
+		'class' : "statsbarbackground statsbarbackgroundshadow z1",
 		critflag : null,
 		rcsFlag : null,
 		boilingFlag : null,
