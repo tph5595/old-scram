@@ -646,7 +646,7 @@ class Plant(object):
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
             self.risk += 1
             
-        if self.generatorMWH > 1000 and self.generatorMWH % 1000 == 0:
+        if self.generatorMWH > 999 and self.generatorMWH % 1000 == 0:
             self.risk += 1
     
     #call every 25 minutes.      
