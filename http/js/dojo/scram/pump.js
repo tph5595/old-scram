@@ -28,11 +28,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			node : "pumpDown",
 			type : "class"
 		},
-		tip : null,
-		_setPumpTipAttr : {
-			node : "pump",
-			type : "title"
-		},
 
 		constructor : function(args) {
 			this.socket = args.socket;
@@ -43,7 +38,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			this.pumpDownClass = args.pumpDownClass;
 			this.pumpLevel = 0;
 			this.pumpLevelMax = args.pumpLevelMax;
-			this.tip = args.tip;
 			this.poll.on("message", lang.hitch(this, this.pollMsg));
 		},
 		postCreate : function() {
@@ -69,6 +63,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			}
 		},
 		increment : function() {
+			///*For testing*/this.damageId = this.damageMsg & this.damageId;
 			if ((this.damageMsg & this.damageId) == this.damageId){
 				this.pumpMove();
 			}

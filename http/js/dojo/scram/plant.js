@@ -27,7 +27,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.rods = new Rods({
 				"socket" : this.sockets.rodSocket,
 				"pollSocket" : this.sockets.pollSocket,
-				'tip' : 'Reactor Core Rods',
+				'title' : 'Reactor Core Rods',
 				'class' : "z2"
 			});
 			this.rods.on('damageRepaired', lang.hitch(this, this.repair));

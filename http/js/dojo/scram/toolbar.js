@@ -14,8 +14,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		postCreate : function() {
 			
 			this.score = new Score({
-				poll : this.sockets.pollSocket,
-				earthquakeSocket : this.sockets.earthquakeSocket
+				poll : this.sockets.pollSocket
 			});
 			this.flag = new Flag();
 			

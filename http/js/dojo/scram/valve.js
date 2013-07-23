@@ -14,8 +14,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 		damageId : null,
 		damageMsg : null,
 		_setValveClassAttr: {node:"valve",type:"class"},
-		tip:null,
-		_setValveTipAttr: {node:"valve",type:"title"},
 
 		constructor : function(args) {
 			this.socket = args.socket;
@@ -23,7 +21,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 			this.damageId = args.damageId;
 			this.valveClass = args.valveClass;
 			this.valveState = false; //false = closed true = open
-			this.tip = args.tip;
 			this.poll.on("message",lang.hitch(this,this.pollMsg));
 		},
 		postCreate : function() {

@@ -11,11 +11,6 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 		damageId: null,
 		damageMsg: null,
 		rodLevel : null,
-		tip : null,
-		_setRodTipAttr : {
-			node : "rod",
-			type : "title"
-		},
 		rodTop : [-53, -58, -63, -69, -75, -80, -86, -92, -99, -105],
 
 		constructor : function(args) {
