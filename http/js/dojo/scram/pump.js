@@ -44,7 +44,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			this.inherited(arguments);
 		},
 		fix : function(){
-			this.emit('repairRemoveVar', {});
 			if (this.workers <= 0){
 				alert('Not Enough Workers');
 			}

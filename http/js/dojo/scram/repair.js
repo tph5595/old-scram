@@ -12,7 +12,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		_setRepairClassAttr: {node:"repairDAP",type:"class"},
 		_setRepairTipAttr: {node:"repairDAP",type:"title"},
 		repairRemoveVar: null,
-		
+
 		constructor : function(args) {
 			this.tip = args.tip;
 			this.repairState = args.repairState;

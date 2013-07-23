@@ -31,20 +31,20 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				'class' : "z2"
 			});
 			this.rods.on('damageRepaired', lang.hitch(this, this.repair));
-			
+
 			this.pumps = new Pumps({
 				socket : this.sockets.pumpSocket,
 				poll : this.sockets.pollSocket
 			});
 			this.pumps.on('damageRepaired', lang.hitch(this, this.repair));
 			this.pumps.on('repairRemoveVar', lang.hitch(this, this.removeRepair));
-			
+
 			this.valves = new Valves({
 				socket : this.sockets.valveSocket,
 				poll : this.sockets.pollSocket
 			});
 			this.valves.on('damageRepaired', lang.hitch(this, this.repair));
-			
+
 			this.waters = new Waters({
 				poll : this.sockets.pollSocket
 			});
@@ -53,14 +53,14 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 				poll : this.sockets.pollSocket
 			});
 //			this.flag = new Flag();
-			
+
 			this.repairs = new Repairs({
 				repairRemoveVar : this.repairRemoveVar
 			});
 			this.repairs.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));
 			this.repairs.on('repairstatetrue', lang.hitch(this, this.repairStateSwitch));
-			 
-			 
+
+
 			this.faces = new Faces({
 				socket : this.sockets.earthquakeSocket,
 				poll : this.sockets.pollSocket

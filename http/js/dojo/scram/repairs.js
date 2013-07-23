@@ -21,7 +21,7 @@ function(lang,Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin, Even
 			},this.repairDAP);
 			this.repair.on('repairstatefalse', lang.hitch(this, this.repairStateSwitch));
 			this.repair.on('repairstatetrue', lang.hitch(this, this.repairStateSwitch));
-			
+
 			this.inherited(arguments);
 		},
 		repairStateSwitch : function(event){
