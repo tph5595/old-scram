@@ -12,6 +12,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		modSimtime : null,
 		pollFace : null,
 		poll: null,
+		duplicateCheck : null,
 		faceClass : null,
 		_setFaceClassAttr : {node : "faceDAP", type : "class"},
 		templateString : template,
@@ -21,6 +22,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			this.socketFace = false;
 			this.socket = args.socket;
 			this.faceClass = args.faceClass;
+			this.duplicateCheck = false;
 			this.modSimtime = -1;
 			this.pollFace = false;
 			this.poll = args.poll;
@@ -38,6 +40,17 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 		pollMsg : function(event) {
 			var obj = JSON.parse(event.data);
 			this.modSimtime = obj['simtime'] % 2;
+			this.explosion = obj['explosion'];
+			this.meltdown = obj['meltdown'];
+			this.steamvoiding = obj['steamvoiding'];
+			if ((this.explosion == true && this.meltdown == false && this.steamvoiding == false) || 
+			(this.explosion == false && this.meltdown == true && this.steamvoiding == false) ||
+			(this.explosion == false && this.meltdown == false && this.steamvoiding == true)){
+				this.duplicateCheck = false;
+			}
+			else{
+				this.duplicateCheck = true;
+			}
 			if (this.faceId != 'quake'){
 				this.pollFace = obj[this.faceId];
 				this.addFacePrep();
@@ -45,12 +58,18 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 			
 		},
 		addFacePrep : function(){
-			if (this.pollFace == true || this.socketFace == true){
+			if ((this.pollFace == true || this.socketFace == true)){		
+				if (this.duplicateCheck == true && this.faceId == 'steamvoiding'){
+					this.pollFace = false;
+				}
+				//check to see if there is a quake
 				if (this.socketFace == true && this.pollFace == false){
 					this.faceId = 'quake';
 				}
+				
+				//remove steam voiding face on earthquake
 				if (this.socketFace == true && this.faceId == 'steamvoiding' && this.pollFace == true){
-					this.pollFace = false
+					this.pollFace = false;
 				}
 				switch (this.modSimtime){
 					case 0:
@@ -60,6 +79,7 @@ function(lang, on, Declare, Deferred, _WidgetBase, _Container, _Contained, _Temp
 						this.addFaceOpen(this.faceId);
 						break;
 				}
+				this.duplicateCheck = true;
 			}
 			else{
 				this.removeFace();
