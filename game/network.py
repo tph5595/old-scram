@@ -119,11 +119,11 @@ class PollPlant(Command):
                 ('afswater',Integer()),
                 ('critflag',Integer()),
                 ('steamvoiding',Boolean()),
-                ('totSteamVoiding',Integer()),
-                ('totEarthquakes',Integer()),
-                ('totSim',Integer()),
-                ('totExplosions',Integer()),
-                ('totMeltdowns',Integer())
+                ('totsteamvoiding',Integer()),
+                ('totearthquakes',Integer()),
+                ('totsim',Integer()),
+                ('totexplosions',Integer()),
+                ('totmeltdowns',Integer())
                 ]
     #response = [('updateid',String()),('mwh',String())]
 
@@ -247,11 +247,11 @@ class NetworkController(AMP):
                 afswater,
                 critflag,
                 steamvoiding,
-                totSteamVoiding,
-                totEarthquakes,
-                totSim,
-                totExplosions,
-                totMeltdowns):
+                totsteamvoiding,
+                totearthquakes,
+                totsim,
+                totexplosions,
+                totmeltdowns):
         
         '''
                         ('pressurizervalve',Boolean()),
@@ -294,11 +294,11 @@ class NetworkController(AMP):
                 'afswater':afswater,
                 'critflag':critflag,
                 'steamvoiding':steamvoiding,
-                'totSteamVoiding':totSteamVoiding,
-                'totEarthquakes':totEarthquakes,
-                'totSim':totSim,
-                'totExplosions':totExplosions,
-                'totMeltdowns':totMeltdowns
+                'totsteamvoiding':totsteamvoiding,
+                'totearthquakes':totearthquakes,
+                'totsim':totsim,
+                'totexplosions':totexplosions,
+                'totmeltdowns':totmeltdowns
                 }
         self.lastPoll = j
         try:

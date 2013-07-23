@@ -100,11 +100,11 @@ class Plant(object):
         self.steamWasTrue = False
         
         #Variables for Totals on Left of Display
-        self.totMeltdowns = 0
-        self.totExplosions = 0
-        self.totSim = 0
-        self.totEarthquakes = 0
-        self.totSteamVoiding = 0
+        self.totmeltdowns = 0
+        self.totexplosions = 0
+        self.totsim = 0
+        self.totearthquakes = 0
+        self.totsteamvoiding = 0
         
         
     # Relationship between reactor temp and cold leg
@@ -496,7 +496,7 @@ class Plant(object):
         #Explosion in pressure tank
         if (self.rcsPressure >= 5000):
             self.pressureExplosion = True
-            self.totExplosions += 1
+            self.totexplosions += 1
             self.steamVoiding = False
             self.clock.callLater(5, self._reset)
             
@@ -533,7 +533,7 @@ class Plant(object):
     def _steamVoiding(self):
         if (self.reactorTemp > self.boilingTemp):
             self.steamVoiding = True
-            self.totSteamVoiding += 1
+            self.totsteamvoiding += 1
             #self._steamVoidingAction() #Called in update now
         else:
             self.steamVoiding = False
@@ -578,7 +578,7 @@ class Plant(object):
         if magicNumber == 69:
             #print"EarthQuake!" #for testing
             self.earthquake = True
-            self.totEarthquakes += 1
+            self.totearthquakes += 1
             self._earthquakeDamage()
 
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
@@ -668,7 +668,7 @@ class Plant(object):
     def _meltDown(self):
         self.generatorMWH = self.generatorMWH * .9
         self.inMeltdown = True
-        self.totMeltdowns += 1
+        self.totmeltdowns += 1
         #Need to make steam voiding false right before pauses to make front end visuals work better
         self.steamVoiding = False
         
@@ -790,11 +790,11 @@ class Plant(object):
                 'afswater':self.afsTankLevel,
                 'critflag':self.critFlag,
                 'steamvoiding':self.steamVoiding,
-                'totSteamVoiding':self.totSteamVoiding,
-                'totEarthquakes':self.totEarthquakes,
-                'totSim':self.totSim,
-                'totExplosions':self.totExplosions,
-                'totMeltdowns':self.totMeltdowns
+                'totsteamvoiding':self.totsteamvoiding,
+                'totearthquakes':self.totearthquakes,
+                'totsim':self.totsim,
+                'totexplosions':self.totexplosions,
+                'totmeltdowns':self.totmeltdowns
                 }
         
     def setRod(self, level):
@@ -846,7 +846,7 @@ class Plant(object):
         #Front end needs sim time to function even during pauses. Needs called no matter what.
         # increment game tick one second
         self.elapsedTime += 1
-        self.totSim = self.totSim + 1
+        self.totsim = self.totsim + 1
             
         if not (self.inMeltdown) and not (self.pressureExplosion) and not (self.earthquake):
             #Calc boiling and pressure (this is still based on previous game tick since calcs haven't been made at this point)
