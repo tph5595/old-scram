@@ -19,14 +19,14 @@
 	color: #99FF33;
 	position: relative;
 	height: 50px;
-	width: 200px;
+	width: 300px;
 	left: 20px;
 }
 .scorestitle{
 	color: #FF9966;
 	position: relative;
 	height: 50px;
-	width: 200px;
+	width: 300px;
 	left: 10px;
 	font-size: 30px;
 }
@@ -74,7 +74,7 @@
 }
 .twitterfeed {
 	position: relative;
-	left: 1450px;
+	left: 1500px;
 	top: -722px;
 	width: 300px;
 	z-index: 4;

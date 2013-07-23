@@ -27,8 +27,8 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.meltdownDAP.innerHTML = 'Meltdowns: ' + this.totmeltdowns;
 			this.explosionDAP.innerHTML = 'Pressure Explosions: ' + this.totexplosions;
 			this.earthquakeDAP.innerHTML = 'Earthquakes: ' + this.totearthquakes;
-			this.steamvoidingDAP.innerHTML = 'Steam Voiding: ' + this.totsteamvoiding;
-			this.totalsimtimeDAP.innerHTML = 'Total Simtime Voiding: ' + this.totsim;
+			this.steamvoidingDAP.innerHTML = 'Steam Voiding Time: ' + this.totsteamvoiding;
+			this.totalsimtimeDAP.innerHTML = 'Total Simtime: ' + this.totsim;
 			this.inherited(arguments);
 		},
 		pollMsg : function(event) {
@@ -37,7 +37,28 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.totexplosions = obj['totexplosions'];
 			this.totearthquakes = obj['totearthquakes'];
 			this.totsteamvoiding = obj['totsteamvoiding'];
-			this.totsim = obj['totsim'];
+			//this.totsimTemporary = obj['totsim'];
+			
+			var totsteamvoidingMins = Math.floor(Math.round(obj['totsteamvoiding']) / 60 % 60);
+			var totsteamvoidingHours = Math.floor(Math.round(obj['totsteamvoiding']) / 3660);
+			var totsteamvoidingSeconds = Math.floor(Math.round(obj['totsteamvoiding']) % 60);
+			var totsteamvoidingD = new Date();
+			totsteamvoidingD.setHours(totsteamvoidingHours);
+			totsteamvoidingD.setMinutes(totsteamvoidingMins);
+			totsteamvoidingD.setSeconds(totsteamvoidingSeconds);
+			this.totsteamvoiding= totsteamvoidingD.toTimeString().split(" ")[0];
+			
+			var totSimMins = Math.floor(Math.round(obj['totsim']) / 60 % 60);
+			var totSimHours = Math.floor(Math.round(obj['totsim']) / 3660);
+			var totSimSeconds = Math.floor(Math.round(obj['totsim']) % 60);
+			var totSimD = new Date();
+			totSimD.setHours(totSimHours);
+			totSimD.setMinutes(totSimMins);
+			totSimD.setSeconds(totSimSeconds);
+			this.totsim= totSimD.toTimeString().split(" ")[0];
+			
+			
+			
 			this.increment();
 		},
 		increment : function() {
@@ -45,7 +66,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.meltdownDAP.innerHTML = 'Meltdowns: ' + this.totmeltdowns;
 			this.explosionDAP.innerHTML = 'Pressure Explosions: ' + this.totexplosions;
 			this.earthquakeDAP.innerHTML = 'Earthquakes: ' + this.totearthquakes;
-			this.steamvoidingDAP.innerHTML = 'Steam Voiding Time: ' + this.totsteamvoiding;
+			this.steamvoidingDAP.innerHTML = 'Total Time Steam Voiding: ' + this.totsteamvoiding;
 			this.totalsimtimeDAP.innerHTML = 'Total Simtime: ' + this.totsim;
 
 		}
