@@ -11,6 +11,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		repairRemoveVar: null,
 
 		constructor : function(args) {
+			this.repairRemoveVar = false;
 			this.sockets = args.sockets;
 			this.sockets.pollSocket.on("message", lang.hitch(this, function(msg) {
 				console.log("Poll Data", msg.data);
@@ -91,7 +92,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		repairStateSwitch : function(event){
 			this.repairState = event['repairstate'];
 		},
-		removeRepair : function(){
+		removeRepair : function(event){
 			this.repairRemoveVar = true;
 			console.log('removeRepair');
 		}
