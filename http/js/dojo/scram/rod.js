@@ -26,7 +26,10 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 		},
 		fix : function(){
 			this.emit('removeRepair', {});
-			if ((this.damageMsg & this.damageId) == this.damageId){
+			if (this.workers <= 0){
+				alert('Not Enough Workers');
+			}
+			if ((this.damageMsg & this.damageId) == this.damageId && this.workers > 0){
 				this.rodUpdate();
 			}
 			else{
@@ -97,6 +100,7 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 			var obj = JSON.parse(event.data);
 			this.rodLevel = obj['rods'];
 			this.damageMsg = obj['damage'];
+			this.workers = obj['workers'];
 			this.rodMove();
 		}
 	});

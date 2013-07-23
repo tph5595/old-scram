@@ -45,7 +45,10 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 		},
 		fix : function(){
 			this.emit('repairRemoveVar', {});
-			if ((this.damageMsg & this.damageId) == this.damageId){
+			if (this.workers <= 0){
+				alert('Not Enough Workers');
+			}
+			if ((this.damageMsg & this.damageId) == this.damageId && this.workers > 0){
 				/*
 				console.log('Pump Fixed');
 				i = {
@@ -112,6 +115,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			var obj = JSON.parse(event.data);
 			this.pumpLevel = obj[this.pumpId];
 			this.damageMsg = obj['damage'];
+			this.workers = obj['workers'];
 			this.pumpMove();
 		}
 	});
