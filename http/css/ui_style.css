@@ -923,3 +923,15 @@
 	left: 10px;
 	width: 250px;
 }
+
+.mouseclick{
+	width: 2500px;
+	height: 1000px;
+	position: relative;
+	top: -2400px;
+	left: -200px;
+	z-index: -999
+}
+.key{
+	display: none;
+}

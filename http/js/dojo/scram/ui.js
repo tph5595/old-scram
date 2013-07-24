@@ -1,6 +1,6 @@
 define(["dojo/on", "dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dojo/fx", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-class", 
-"scram/sockets", "scram/plant", "scram/status", "scram/splash", "scram/user", "scram/tweet", "scram/toolbar", "scram/banner", "dojo/text!scram/templates/ui.html"], 
-function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedMixin, Evented, domClass, Sockets, Plant, Status, Splash, User, Tweet,Toolbar, Banner, template) {
+"scram/sockets", "scram/plant", "scram/status", "scram/splash", "scram/user", "scram/tweet", "scram/toolbar", "scram/banner", "scram/mouseclick", "dojo/text!scram/templates/ui.html"], 
+function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedMixin, Evented, domClass, Sockets, Plant, Status, Splash, User, Tweet,Toolbar, Banner, MouseClick, template) {
 	return Declare("scram.ui", [_WidgetBase, _TemplatedMixin, Evented, _Contained, _Container], {
 		///
 		/// This is the class for the main UI
@@ -36,6 +36,8 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 					this.toolbar = new Toolbar({
 						sockets : this._sockets
 					}, this.toolbarDAP);
+					this.mouseclick = new MouseClick({
+					}, this.mouseclickDAP);
 
 					//this._sockets.earthquakeSocket.on('message', lang.hitch(this, this.quakeShake));
 					/*
@@ -53,6 +55,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 			this.addChild(this.plant);
 			this.addChild(this.tweet);
 			this.addChild(this.toolbar);
+			this.addChild(this.mouseclick);
 
 			dojo.style(this.userDAP, "opacity", "0");
 			dojo.style(this.statusDAP, "opacity", "0");

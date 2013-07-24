@@ -366,7 +366,6 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 					this.afsTimeSlice = 0;
 					break;
 			}
-			console.log(this.rcsTimeSlice);
 			if (this.rcsPumpStateTemp != 0 && this.rcsTimeSlice == true){
 				this.rcsWaterMove1();
 			}
