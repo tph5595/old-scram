@@ -6,7 +6,7 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 		templateString : template,
 		socket : null,
 		constructor : function(args) {
-			this.socket = new Socket("ws://192.168.15.5:50506");
+			this.socket = new Socket("ws://127.0.0.1:50506");
 			this.socket.on("error", lang.hitch(this, function(e) {
 				console.log("Flag Socket Error", e);
 			}));
