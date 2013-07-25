@@ -1,6 +1,4 @@
-define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", "dojo/dom-class", 
-"dojo/mouse", "dojo/dom", "dojo/text!scram/templates/mouseclick.html"], 
-function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, mouse, dom, template) {
+define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", "dojo/dom-class", "dojo/mouse", "dojo/dom", "dojo/text!scram/templates/mouseclick.html"], function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, mouse, dom, template) {
 	return Declare("scram.mouseclick", [_WidgetBase, _TemplatedMixin, _Contained, _Container, Evented], {
 		///
 		/// This is the class for the flag
@@ -15,20 +13,36 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			this.proximity = 30;
 			this.xLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
 			this.yLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
-			this.flags = new Array(
-				'flag1',
-				'flag2',
-				'flag3',
-				'flag4',
-				'flag5',
-				'flag6',
-				'flag7',
-				'flag8',
-				'flag9',
-				'flag10'
-			);
-			this.flagcount = 0;
-			this.flaglen = this.flags.length;
+
+
+			/*
+			this.plainFlags = new Array('flag1', 'flag2', 'flag3', 'flag4', 'flag5', 'flag6', 'flag7', 'flag8', 'flag9', 'flag10');
+			this.plainFlagsLen = this.plainFlags.length;
+			//this is the length of the plainFlags array
+			this.plainFlagsLocation = 0;
+			//this described what iteration over the plainFlags array i am on
+
+			this.xoredFlag = new Array();
+			this.flags = new Array();
+
+			while (this.plainFlagsLocation < this.plainFlagsLen) {
+				this.flagcount = 0;
+				this.xorCount = 0;
+
+				this.splitFlag = this.plainFlags[this.plainFlagsLocation].split('');
+				this.splitFlagLen = this.splitFlag.length;
+				while (this.xorCount < this.splitFlagLen) {
+					console.log(this.splitFlag[this.xorCount].toString(2));
+					this.toBinary(this.splitFlag[this.xorCount]);
+					this.xoredFlag[this.xorCount] = (this.splitFlag[this.xorCount] ^ 0110000101110011011100110110001101101100011011110111011101101110);
+					this.xorCount++;
+				}
+				this.joinedFlag = this.xoredFlag.join('');
+				this.flags[this.plainFlagsLocation] = this.joinedFlag
+				this.plainFlagsLocation++;
+			}
+			console.log(this.flags);
+			*/
 		},
 		postCreate : function() {
 			this.onMouseOver();
@@ -48,13 +62,11 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 				};
 				//console.log('Flag Location: ' + JSON.stringify(this.flagLocation), this.flagLocation);
 				//console.log('Mouse Location: ' + JSON.stringify(this.mouselocation), this.mouselocation);
-				
-				
+
 				if (Math.abs(this.xLocUser - this.xLocFlag) <= this.proximity && Math.abs(this.yLocUser - this.yLocFlag) <= this.proximity) {
-					if (this.flagcount >= this.flaglen){
+					if (this.flagcount >= this.flaglen) {
 						console.log('No More ... or is there');
-					}
-					else{
+					} else {
 						console.log(this.flags[this.flagcount]);
 						this.xLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
 						this.yLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
