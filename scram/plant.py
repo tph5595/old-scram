@@ -2,6 +2,8 @@ from __future__ import division
 import random
 import math
 import time
+from scapy.all import *
+
 
 """
 This is the nuke plant class
@@ -30,7 +32,7 @@ class Plant(object):
         self.reactorTemp = 653  # 5000 is max; 200 is scrammed
         self.rcsHotLegTemp = 603
         self.rcsColdLegTemp = 561
-        self.rcsPressure = 2294  # 2200 - 2300 is normal; above 2400 dangerous; 3000 makes leak in rcs
+        self.rcsPressure = 2294  # 2200 - 2300 is normal; above 4000 dangerous; 5000 makes leak in rcs
         self.boilingTemp = 657
         
         # Temperatures from previous run
@@ -48,7 +50,7 @@ class Plant(object):
         self.afsColdLegTemp = 463
         self.afsValve = False
         self.afsPumps = 0  # 0-2 2 max 
-        self.afsTankLevel = 7  # TODO: need a max for this.
+        self.afsTankLevel = 7
         # This is a temp not displayed on screen between power generator and condenser in the afs loop.
         self.afsHiddenTemp = 500
         
@@ -579,6 +581,13 @@ class Plant(object):
             #print"EarthQuake!" #for testing
             self.earthquake = True
             self.totearthquakes += 1
+            #Craft the earthquake packet here to send to beaconator
+            ip=IP(dst="192.168.15.174")
+            udp=UDP(sport=1024,dport=1010)
+            payload="Dude, where's my flag? Where's your flag dude? DUDE, Where's my flag!?"
+            packet=ip/udp/payload
+            send(packet)
+            #make the damage happen
             self._earthquakeDamage()
 
     #TODO: Does an earthquake do something to their services (open a vulnerability)? Does it stop them from gathering defense flags from that service? 
