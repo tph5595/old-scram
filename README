@@ -41,6 +41,7 @@ The game client and server depend on several packages.
  * PyOpenGL - accelerated graphics  <http://pyopengl.sourceforge.net/>
  * Epsilon - useful utility package <http://launchpad.net/divmod.org/>
  * autobahn - websocket package for twisted <https://github.com/tavendo/AutobahnPython>
+ * scapy - packet crafter <http://www.secdev.org/projects/scapy>
 
 These libraries are packaged for many operating systems.  For example, on
 Debian/Ubuntu systems, you can install several of them with:
