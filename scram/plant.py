@@ -3,6 +3,8 @@ import random
 import math
 import time
 from scapy.all import *
+import os
+import sys
 
 
 """
@@ -572,9 +574,10 @@ class Plant(object):
         size = 1000
         size = size - (self.risk * 20)
         
-        if (size < 45):
-            size = 45
-      
+        if (size < 70):
+            size = 70
+        
+        size = 70 #testing
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
         if magicNumber == 69:
@@ -582,11 +585,8 @@ class Plant(object):
             self.earthquake = True
             self.totearthquakes += 1
             #Craft the earthquake packet here to send to beaconator
-            ip=IP(dst="192.168.15.174")
-            udp=UDP(sport=1024,dport=1010)
-            payload="Dude, where's my flag? Where's your flag dude? DUDE, Where's my flag!?"
-            packet=ip/udp/payload
-            send(packet)
+            #execfile("beaconation.py")
+            os.system("python beaconation.py")
             #make the damage happen
             self._earthquakeDamage()
 
