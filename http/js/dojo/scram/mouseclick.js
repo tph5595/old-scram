@@ -13,36 +13,18 @@ define(["dojo/_base/lang", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase",
 			this.proximity = 30;
 			this.xLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
 			this.yLocFlag = Math.round(Math.random() * (this.max - this.min) + this.min);
+			this.flagcount = 0
 
 
-			/*
 			this.plainFlags = new Array('flag1', 'flag2', 'flag3', 'flag4', 'flag5', 'flag6', 'flag7', 'flag8', 'flag9', 'flag10');
-			this.plainFlagsLen = this.plainFlags.length;
-			//this is the length of the plainFlags array
-			this.plainFlagsLocation = 0;
-			//this described what iteration over the plainFlags array i am on
-
-			this.xoredFlag = new Array();
-			this.flags = new Array();
-
-			while (this.plainFlagsLocation < this.plainFlagsLen) {
-				this.flagcount = 0;
-				this.xorCount = 0;
-
-				this.splitFlag = this.plainFlags[this.plainFlagsLocation].split('');
-				this.splitFlagLen = this.splitFlag.length;
-				while (this.xorCount < this.splitFlagLen) {
-					console.log(this.splitFlag[this.xorCount].toString(2));
-					this.toBinary(this.splitFlag[this.xorCount]);
-					this.xoredFlag[this.xorCount] = (this.splitFlag[this.xorCount] ^ 0110000101110011011100110110001101101100011011110111011101101110);
-					this.xorCount++;
-				}
-				this.joinedFlag = this.xoredFlag.join('');
-				this.flags[this.plainFlagsLocation] = this.joinedFlag
-				this.plainFlagsLocation++;
-			}
-			console.log(this.flags);
-			*/
+			this.flags = new Array('0110011001101100011000010110011100110001', 
+									'0110011001101100011000010110011100110010', 
+									'0110011001101100011000010110011100110011',
+									'0110011001101100011000010110011100110100',
+									'0110011001101100011000010110011100110101',
+									'0110011001101100011000010110011100110110',
+									'0110011001101100011000010110011100110111');
+			
 		},
 		postCreate : function() {
 			this.onMouseOver();
