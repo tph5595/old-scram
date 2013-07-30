@@ -12,7 +12,9 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket","dojo/Evented"],
 		earthquakeSocket : null,
 		constructor : function(args) {
 			//HACK: Variable for the IP address of the team machine it lives on
-			var ip = "192.168.6.200"	//Team 2
+			var ip = "127.0.0.1"		//Local Testing
+			//var ip = "192.168.4.176" 	//Team 1
+			//var ip = "192.168.6.200"	//Team 2
 			
 			//TODO: add emits for events
 			this.pollSocket = new Socket("ws://" + ip + ":8081");
