@@ -577,15 +577,12 @@ class Plant(object):
         if (size < 70):
             size = 70
         
-        size = 70 #testing
         magicNumber = random.randrange(0, size, 1)
         #magicNumber = 69 #to test earthquake
         if magicNumber == 69:
-            #print"EarthQuake!" #for testing
             self.earthquake = True
             self.totearthquakes += 1
-            #Craft the earthquake packet here to send to beaconator
-            #execfile("beaconation.py")
+            #Send packet to Beacon Machine.
             os.system("python beaconation.py")
             #make the damage happen
             self._earthquakeDamage()
@@ -659,9 +656,10 @@ class Plant(object):
         return {'quake':self.earthquake,'damage':self.damage}
     
     def repairDamage(self,repaired):
-        #just xor the damage with the repaired
-        self.damage = self.damage^repaired
-        self.workers -= 5
+        if (self.workers >= 5):
+            #just xor the damage with the repaired
+            self.damage = self.damage^repaired
+            self.workers -= 5
     
     def _calcRisk(self): #if there is no meltdown or scram risk can go up to 1440 by end of 24 hours just based on time
         if self.elapsedTime >= 60 and self.elapsedTime % 60 == 0:
