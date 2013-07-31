@@ -9,18 +9,30 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		sockets : null,
 		
 		constructor : function(args) {
-			this.sockets = args.sockets
+			this.socket = args.socket
+			this.socket.on('message', lang.hitch(this, this.windowMove));
 		},
 		postCreate : function() {
-			
 			this.score = new Score({
-				poll : this.sockets.pollSocket
-			});
-			this.flag = new Flag();
+				poll : this.socket
+			}, this.toolbarDAP);
+			this.flag = new Flag({}, this.toolbarDAP);
 			
 			this.addChild(this.score);
 			this.addChild(this.flag);
 			this.inherited(arguments);
+		},
+		windowMove : function(){
+			this.windowWidth = window.innerWidth;
+			this.widthCheck = 1920;
+			if (this.windowWidth < this.widthCheck){
+				domClass.remove(this.toolbarDAP)
+				domClass.add(this.toolbarDAP, 'modifiedtoolbar');
+			}
+			else{
+				domClass.remove(this.toolbarDAP)
+				domClass.add(this.toolbarDAP, 'toolbar');
+			}
 		}
 	});
 });

@@ -34,7 +34,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 					this.tweet = new Tweet({
 					}, this.tweetDAP);
 					this.toolbar = new Toolbar({
-						sockets : this._sockets
+						socket : this._sockets.pollSocket
 					}, this.toolbarDAP);
 					this.mouseclick = new MouseClick({
 					}, this.mouseclickDAP);

@@ -22,6 +22,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.totsteamvoiding = 0;
 			this.totsim = 0;
 			this.poll.on('message', lang.hitch(this, this.pollMsg));
+			this.poll.on('message', lang.hitch(this, this.windowMove));
 		},
 		postCreate : function() {
 			this.meltdownDAP.innerHTML = 'Meltdowns: ' + this.totmeltdowns;
@@ -60,6 +61,40 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			
 			
 			this.increment();
+		},
+		windowMove : function(){
+			this.windowWidth = window.innerWidth;
+			this.widthCheck = 1920
+			if (this.windowWidth < this.widthCheck){
+				domClass.remove(this.titleDAP);
+				domClass.remove(this.meltdownDAP);
+				domClass.remove(this.explosionDAP);
+				domClass.remove(this.earthquakeDAP);
+				domClass.remove(this.steamvoidingDAP);
+				domClass.remove(this.totalsimtimeDAP);
+				
+				domClass.add(this.titleDAP, 'modifiedscorestitle');
+				domClass.add(this.meltdownDAP, 'modifiedscores');
+				domClass.add(this.explosionDAP, 'modifiedscores');
+				domClass.add(this.earthquakeDAP, 'modifiedscores');
+				domClass.add(this.steamvoidingDAP, 'modifiedscores');
+				domClass.add(this.totalsimtimeDAP, 'modifiedscores');
+			}
+			else{
+				domClass.remove(this.titleDAP);
+				domClass.remove(this.meltdownDAP);
+				domClass.remove(this.explosionDAP);
+				domClass.remove(this.earthquakeDAP);
+				domClass.remove(this.steamvoidingDAP);
+				domClass.remove(this.totalsimtimeDAP);
+				
+				domClass.add(this.titleDAP, 'scorestitle');
+				domClass.add(this.meltdownDAP, 'scores');
+				domClass.add(this.explosionDAP, 'scores');
+				domClass.add(this.earthquakeDAP, 'scores');
+				domClass.add(this.steamvoidingDAP, 'scores');
+				domClass.add(this.totalsimtimeDAP, 'scores');
+			}
 		},
 		increment : function() {
 						

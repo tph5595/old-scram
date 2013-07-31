@@ -1,5 +1,5 @@
 .html{
-	overflow-y: hidden;
+	/*overflow-y: hidden;*/
 	overflow-x: hidden;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
@@ -22,6 +22,15 @@
 	width: 300px;
 	left: 20px;
 }
+.modifiedscores{
+	color: #99FF33;
+	position: relative;
+	height: 50px;
+	width: 300px;
+	float: left;
+	left: 20px;
+	top: 800px;
+}
 .scorestitle{
 	color: #FF9966;
 	position: relative;
@@ -29,6 +38,16 @@
 	width: 300px;
 	left: 10px;
 	font-size: 30px;
+}
+.modifiedscorestitle{
+	color: #FF9966;
+	position: relative;
+	height: 50px;
+	text-align: center;
+	width: 1500px;
+	left: 10px;
+	font-size: 30px;
+	top: 800px;
 }
 .bodyblack {
 	background-color: black;
@@ -79,6 +98,16 @@
 	width: 300px;
 	z-index: 4;
 }
+.toolbardiv {
+	position: relative;
+	left: 90px;
+	top: -1445px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1920px;
+	height: 1000px;
+	z-index: -1;
+}
 .toolbar {/*
 	border-width : 1px;
 	border-color: gray;
@@ -89,6 +118,13 @@
 	top: -1445px;
 	width: 300px;
 	height: 720px;
+	z-index: 4;
+}
+.modifiedtoolbar {
+	position: relative;
+	top: -700px;
+	width: 300px;
+	height: 500px;
 	z-index: 4;
 }
 .statsbarbackground {
