@@ -130,7 +130,17 @@ class UI(object):
             
     def _handleValve(self,conn,msg):
         if(self._handleStash("valve", conn, msg)):return
-        self.protocol.valve(msg)
+        jsonmsg = json.loads(msg)
+        if(jsonmsg == {"GHI":"getflag"}):
+            j={"Flag":"FLAGDATA"}
+            conn.sendMessage(json.dumps(j))
+            return
+        try:
+            self.protocol.valve(msg)
+        except:
+            i={"Try":"Again"}
+            conn.sendMessage(json.dumps(i))
+            return
     
     def _handlePump(self,conn,msg):
         if(self._handleStash("pump", conn, msg)):return
@@ -144,16 +154,42 @@ class UI(object):
     
     def _handleRod(self, conn, msg):
         if(self._handleStash("rod", conn, msg)):return
-        self.protocol.rod(msg)
+        jsonmsg = json.loads(msg)
+        if(jsonmsg == {"DEF":"getflag"}):
+            j={"Flag":"FLAGDATA"}
+            conn.sendMessage(json.dumps(j))
+            return
+        try:
+            self.protocol.rod(msg)
+        except:
+            i={"Try":"Again"}
+            conn.sendMessage(json.dumps(i))
+            return
         
     def _handleUser(self,conn,msg):
         if(self._handleStash("user", conn, msg)):return
+        jsonmsg = json.loads(msg)
+        if(jsonmsg == {"ABC":"getflag"}):
+            j={"Flag":"FLAGDATA"}
+            conn.sendMessage(json.dumps(j))
+            return
+        
         #TODO: add user to array
         
     def _handleEarthquake(self,conn,msg):
         print "EarthQuake Repair",msg
         if(self._handleStash("earthquake", conn, msg, True)):return
-        self.protocol.repairDamage(msg)
+        jsonmsg = json.loads(msg)
+        if(jsonmsg == {"JKL":"getflag"}):
+            j={"Flag":"FLAGDATA"}
+            conn.sendMessage(json.dumps(j))
+            return
+        try:
+            self.protocol.repairDamage(msg)
+        except:
+            i={"Try":"Again"}
+            conn.sendMessage(json.dumps(i))
+            return
         
     
     def _initFlags(self):
