@@ -43,8 +43,7 @@
 	color: #FF9966;
 	position: relative;
 	height: 50px;
-	text-align: center;
-	width: 1500px;
+	width: 300px;
 	left: 10px;
 	font-size: 30px;
 	top: 800px;
@@ -944,7 +943,7 @@
 .flagsubmission{
 	position: relative;
 	top: 2px;
-	left: 10px;
+	left: 110px;
 	background-image: url(../images/submitBtn.png);
 	height: 20px;
 	width: 50px;
@@ -957,6 +956,11 @@
 .flag{
 	position: relative;
 	left: 10px;
+	width: 250px;
+}
+.flagdiv{
+	position: relative;
+	left:10px;
 	width: 250px;
 }
 

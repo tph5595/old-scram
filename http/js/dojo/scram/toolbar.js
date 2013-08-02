@@ -7,6 +7,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		///
 		templateString : template,
 		sockets : null,
+		'class': 'toolbar',
 		
 		constructor : function(args) {
 			this.socket = args.socket
