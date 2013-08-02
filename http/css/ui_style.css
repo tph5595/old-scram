@@ -97,6 +97,13 @@
 	width: 300px;
 	z-index: 4;
 }
+.modifiedtwitterfeed {
+	position: relative;
+	left: 825px;
+	top: 100px;
+	width: 300px;
+	z-index: 4;
+}
 .toolbardiv {
 	position: relative;
 	left: 90px;
@@ -961,6 +968,12 @@
 .flagdiv{
 	position: relative;
 	left:10px;
+	width: 250px;
+}
+.modifiedflagdiv{
+	position: relative;
+	left:400px;
+	top: 525px;
 	width: 250px;
 }
 

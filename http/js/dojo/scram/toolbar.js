@@ -17,7 +17,9 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 			this.score = new Score({
 				poll : this.socket
 			}, this.toolbarDAP);
-			this.flag = new Flag({}, this.toolbarDAP);
+			this.flag = new Flag({
+				poll : this.socket
+			}, this.toolbarDAP);
 			
 			this.addChild(this.score);
 			this.addChild(this.flag);

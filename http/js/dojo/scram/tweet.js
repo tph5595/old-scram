@@ -1,6 +1,6 @@
-define(["dojo/_base/lang", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/fx/Toggler", 
+define(["dojo/_base/lang", "dojo/_base/declare", "dojo/dom-class", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/fx/Toggler", 
 "dojo/fx", "dojo/on", "dojo/text!scram/templates/tweet.html"], 
-function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, Toggler, coreFx, on, template) {
+function(lang, Declare, domClass, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, Toggler, coreFx, on, template) {
 	return Declare("scram.tweet", [_WidgetBase, _Container, _Contained, _TemplatedMixin, Evented], {
 
 		///
@@ -9,8 +9,11 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Ev
 		templateString : template,
 		args : null, //property bag,
 		'class' : 'twitterfeed',
+		poll: null,
 
 		constructor : function(args) {
+			this.poll = args.socket;
+			this.poll.on('message', lang.hitch(this, this.windowMove));
 			this.args = args;
 		},
 		buildRendering : function() {
@@ -31,6 +34,18 @@ function(lang, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Ev
 		startup : function() {
 			this.inherited(arguments);
 		},
+		windowMove : function(){
+			this.windowWidth = window.innerWidth;
+			this.widthCheck = 1920
+			if (this.windowWidth < this.widthCheck){
+				domClass.remove(this.tweetDAP);
+				domClass.add(this.tweetDAP, 'modifiedtwitterfeed');
+			}
+			else{
+				domClass.remove(this.tweetDAP);
+				domClass.add(this.tweetDAP, 'twitterfeed');
+			}
+		}
 	});
 
 });

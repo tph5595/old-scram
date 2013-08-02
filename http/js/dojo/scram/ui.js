@@ -32,6 +32,7 @@ function(on, lang, Declare, _WidgetBase, _Container, _Contained, fx, _TemplatedM
 						sockets : this._sockets
 					}, this.plantDAP);
 					this.tweet = new Tweet({
+						socket : this._sockets.pollSocket
 					}, this.tweetDAP);
 					this.toolbar = new Toolbar({
 						socket : this._sockets.pollSocket

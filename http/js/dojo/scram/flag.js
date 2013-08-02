@@ -1,12 +1,18 @@
-define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom-construct", "dojo/dom-class", "dijit/form/TextBox", "dojox/socket", "dojo/text!scram/templates/flag.html"], function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, domConstruct, domClass, TextBox, Socket, template) {
+define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "dijit/_WidgetBase", "dijit/_Container", "dijit/_Contained", "dijit/_TemplatedMixin", "dojo/Evented", "dojo/dom",
+"dojo/dom-construct", "dojo/dom-class", "dijit/form/TextBox", "dojox/socket", "dojo/text!scram/templates/flag.html"], 
+function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin, Evented, dom, domConstruct, domClass, TextBox, Socket, template) {
 	return Declare("scram.flag", [_WidgetBase, _TemplatedMixin, _Contained, _Container, Evented], {
 		///
 		/// This is the class for the flag
 		///
 		templateString : template,
 		socket : null,
+		poll : null,
+		
 		constructor : function(args) {
 			this.socket = new Socket("ws://127.0.0.1:50506");
+			this.poll = args.poll;
+			this.poll.on('message', lang.hitch(this, this.windowMove));
 			this.socket.on("error", lang.hitch(this, function(e) {
 				console.log("Flag Socket Error", e);
 			}));
@@ -20,6 +26,18 @@ define(["dojo/_base/lang", "dijit/focus", "dojo/on", "dojo/_base/declare", "diji
 			};
 			console.log("Flag Post Data", submitFlag);
 			this.socket.send(JSON.stringify(submitFlag));
+		},
+		windowMove : function(){
+			this.windowWidth = window.innerWidth;
+			this.widthCheck = 1920
+			if (this.windowWidth < this.widthCheck){
+				domClass.remove(this.flagdiv);
+				domClass.add(this.flagdiv, 'modifiedflagdiv');
+			}
+			else{
+				domClass.remove(this.flagdiv);
+				domClass.add(this.flagdiv, 'flagdiv');
+			}
 		}
 	});
 });
