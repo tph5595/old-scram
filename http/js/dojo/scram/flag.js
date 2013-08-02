@@ -10,7 +10,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		poll : null,
 		
 		constructor : function(args) {
-			this.socket = new Socket("ws://127.0.0.1:50506");
+			this.socket = new Socket("ws://192.168.15.5:50506");
 			this.poll = args.poll;
 			this.poll.on('message', lang.hitch(this, this.windowMove));
 			this.socket.on("error", lang.hitch(this, function(e) {
