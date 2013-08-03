@@ -8,11 +8,15 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		templateString : template,
 		socket : null,
 		poll : null,
+		simtime: null,
 		
 		constructor : function(args) {
+			this.simtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
 			this.poll = args.poll;
+			this.poll.on('message', lang.hitch(this, this.pollMsg));
 			this.poll.on('message', lang.hitch(this, this.windowMove));
+			//this.socket.on('message', lang.hitch(this, this. socketMsg));
 			this.socket.on("error", lang.hitch(this, function(e) {
 				console.log("Flag Socket Error", e);
 			}));
@@ -26,6 +30,28 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			};
 			console.log("Flag Post Data", submitFlag);
 			this.socket.send(JSON.stringify(submitFlag));
+		},
+		socketMsg : function(event){
+			var obj = JSON.parse(event.data);
+			//FIXME: Need the response that is coming down
+			//this.response = obj['FILL THIS IN''];
+			
+			this.response = 'not accepted';
+			if (this.response == 'accepted'){
+				this.submissionResponseDAP.innerHTML='Flag accepted';
+				var tempSimtime = this.simtime;
+			}
+			else if (this.response == 'not accepted'){
+				this.submissionResponseDAP.innerHTML='Flag not accepted';
+				var tempSimtime = this.simtime;
+			}
+			if (Math.abs(tempSimtime - this.simtime) >= 10){
+				this.submissionResponseDAP.innerHTML='Submit More Flags';
+			}
+		},
+		pollMsg : function(event){
+			var obj = JSON.parse(event.data);
+			this.simtime = obj['simtime'];
 		},
 		windowMove : function(){
 			this.windowWidth = window.innerWidth;

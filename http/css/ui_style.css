@@ -976,7 +976,15 @@
 	top: 525px;
 	width: 250px;
 }
-
+.submissionresponse{
+	position: relative;
+	left: 10px;
+	width: 250px;
+	height: 50px;
+	text-align: center;
+	color: #FF9966;
+	font-size: 30px;
+}
 .mouseclick{
 	width: 2500px;
 	height: 1000px;
