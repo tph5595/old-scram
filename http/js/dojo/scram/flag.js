@@ -35,12 +35,11 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		},
 		socketMsg : function(event){
 			var obj = JSON.parse(event.data);
-			//FIXME: Need the response that is coming down
-			//this.response = obj['FILL THIS IN''];
 			
 			this.response = obj['result'];
 			this.submissionResponseDAP.innerHTML=this.response;
 			this.tempSimtime=this.simtime;
+			this.flagDAP.set("value", "");
 			/*
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
