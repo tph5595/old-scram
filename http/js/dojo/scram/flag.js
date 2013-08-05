@@ -12,7 +12,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		tempSimtime: null,
 		
 		constructor : function(args) {
-			this.flagDiv = dom.byId('flag');
+			this.flagTextBox = dom.byId("flagTextBox");
 			this.simtime = 0;
 			this.tempSimtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
@@ -40,7 +40,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.response = obj['result'];
 			this.submissionResponseDAP.innerHTML=this.response;
 			this.tempSimtime=this.simtime;
-			this.flagDiv.set("value", "");
+			this.flagTextBox.set("value", "");
 			/*
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
