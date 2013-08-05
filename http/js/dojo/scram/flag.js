@@ -39,6 +39,9 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			//this.response = obj['FILL THIS IN''];
 			
 			this.response = obj['result'];
+			this.submissionResponseDAP.innerHTML=this.response;
+			this.tempSimtime=this.simtime;
+			/*
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
 				this.tempSimtime = this.simtime;
@@ -46,7 +49,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			else if (this.response == 'Invalid Flag!'){
 				this.submissionResponseDAP.innerHTML='Invalid Flag!';
 				this.tempSimtime = this.simtime;
-			}
+			}*/
 			
 		},
 		pollMsg : function(event){
