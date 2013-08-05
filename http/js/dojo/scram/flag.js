@@ -12,7 +12,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		tempSimtime: null,
 		
 		constructor : function(args) {
-			this.flagTextBox = dom.byId("flagTextBox");
+			this.flagTextBox = document.getElementById("flagTextBox");
 			this.simtime = 0;
 			this.tempSimtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
