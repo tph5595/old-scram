@@ -31,7 +31,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 			domClass.add(this.repairDAP, 'repairbutton '+ ' repairstate'+state +' '+this.repairClass);
 		},
 		repairUpdate : function(x) {
-			console.log(this.repairRemoveVar);
 			if (this.repairRemoveVar == true){
 				this.repairState = false;
 				this.repairRemoveVar = false;

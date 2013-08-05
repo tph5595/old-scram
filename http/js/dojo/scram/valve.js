@@ -37,8 +37,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				console.log(JSON.stringify(j), j);
 				this.socket.send(JSON.stringify(j));
 				*/
-				console.log('Valve Repair CLicked');
-				console.log(this.damageId);
+				//console.log(this.damageId);
 				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.valveMove();
 			}
@@ -70,7 +69,7 @@ function(lang, on, Declare, _WidgetBase,_Container, _Contained, _TemplatedMixin,
 				"state" : event,
 				"valveid" : this.valveId
 			};
-			console.log(JSON.stringify(j), j);
+			//console.log(JSON.stringify(j), j);
 			this.socket.send(JSON.stringify(j));
 			this.valveMove();
 		},

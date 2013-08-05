@@ -56,8 +56,6 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 				console.log(JSON.stringify(i), i);
 				this.socket.send(JSON.stringify(i));
 				*/
-				console.log('Pump Repair CLicked');
-				console.log(this.damageId);
 				this.emit('damageRepaired', {'damage' : this.damageId});
 				this.pumpMove();
 			}
@@ -106,7 +104,7 @@ function(lang, on, Declare, _WidgetBase, _Container, _Contained, _TemplatedMixin
 				"level" : this.pumpLevel,
 				"pumpid" : this.pumpId
 			};
-			console.log(JSON.stringify(j), j);
+			//console.log(JSON.stringify(j), j);
 			this.socket.send(JSON.stringify(j));
 			this.pumpMove();
 		},

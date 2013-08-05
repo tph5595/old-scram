@@ -76,7 +76,7 @@ function(lang, Declare, _WidgetBase, domClass, _Container,_Contained, _Templated
 				j = {
 					"level" : this.rodLevel
 				};
-				console.log(JSON.stringify(j), j);
+				//console.log(JSON.stringify(j), j);
 				this._socket.send(JSON.stringify(j));	
 				this.rodMove();
 			}

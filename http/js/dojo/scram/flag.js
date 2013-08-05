@@ -30,7 +30,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			var submitFlag = {
 				'flag' : this.flagDAP.value
 			};
-			console.log("Flag Post Data", JSON.stringify(submitFlag));
+			//console.log("Flag Post Data", JSON.stringify(submitFlag));
 			this.socket.send(JSON.stringify(submitFlag));
 		},
 		socketMsg : function(event){
