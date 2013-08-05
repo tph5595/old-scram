@@ -14,6 +14,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.simtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
 			this.poll = args.poll;
+			this.socket.on('message', lang.hitch(function(){console.log(event.data)}))
 			this.poll.on('message', lang.hitch(this, this.pollMsg));
 			this.poll.on('message', lang.hitch(this, this.windowMove));
 			//this.socket.on('message', lang.hitch(this, this. socketMsg));
@@ -28,7 +29,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			var submitFlag = {
 				'flag' : this.flagDAP.value
 			};
-			console.log("Flag Post Data", submitFlag);
+			console.log("Flag Post Data", JSON.stringify(submitFlag));
 			this.socket.send(JSON.stringify(submitFlag));
 		},
 		socketMsg : function(event){
