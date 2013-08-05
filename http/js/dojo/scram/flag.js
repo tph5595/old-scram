@@ -39,7 +39,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.response = obj['result'];
 			this.submissionResponseDAP.innerHTML=this.response;
 			this.tempSimtime=this.simtime;
-			this.flagDAP.set("value", "");
+			this.flag.set("value", "");
 			/*
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
