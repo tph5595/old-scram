@@ -14,7 +14,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.simtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
 			this.poll = args.poll;
-			this.socket.on('message', lang.hitch(function(){console.log(event.data)}))
+			this.socket.on('message', lang.hitch(this, this.socketMsg));
 			this.poll.on('message', lang.hitch(this, this.pollMsg));
 			this.poll.on('message', lang.hitch(this, this.windowMove));
 			//this.socket.on('message', lang.hitch(this, this. socketMsg));
@@ -37,13 +37,13 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			//FIXME: Need the response that is coming down
 			//this.response = obj['FILL THIS IN''];
 			
-			this.response = 'not accepted';
-			if (this.response == 'accepted'){
-				this.submissionResponseDAP.innerHTML='Flag accepted';
+			this.response = obj['result'];
+			if (this.response == 'Flag Accepted'){
+				this.submissionResponseDAP.innerHTML='Flag Accepted';
 				var tempSimtime = this.simtime;
 			}
-			else if (this.response == 'not accepted'){
-				this.submissionResponseDAP.innerHTML='Flag not accepted';
+			else if (this.response == 'Invalid Flag!'){
+				this.submissionResponseDAP.innerHTML='Invalid Flag!';
 				var tempSimtime = this.simtime;
 			}
 			if (Math.abs(tempSimtime - this.simtime) >= 10){
