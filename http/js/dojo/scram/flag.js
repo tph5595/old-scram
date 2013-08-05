@@ -9,15 +9,16 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		socket : null,
 		poll : null,
 		simtime: null,
+		tempSimtime: null,
 		
 		constructor : function(args) {
 			this.simtime = 0;
+			this.tempSimtime = 0;
 			this.socket = new Socket("ws://192.168.15.5:50506");
 			this.poll = args.poll;
 			this.socket.on('message', lang.hitch(this, this.socketMsg));
 			this.poll.on('message', lang.hitch(this, this.pollMsg));
 			this.poll.on('message', lang.hitch(this, this.windowMove));
-			//this.socket.on('message', lang.hitch(this, this. socketMsg));
 			this.socket.on("error", lang.hitch(this, function(e) {
 				console.log("Flag Socket Error", e);
 			}));
@@ -40,19 +41,20 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.response = obj['result'];
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
-				var tempSimtime = this.simtime;
+				this.tempSimtime = this.simtime;
 			}
 			else if (this.response == 'Invalid Flag!'){
 				this.submissionResponseDAP.innerHTML='Invalid Flag!';
-				var tempSimtime = this.simtime;
+				this.tempSimtime = this.simtime;
 			}
-			if (Math.abs(tempSimtime - this.simtime) >= 10){
-				this.submissionResponseDAP.innerHTML='Submit More Flags';
-			}
+			
 		},
 		pollMsg : function(event){
 			var obj = JSON.parse(event.data);
 			this.simtime = obj['simtime'];
+			if (Math.abs(this.tempSimtime - this.simtime) >= 10){
+				this.submissionResponseDAP.innerHTML='Submit More Flags';
+			}
 		},
 		windowMove : function(){
 			this.windowWidth = window.innerWidth;
