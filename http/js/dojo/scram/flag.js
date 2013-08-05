@@ -32,6 +32,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			};
 			//console.log("Flag Post Data", JSON.stringify(submitFlag));
 			this.socket.send(JSON.stringify(submitFlag));
+			document.getElementById('flagTextBox').value="";
 		},
 		socketMsg : function(event){
 			var obj = JSON.parse(event.data);
@@ -39,7 +40,6 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 			this.response = obj['result'];
 			this.submissionResponseDAP.innerHTML=this.response;
 			this.tempSimtime=this.simtime;
-			document.getElementById('flagTextBox').value="";
 			/*
 			if (this.response == 'Flag Accepted'){
 				this.submissionResponseDAP.innerHTML='Flag Accepted';
