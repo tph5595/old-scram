@@ -60,7 +60,7 @@ function(lang, focusUtil, on, Declare, _WidgetBase, _Container, _Contained, _Tem
 		},
 		windowMove : function(){
 			this.windowWidth = window.innerWidth;
-			this.widthCheck = 1920
+			this.widthCheck = 1800
 			if (this.windowWidth < this.widthCheck){
 				domClass.remove(this.flagdiv);
 				domClass.add(this.flagdiv, 'modifiedflagdiv');

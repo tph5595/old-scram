@@ -36,7 +36,7 @@ function(lang, Declare, domClass, _WidgetBase, _Container, _Contained, _Template
 		},
 		windowMove : function(){
 			this.windowWidth = window.innerWidth;
-			this.widthCheck = 1920
+			this.widthCheck = 1800
 			if (this.windowWidth < this.widthCheck){
 				domClass.remove(this.tweetDAP);
 				domClass.add(this.tweetDAP, 'modifiedtwitterfeed');
