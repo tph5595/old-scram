@@ -27,7 +27,7 @@ function(on, lang, Declare, fx, _WidgetBase, _Container, domClass, _Contained, _
 		},
 		windowMove : function(){
 			this.windowWidth = window.innerWidth;
-			this.widthCheck = 1920;
+			this.widthCheck = 1800;
 			if (this.windowWidth < this.widthCheck){
 				domClass.remove(this.toolbarDAP)
 				domClass.add(this.toolbarDAP, 'modifiedtoolbar');
