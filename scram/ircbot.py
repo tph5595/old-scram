@@ -137,9 +137,9 @@ class LogBotFactory(protocol.ClientFactory):
         self.observers = []
     
     def buildProtocol(self, addr):
-        self.logBot = LogBot()
-        self.logBot.factory = self
-        return self.logBot
+        p = LogBot()
+        p.factory = self
+        return p
 
     def clientConnectionLost(self, connector, reason):
         """If we get disconnected, reconnect to server."""
