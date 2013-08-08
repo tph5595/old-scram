@@ -36,6 +36,7 @@ class World(SimulationTime):
         self.bot = LogBotFactory("derpy")
         self.bot.observers.append(self.botMsg)
         platformClock.connectTCP("192.168.15.5", 6667, self.bot)
+        platformClock.callLater(3,self.bot.logBot.newNick())
         
         #array for the players
         self.players = []

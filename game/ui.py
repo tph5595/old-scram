@@ -75,6 +75,7 @@ class UI(object):
         self.bot = LogBotFactory("derpy")
         self.bot.observers.append(self.botMsg)
         self.reactor.connectTCP("192.168.15.5", 6667, self.bot)
+        self.reactor.callLater(3,self.bot.logBot.newNick())
         
     def botMsg(self,conn,msg,channel,user):
         if("start" in msg):

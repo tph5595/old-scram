@@ -68,9 +68,6 @@ class LogBot(irc.IRCClient):
     def joined(self, channel):
         """This will get called when the bot joins the channel."""
         print("[I have joined %s]" % channel)
-        nick = self.id_generator()
-        self.setNick(nick)
-        self.nickChanged(nick)
 
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
@@ -82,17 +79,26 @@ class LogBot(irc.IRCClient):
             msg = "It isn't nice to whisper!  Play nice with the group."
             self.msg(user, msg)
             return
-
-        # Otherwise check to see if it is a message directed at me
-        if msg.startswith(self.nickname + ":"):
-            self.msg(channel, msg)
+        
+        if msg.startswith("all:"):
             for f in self.factory.observers:
                 f(self,origMsg,channel,user)
-            if("change nick" in msg):
-                nick = self.id_generator()
-                self.setNick(nick)
-                self.nickChanged(nick)
+            
+        # Otherwise check to see if it is a message directed at me
+        if msg.startswith(self.nickname + ":"):
+            #self.msg(channel, msg)
+            for f in self.factory.observers:
+                f(self,origMsg,channel,user)
                 
+            if("change nick" in msg):
+                self.newNick()
+                self.msg(channel, "I changed my Nick.")
+                
+    def newNick(self):
+        nick = self.id_generator()
+        self.setNick(nick)
+        self.nickChanged(nick)
+                        
     def started(self,msg,channel,user):
         self.msg(channel,"%s: %s"%(user,msg))
         
@@ -131,9 +137,9 @@ class LogBotFactory(protocol.ClientFactory):
         self.observers = []
     
     def buildProtocol(self, addr):
-        p = LogBot()
-        p.factory = self
-        return p
+        self.logBot = LogBot()
+        self.logBot.factory = self
+        return self.logBot
 
     def clientConnectionLost(self, connector, reason):
         """If we get disconnected, reconnect to server."""
