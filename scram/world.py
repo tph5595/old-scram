@@ -3,11 +3,14 @@ import random
 import uuid
 from twisted.application.service import Service
 from scram.plant import Plant
+from scram.ircbot import LogBotFactory
 
 from game.environment import SimulationTime
 
 TCP_SERVICE_NAME = 'tcp-service-name'
 SCRAM_SERVICE_NAME = 'scram-service-name'
+
+from twisted.internet.protocol import Protocol, Factory
 
 #point = record('x y')
 class Player(object):
@@ -29,8 +32,11 @@ class World(SimulationTime):
         self.random = random
         #the plant
         self.plant = Plant(platformClock)
+        self.bot = LogBotFactory("derpy")
+        platformClock.connectTCP("192.168.15.5", 6667, self.bot)
         #array for the players
         self.players = []
+
         
     def createPlayer(self):
         player = Player()
