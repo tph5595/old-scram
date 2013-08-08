@@ -13,6 +13,9 @@ from twisted.internet.task import LoopingCall
 from Queue import Queue, Empty
 
 from game.network import NetworkController
+
+from scram.ircbot import LogBotFactory
+
 import socket
 import ConfigParser
 
@@ -62,12 +65,25 @@ class UI(object):
 
     def __init__(self, reactor=reactor):
         self.reactor = reactor
+        self.scoringStarted = False
         self.q = Queue() #not sure I need this
         self.frontEndListeners={}
         self._initFlags()
         self.config = ConfigParser.RawConfigParser() # Config file parser
         self.config.read('game/config.ini')   # Config file
-
+        
+        self.bot = LogBotFactory("derpy")
+        self.bot.observers.append(self.botMsg)
+        self.reactor.connectTCP("192.168.15.5", 6667, self.bot)
+        
+    def botMsg(self,conn,msg,channel,user):
+        if("start" in msg):
+            self.scoringStarted = True
+            conn.started("I am allowed to talk to Scorebot",channel,user) 
+        if("stop" in msg):
+            self.scoringStarted = False
+            conn.started("I am *NOT* allowed to talk to Scorebot",channel,user) 
+        
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
         #HACK: provide the front end listeners to the AMP client protocol
@@ -202,7 +218,7 @@ class UI(object):
         self.flags['earthquake'] = None
         
     def _handleStash(self,service,conn,msg,termConn=False): 
-        if(conn.http_request_path == "/stash"):
+        if(conn.http_request_path == "/stash" and self.scoringStarted):
             #get the old flag            
             prevFlag = self.flags[service] if self.flags[service]!=None else 'none'
             z = json.loads(msg)            

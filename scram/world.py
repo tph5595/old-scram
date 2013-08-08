@@ -44,7 +44,11 @@ class World(SimulationTime):
         if("start" in msg):
             # add plant update as an observer to the sim time tick
             self.addObserver(self.plant.update)
-            conn.started(msg,channel,user) 
+            conn.started("I am started.",channel,user) 
+        if("stop" in msg):
+            self.removeObserver(self.plant.update)
+            conn.started("I am stopped.",channel,user) 
+        
             
     def createPlayer(self):
         player = Player()

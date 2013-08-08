@@ -90,7 +90,7 @@ class LogBot(irc.IRCClient):
                 f(self,origMsg,channel,user)
                 
     def started(self,msg,channel,user):
-        self.msg(channel,"%s: I am started..."%user)
+        self.msg(channel,"%s: %s"%(user,msg))
         
     def action(self, user, channel, msg):
         """This will get called when the bot sees someone do an action."""
