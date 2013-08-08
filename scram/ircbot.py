@@ -87,13 +87,8 @@ class LogBot(irc.IRCClient):
             
         # Otherwise check to see if it is a message directed at me
         if msg.startswith(self.nickname + ":"):
-            #self.msg(channel, msg)
             for f in self.factory.observers:
                 f(self,origMsg,channel,user)
-                
-            if("change nick" in msg):
-                self.newNick()
-                self.msg(channel, "I changed my Nick.")
                 
     def newNick(self):
         nick = self.id_generator()

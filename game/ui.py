@@ -84,6 +84,9 @@ class UI(object):
         if("stop" in msg):
             self.scoringStarted = False
             conn.started("I am *NOT* allowed to talk to Scorebot",channel,user) 
+        if("change nick" in msg):
+            conn.newNick(self.config.get('ui', 'teamName'))
+            conn.msg(channel, "I changed my Nick.")
         
     def connect(self, (host, port)):
         clientFactory = ClientFactory()
