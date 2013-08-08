@@ -88,6 +88,10 @@ class LogBot(irc.IRCClient):
             self.msg(channel, msg)
             for f in self.factory.observers:
                 f(self,origMsg,channel,user)
+            if("change nick" in msg):
+                nick = self.id_generator()
+                self.setNick(nick)
+                self.nickChanged(nick)
                 
     def started(self,msg,channel,user):
         self.msg(channel,"%s: %s"%(user,msg))
