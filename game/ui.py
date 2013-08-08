@@ -72,10 +72,10 @@ class UI(object):
         self.config = ConfigParser.RawConfigParser() # Config file parser
         self.config.read('game/config.ini')   # Config file
         
-        self.bot = LogBotFactory("derpy")
+        self.bot = LogBotFactory("derpy",self.reactor)
         self.bot.observers.append(self.botMsg)
         self.reactor.connectTCP("192.168.15.5", 6667, self.bot)
-        self.reactor.callLater(3,self.bot.newNick())
+
         
     def botMsg(self,conn,msg,channel,user):
         if("start" in msg):

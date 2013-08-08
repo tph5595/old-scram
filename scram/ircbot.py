@@ -68,6 +68,7 @@ class LogBot(irc.IRCClient):
     def joined(self, channel):
         """This will get called when the bot joins the channel."""
         print("[I have joined %s]" % channel)
+        self.reactor.callLater(3,self.newNick())
 
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
@@ -132,14 +133,16 @@ class LogBotFactory(protocol.ClientFactory):
     A new protocol instance will be created each time we connect to the server.
     """
 
-    def __init__(self, channel):
+    def __init__(self, channel,reactor):
         self.channel = channel
+        self.reactor = reactor
         self.observers = []
     
     def buildProtocol(self, addr):
-        p = LogBot()
-        p.factory = self
-        return p
+        self.logBot = LogBot()
+        self.logBot.factory = self
+        self.logBot.reactor = self.reactor
+        return self.logBot
 
     def clientConnectionLost(self, connector, reason):
         """If we get disconnected, reconnect to server."""
