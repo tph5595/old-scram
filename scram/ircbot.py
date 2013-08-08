@@ -47,7 +47,13 @@ class LogBot(irc.IRCClient):
     def connectionMade(self):
         irc.IRCClient.connectionMade(self)
         print "connection made"
-
+        
+    def nickChanged(self, nick):
+        """
+        Called when my nick has been changed.
+        """
+        irc.IRCClient.nickChanged(self,nick)
+        print"[New Nick %s]"%nick
 
     def connectionLost(self, reason):
         irc.IRCClient.connectionLost(self, reason)
@@ -62,9 +68,13 @@ class LogBot(irc.IRCClient):
     def joined(self, channel):
         """This will get called when the bot joins the channel."""
         print("[I have joined %s]" % channel)
+        nick = self.id_generator()
+        self.setNick(nick)
+        self.nickChanged(nick)
 
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
+        origMsg = msg
         user = user.split('!', 1)[0]
         
         # Check to see if they're sending me a private message
@@ -75,9 +85,13 @@ class LogBot(irc.IRCClient):
 
         # Otherwise check to see if it is a message directed at me
         if msg.startswith(self.nickname + ":"):
-            msg = "%s: I am a log bot" % user
             self.msg(channel, msg)
-
+            for f in self.factory.observers:
+                f(self,origMsg,channel,user)
+                
+    def started(self,msg,channel,user):
+        self.msg(channel,"%s: I am started..."%user)
+        
     def action(self, user, channel, msg):
         """This will get called when the bot sees someone do an action."""
         user = user.split('!', 1)[0]
@@ -110,7 +124,8 @@ class LogBotFactory(protocol.ClientFactory):
 
     def __init__(self, channel):
         self.channel = channel
-
+        self.observers = []
+    
     def buildProtocol(self, addr):
         p = LogBot()
         p.factory = self
@@ -126,13 +141,19 @@ class LogBotFactory(protocol.ClientFactory):
 
 if __name__ == '__main__':
     # initialize logging
+    def myFunc(conn,msg,channel,user):
+        if("start" in msg):
+            conn.started(msg,channel,user)
+        print "Callback: %s"%msg
+        
     log.startLogging(sys.stdout)
     
     # create factory protocol and application
-    f = LogBotFactory(sys.argv[1], sys.argv[2])
-
+    f = LogBotFactory("derpy")
+    f.observers.append(myFunc)
+    
     # connect factory to this host and port
-    #reactor.connectTCP("irc.freenode.net", 6667, f)
+    reactor.connectTCP("192.168.15.5", 6667, f)
 
     # run bot
-    #reactor.run()
+    reactor.run()
