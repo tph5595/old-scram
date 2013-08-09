@@ -13,21 +13,21 @@ define(["dojo/_base/lang", "dojo/_base/declare", "dojox/socket","dojo/Evented"],
 		constructor : function(args) {
 			//HACK: Variable for the IP address of the team machine it lives on
 			//var ip = "127.0.0.1"		//Local Testing
-			//var ip = "192.168.4.176" 	//Team 1
-			//var ip = "192.168.6.200"	//Team 2
-			//var ip = "192.168.8.xxx"	//Team 3
-			//var ip = "192.168.10.xxx"	//Team 4
-			//var ip = "192.168.12.xxx"	//Team 5
-			//var ip = "192.168.14.xxx"	//Team 6
-			//var ip = "192.168.16.xxx"	//Team 7
-			//var ip = "192.168.18.xxx"	//Team 8
-			//var ip = "192.168.20.xxx"	//Team 9
-			//var ip = "192.168.22.xxx"	//Team 10
-			//var ip = "192.168.24.xxx"	//Team 11
-			//var ip = "192.168.26.xxx"	//Team 12
-			//var ip = "192.168.28.xxx"	//Team 13
-			//var ip = "192.168.30.xxx"	//Team 14
-			//var ip = "192.168.32.xxx"	//Team 15
+			//var ip = "192.168.4.114" 	//Team 1
+			//var ip = "192.168.6.116"	//Team 2
+			//var ip = "192.168.8.118"	//Team 3
+			//var ip = "192.168.10.120"	//Team 4
+			//var ip = "192.168.12.122"	//Team 5
+			//var ip = "192.168.14.124"	//Team 6
+			//var ip = "192.168.16.126"	//Team 7
+			//var ip = "192.168.18.128"	//Team 8
+			//var ip = "192.168.20.130"	//Team 9
+			//var ip = "192.168.22.132"	//Team 10
+			//var ip = "192.168.24.134"	//Team 11
+			//var ip = "192.168.26.136"	//Team 12
+			//var ip = "192.168.28.138"	//Team 13
+			//var ip = "192.168.30.140"	//Team 14
+			//var ip = "192.168.32.142"	//Team 15
 
 			
 			
