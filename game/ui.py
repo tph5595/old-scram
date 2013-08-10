@@ -177,7 +177,7 @@ class UI(object):
         self.flags['earthquake'] = None
         
     def _handleStash(self,service,conn,msg,termConn=False): 
-        print conn.http_request_path
+        print "handle stash"
         if(conn.http_request_path == "/stash"):
             
             #if(self.scoringStarted):
@@ -243,7 +243,7 @@ class UI(object):
             resp['data'] = j
             self.scoreClient.send(json.dumps(resp))
         except KeyError:
-            pass
+            print "keyerror"
         
     def setUpListeners(self):
         self._setUpListener("poll", 8081, PollServerProtocol, self._handlePoll)
