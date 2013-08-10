@@ -177,7 +177,7 @@ class UI(object):
         self.flags['earthquake'] = None
         
     def _handleStash(self,service,conn,msg,termConn=False): 
-        print "conn.http_request_path"
+        print conn.http_request_path
         if(conn.http_request_path == "/stash"):
             
             #if(self.scoringStarted):
