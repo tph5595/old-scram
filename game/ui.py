@@ -14,7 +14,6 @@ from Queue import Queue, Empty
 
 from game.network import NetworkController
 
-from scram.ircbot import LogBotFactory
 
 import socket
 import ConfigParser
@@ -71,19 +70,6 @@ class UI(object):
         self._initFlags()
         self.config = ConfigParser.RawConfigParser() # Config file parser
         self.config.read('game/config.ini')   # Config file
-        
-        self.bot = LogBotFactory("derpy",self.reactor)
-        self.bot.observers.append(self.botMsg)
-        self.reactor.connectTCP("192.168.15.5", 6667, self.bot)
-
-        
-    def botMsg(self,conn,msg,channel,user):
-        if("start" in msg):
-            self.scoringStarted = True
-            conn.started("I am allowed to talk to Scorebot",channel,user) 
-        if("stop" in msg):
-            self.scoringStarted = False
-            conn.started("I am *NOT* allowed to talk to Scorebot",channel,user) 
 
         
     def connect(self, (host, port)):
@@ -214,7 +200,7 @@ class UI(object):
             return False  
         
     def connectToScoreboard(self):
-
+        print "connecting to scoreboard"
         #NOTE: Not sure if this is the best way to do this (try/except when reading value)
         try:
             # Load values from config file

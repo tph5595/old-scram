@@ -3,7 +3,6 @@ import random
 import uuid
 from twisted.application.service import Service
 from scram.plant import Plant
-from scram.ircbot import LogBotFactory
 
 from game.environment import SimulationTime
 
@@ -33,22 +32,8 @@ class World(SimulationTime):
         #the plant
         self.plant = Plant(platformClock)
         
-        self.bot = LogBotFactory("derpy",platformClock)
-        self.bot.observers.append(self.botMsg)
-        platformClock.connectTCP("192.168.15.5", 6667, self.bot)
-        
         #array for the players
         self.players = []
-
-    def botMsg(self,conn,msg,channel,user): 
-        if("start" in msg):
-            # add plant update as an observer to the sim time tick
-            #SimulationTime.start(self)
-            self.addObserver(self.plant.update)
-            conn.started("I am started.",channel,user) 
-        if("stop" in msg):
-            #self.removeObserver(self.plant.update)
-            conn.started("I am stopped.",channel,user) 
         
             
     def createPlayer(self):
