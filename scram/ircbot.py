@@ -68,7 +68,7 @@ class LogBot(irc.IRCClient):
     def joined(self, channel):
         """This will get called when the bot joins the channel."""
         print("[I have joined %s]" % channel)
-        self.reactor.callLater(3,self.newNick())
+        self.reactor.callLater(3,self.newNick)
 
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
