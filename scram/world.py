@@ -43,11 +43,11 @@ class World(SimulationTime):
     def botMsg(self,conn,msg,channel,user): 
         if("start" in msg):
             # add plant update as an observer to the sim time tick
-            SimulationTime.start(self)
+            #SimulationTime.start(self)
             self.addObserver(self.plant.update)
             conn.started("I am started.",channel,user) 
         if("stop" in msg):
-            self.removeObserver(self.plant.update)
+            #self.removeObserver(self.plant.update)
             conn.started("I am stopped.",channel,user) 
         
             
@@ -60,7 +60,8 @@ class World(SimulationTime):
         self.players.remove(player)
         
     def start(self):
-        #SimulationTime.start(self)
+        SimulationTime.start(self)
+        self.addObserver(self.plant.update)
         pass
         
 
