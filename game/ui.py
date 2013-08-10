@@ -221,12 +221,14 @@ class UI(object):
         
     def _handleStash(self,service,conn,msg,termConn=False): 
         if(conn.http_request_path == "/stash"):
+            
             #if(self.scoringStarted):
             #get the old flag            
             prevFlag = self.flags[service] if self.flags[service]!=None else 'none'
             z = json.loads(msg)            
             #stash the new flag
             self.flags[service]  = z['flag']
+            print "flag: %s"%z['flag']
             #return a response object
             j = {"oldflag":prevFlag}
             conn.sendMessage(json.dumps(j))
